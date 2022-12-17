@@ -19,6 +19,9 @@ class CreatePoPictureGarmentsTable extends Migration
             $table->string("file_name");
             $table->string("file_url");
             $table->enum('type',["mannual","po_conversion"]);
+            $table->foreignId('created_by')->nullable()->references("id")->on("admins");
+            $table->foreignId('updated_by')->nullable()->references("id")->on("admins");
+            $table->foreignId('deleted_by')->nullable()->references("id")->on("admins");
             $table->timestamps();
             $table->softDeletes();
         });

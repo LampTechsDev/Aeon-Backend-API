@@ -18,7 +18,11 @@ class CreateFabricContentsTable extends Migration
             $table->string("name");
             $table->text("details");
             $table->string("status");
+            $table->foreignId('created_by')->nullable()->references("id")->on("admins");
+            $table->foreignId('updated_by')->nullable()->references("id")->on("admins");
+            $table->foreignId('deleted_by')->nullable()->references("id")->on("admins");
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

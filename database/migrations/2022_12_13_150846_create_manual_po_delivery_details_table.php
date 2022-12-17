@@ -22,7 +22,11 @@ class CreateManualPoDeliveryDetailsTable extends Migration
             $table->string("country_of_origin");
             $table->date("ex_factor_date");
             $table->date("care_label_date");
+            $table->foreignId('created_by')->nullable()->references("id")->on("admins");
+            $table->foreignId('updated_by')->nullable()->references("id")->on("admins");
+            $table->foreignId('deleted_by')->nullable()->references("id")->on("admins");
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

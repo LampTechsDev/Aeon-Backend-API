@@ -20,13 +20,11 @@ class CreateGroupAccessesTable extends Migration
 
             $table->string('remarks')->nullable();
             $table->enum('status',["Active","Inactive","Pending","Cencle","Delete"]);
-            $table->string('create_by')->nullable();
-            $table->date('create_date')->nullable();
-            $table->string('modified_by')->nullable();
-            $table->date('modified_date')->nullable();
-            $table->string('deleted_by')->nullable();
-            $table->date('deleted_date')->nullable();
+            $table->unsignedBigInteger('created_by')->nullable();
+            $table->unsignedBigInteger('updated_by')->nullable();
+            $table->unsignedBigInteger('deleted_by')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

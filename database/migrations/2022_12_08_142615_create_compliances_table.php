@@ -27,7 +27,11 @@ class CreateCompliancesTable extends Migration
             $table->date('requirement_date')->nullable();
             $table->text('requirement_details');
             $table->text('note_remarks')->nullable();
+            $table->foreignId('created_by')->nullable()->references("id")->on("admins");
+            $table->foreignId('updated_by')->nullable()->references("id")->on("admins");
+            $table->foreignId('deleted_by')->nullable()->references("id")->on("admins");
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

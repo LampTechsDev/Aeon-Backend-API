@@ -26,7 +26,11 @@ class CreateManualPoItemDetailsTable extends Migration
             $table->double("supplier_price");
             $table->string("value");
             $table->double("selling_price");
+            $table->foreignId('created_by')->nullable()->references("id")->on("admins");
+            $table->foreignId('updated_by')->nullable()->references("id")->on("admins");
+            $table->foreignId('deleted_by')->nullable()->references("id")->on("admins");
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

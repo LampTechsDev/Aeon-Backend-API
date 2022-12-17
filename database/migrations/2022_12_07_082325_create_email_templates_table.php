@@ -20,8 +20,9 @@ class CreateEmailTemplatesTable extends Migration
             $table->boolean("mail_send")->default(true);
             $table->string("cc")->nullable();
             $table->text("template")->nullable();
-            $table->foreignId("created_by")->nullable()->references("id")->on("admins");
-            $table->foreignId("updated_by")->nullable()->references("id")->on("admins");
+            $table->foreignId('created_by')->nullable()->references("id")->on("admins");
+            $table->foreignId('updated_by')->nullable()->references("id")->on("admins");
+            $table->foreignId('deleted_by')->nullable()->references("id")->on("admins");
             $table->timestamps();
             $table->softDeletes();
         });

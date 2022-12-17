@@ -23,13 +23,11 @@ class CreateCustomersTable extends Migration
 
             $table->string('remarks')->nullable();
             $table->enum('status',["Active","Inactive","Pending","Cencle","Delete"]);
-            $table->string('create_by')->nullable();
-            $table->date('create_date')->nullable();
-            $table->string('modified_by')->nullable();
-            $table->date('modified_date')->nullable();
-            $table->string('deleted_by')->nullable();
-            $table->date('deleted_date')->nullable();
+            $table->foreignId('created_by')->nullable()->references("id")->on("admins");
+            $table->foreignId('updated_by')->nullable()->references("id")->on("admins");
+            $table->foreignId('deleted_by')->nullable()->references("id")->on("admins");
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

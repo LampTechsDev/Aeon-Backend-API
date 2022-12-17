@@ -18,6 +18,9 @@ class CreateComplianceAuditUploadsTable extends Migration
             $table->foreignId("complianceaudit_id")->references("id")->on("compliances")->cascadeOnDelete();
             $table->string("file_name");
             $table->string("file_url");
+            $table->foreignId('created_by')->nullable()->references("id")->on("admins");
+            $table->foreignId('updated_by')->nullable()->references("id")->on("admins");
+            $table->foreignId('deleted_by')->nullable()->references("id")->on("admins");
             $table->timestamps();
             $table->softDeletes();
         });

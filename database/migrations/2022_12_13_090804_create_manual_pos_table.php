@@ -29,7 +29,11 @@ class CreateManualPosTable extends Migration
             $table->text("description");
             $table->string("fabric_quality");
             $table->string("fabric_content");
+            $table->foreignId('created_by')->nullable()->references("id")->on("admins");
+            $table->foreignId('updated_by')->nullable()->references("id")->on("admins");
+            $table->foreignId('deleted_by')->nullable()->references("id")->on("admins");
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
