@@ -33,6 +33,7 @@ class ManualPoItemDetailsResource extends JsonResource
     {
         return $this->filter([
             "id"                        => $this->id ?? "",
+            "po_id"                     => $this->po_id ?? "",
             "plm"                       => $this->plm ?? "",
             "style_no"                  => $this->style_no ?? "",
             "colour"                    => $this->colour ?? "",
@@ -45,6 +46,7 @@ class ManualPoItemDetailsResource extends JsonResource
             "selling_price"             => $this->selling_price ?? "",
             "created_at"                => $this->created_at ?? "",
             "updated_at"                => $this->updated_at ?? "",
+            "po_information"            =>  isset($this->manualPo) ? (new ManualPoResource($this->manualPo))->hide(["created_by", "updated_by"]) : null,
         ]);
     }
 }
