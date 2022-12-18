@@ -5,6 +5,7 @@ use App\Http\Controllers\V1\AdminController;
 use App\Http\Controllers\V1\GroupController;
 use App\Http\Controllers\V1\Admin\PermissionController;
 use App\Http\Controllers\V1\Admin\EmailController;
+use App\Http\Controllers\V1\Admin\FabricContentController;
 use App\Http\Controllers\V1\Admin\InspectionController;
 use App\Http\Controllers\V1\Admin\ManualPoController;
 use App\Http\Controllers\V1\Admin\ManualPoDeliveryDetailsController;
@@ -154,6 +155,21 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
         Route::post('/update', [ManualPoItemDetailsController::class, 'update']);
         Route::get('/show', [ManualPoItemDetailsController::class, 'show']);
         Route::post('/delete', [ManualPoItemDetailsController::class, 'delete']);
+        
+    });
+
+
+     /**
+     * Fabric Content
+     */
+
+     Route::prefix('fabric-content')->group(function(){
+
+        Route::get('/list', [FabricContentController::class, 'index']);
+        Route::post('/store', [FabricContentController::class, 'store']);
+        Route::post('/update', [FabricContentController::class, 'update']);
+        Route::get('/show', [FabricContentController::class, 'show']);
+        Route::post('/delete', [FabricContentController::class, 'delete']);
         
     });
     
