@@ -66,7 +66,7 @@ class ManualPoController extends Controller
             $this->saveFileInfo($request, $manualpo);
             $this->saveExtraFileInfo($request, $manualpo);
             $this->deliveryDetails($request,$manualpo);
-            //$this->itemdetails($request,$manualpo);
+
             DB::commit();
             $this->apiSuccess();
             $this->data = (new ManualPoResource($manualpo));
@@ -130,29 +130,10 @@ class ManualPoController extends Controller
             $data->save();
     }
 
-
-    // public function itemdetails($request,$manualpo){
-
-    //         $manualpoItemDetails = new ManualPoItemDetails();
-    //         $manualpoItemDetails->po_id = $request->po_id;
-    //         $manualpoItemDetails->plm = $request->plm;
-    //         $manualpoItemDetails->style_no = $request->style_no;
-    //         $manualpoItemDetails->colour = $request->colour;
-    //         $manualpoItemDetails->item_no = $request->item_no;
-    //         $manualpoItemDetails->size = $request->size;
-    //         $manualpoItemDetails->qty_order = $request->qty_order;
-    //         $manualpoItemDetails->inner_qty = $request->inner_qty;
-    //         $manualpoItemDetails->outer_case_qty = $request->outer_case_qty;
-    //         $manualpoItemDetails->supplier_price = $request->supplier_price;
-    //         $manualpoItemDetails->value = $request->value;
-    //         $manualpoItemDetails->selling_price = $request->selling_price;
-    //         $manualpoItemDetails->save();
-    // }
-
-
-     /*
-    Show
-    */
+    
+        /*
+        Show
+        */
     public function show(Request $request)
     {
         try{
