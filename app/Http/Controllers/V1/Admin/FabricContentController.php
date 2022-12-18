@@ -11,6 +11,20 @@ use Exception;
 
 class FabricContentController extends Controller
 {
+
+    public function index()
+    {
+       try{
+
+            $this->data = FabricContentResource::collection(FabricContent::all());
+            $this->apiSuccess("Fabric Content Loaded Successfully");
+            return $this->apiOutput();
+
+        }catch(Exception $e){
+            return $this->apiOutput($this->getError($e), 500);
+        }
+    }
+
     public function store(Request $request)
     {
      
@@ -81,5 +95,13 @@ class FabricContentController extends Controller
         }catch(Exception $e){
             return $this->apiOutput($this->getError( $e), 500);
         }
+    }
+
+
+    public function delete(Request $request)
+    {
+        FabricContent::where("id", $request->id)->delete();
+        $this->apiSuccess();
+        return $this->apiOutput("Fabric Deleted Successfully", 200);
     }
 }
