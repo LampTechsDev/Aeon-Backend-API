@@ -38,7 +38,7 @@ class InspectionController extends Controller
             }
             
    
-            $inspection = new Inspection();
+            $inspection = Inspection::find($request->id);
             $inspection->meeting_name = $request->meeting_name;
             $inspection->po_number = $request->po_number;
             $inspection->vendor_id = $request->vendor_id;
@@ -56,7 +56,7 @@ class InspectionController extends Controller
           
             $this->apiSuccess();
             $this->data = (new InspectionResource($inspection));
-            return $this->apiOutput("Inspection Added Successfully");
+            return $this->apiOutput("Inspection Updated Successfully");
 
         }catch(Exception $e){
             return $this->apiOutput($this->getError( $e), 500);
