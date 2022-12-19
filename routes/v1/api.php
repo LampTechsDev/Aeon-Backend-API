@@ -1,19 +1,22 @@
 <?php
 
-use App\Http\Controllers\V1\Admin\ComplianceAuditController;
-use App\Http\Controllers\V1\AdminController;
-use App\Http\Controllers\V1\GroupController;
-use App\Http\Controllers\V1\Admin\PermissionController;
-use App\Http\Controllers\V1\Admin\EmailController;
-use App\Http\Controllers\V1\Admin\FabricContentController;
-use App\Http\Controllers\V1\Admin\FabricQualityController;
-use App\Http\Controllers\V1\Admin\InspectionController;
-use App\Http\Controllers\V1\Admin\ManualPoController;
-use App\Http\Controllers\V1\Admin\ManualPoDeliveryDetailsController;
-use App\Http\Controllers\V1\Admin\ManualPoItemDetailsController;
-use App\Models\ManualPoDeliveryDetails;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Models\ManualPoDeliveryDetails;
+use App\Http\Controllers\V1\AdminController;
+use App\Http\Controllers\V1\GroupController;
+use App\Http\Controllers\V1\Admin\EmailController;
+use App\Http\Controllers\V1\Admin\VendorController;
+use App\Http\Controllers\V1\Admin\ManualPoController;
+use App\Http\Controllers\V1\Admin\InspectionController;
+use App\Http\Controllers\V1\Admin\PermissionController;
+use App\Http\Controllers\V1\Admin\FabricContentController;
+use App\Http\Controllers\V1\Admin\FabricQualityController;
+use App\Http\Controllers\V1\Admin\VendorProfileController;
+use App\Http\Controllers\V1\Admin\ComplianceAuditController;
+use App\Http\Controllers\V1\Admin\ManualPoItemDetailsController;
+use App\Http\Controllers\V1\Admin\VendorContactPeopleController;
+use App\Http\Controllers\V1\Admin\ManualPoDeliveryDetailsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,6 +28,9 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
+
+
 
 /**
  * Admin Login Section
@@ -111,7 +117,7 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
         Route::post('/update', [InspectionController::class, 'update']);
         Route::get('/show', [InspectionController::class, 'show']);
         Route::post('/delete', [InspectionController::class, 'delete']);
-        
+
     });
 
 
@@ -126,7 +132,7 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
         Route::post('/update', [ManualPoController::class, 'update']);
         Route::get('/show', [ManualPoController::class, 'show']);
         Route::post('/delete', [ManualPoController::class, 'delete']);
-        
+
     });
 
 
@@ -141,7 +147,7 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
         Route::post('/update', [ManualPoDeliveryDetailsController::class, 'update']);
         Route::get('/show', [ManualPoDeliveryDetailsController::class, 'show']);
         Route::post('/delete', [ManualPoDeliveryDetailsController::class, 'delete']);
-        
+
     });
 
 
@@ -156,7 +162,7 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
         Route::post('/update', [ManualPoItemDetailsController::class, 'update']);
         Route::get('/show', [ManualPoItemDetailsController::class, 'show']);
         Route::post('/delete', [ManualPoItemDetailsController::class, 'delete']);
-        
+
     });
 
 
@@ -171,7 +177,7 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
         Route::post('/update', [FabricContentController::class, 'update']);
         Route::get('/show', [FabricContentController::class, 'show']);
         Route::post('/delete', [FabricContentController::class, 'delete']);
-        
+
     });
 
 
@@ -186,7 +192,45 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
         Route::post('/update', [FabricQualityController::class, 'update']);
         Route::get('/show', [FabricQualityController::class, 'show']);
         Route::post('/delete', [FabricQualityController::class, 'delete']);
-        
+
     });
-    
+
+    /**
+     * Vendor
+     */
+    Route::prefix('vendor')->group(function(){
+
+        Route::get('/list', [VendorController::class, 'index']);
+        Route::post('/store', [VendorController::class, 'store']);
+        Route::post('/update/{id}', [VendorController::class, 'update']);
+        Route::get('/show', [VendorController::class, 'show']);
+        Route::post('/delete/{id}', [VendorController::class, 'delete']);
+
+    });
+
+    /**
+     * Vendor Profile Section
+     **/
+    Route::prefix('vendor_profile')->group(function(){
+        Route::get('/show',   [VendorProfileController::class, "show"]);
+        Route::post('/store', [VendorProfileController::class, "store"]);
+        Route::post('/update/{id}', [VendorProfileController::class, "update"]);
+        Route::post('/delete/{id}', [VendorProfileController::class, "destroy"]);
+    });
+
+    // Vendor Contact People Section
+
+        Route::prefix('vendor_contact')->group(function(){
+            Route::get('/show',   [VendorContactPeopleController::class, "show"]);
+            Route::post('/store', [VendorContactPeopleController::class, "store"]);
+            Route::post('/update/{id}', [VendorContactPeopleController::class, "update"]);
+            Route::post('/delete/{id}', [VendorContactPeopleController::class, "destroy"]);
+        });
+
+
+
+
+
+
+
 });

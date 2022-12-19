@@ -47,6 +47,7 @@ class AdminController extends Controller
             }
             $admin =Admin::where("email", $request->email)->first();
             if( !Hash::check($request->password, $admin->password) ){
+                
                 return $this->apiOutput("Sorry! Password Dosen't Match", 401);
             }
             if( !$admin->status ){
@@ -108,22 +109,22 @@ class AdminController extends Controller
 
     public function store(Request $request)
     {
-        
+
         try{
             $validator = Validator::make(
                 $request->all(),
-                [ 
+                [
                     "name"          => ["required", "min:4"],
                     "email"         => ["required","email","unique:admins,email"],
                     "password"      => ["required", "string", "min:6"],
                     "group_id"      => ["required", "exists:groups,id"],
                     "status"        => 'required',
-                    
+
                 ],[
                     "group_id.exists"     => "No Record found under this group",
                 ]
                );
-                
+
                 if ($validator->fails()) {
                     return $this->apiOutput($this->getValidationError($validator), 400);
                 }
@@ -159,14 +160,14 @@ class AdminController extends Controller
             "status"        => 'required',
         ],[
             "id"                  => "No Data Found for this Id",
-            "group_id.exists"     => "No Record found under this group",  
+            "group_id.exists"     => "No Record found under this group",
         ]
         );
 
            if ($validator->fails()) {
             $this->apiOutput($this->getValidationError($validator), 400);
            }
-           
+
             $admin = Admin::find($request->id);
             // if(empty($admin)){
             //     return $this->apiOutput("No Data Found", $admin);

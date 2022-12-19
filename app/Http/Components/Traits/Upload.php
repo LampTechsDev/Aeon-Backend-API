@@ -27,6 +27,8 @@ trait Upload{
     protected  $admin_profile = "storage/uploads/admin/profile";
     protected  $logo_dir = "storage/uploads/logo";
     protected  $others_dir = "storage/uploads/others";
+    protected  $vendor_logo = "storage/uploads/vendor";
+    protected  $vendor_profile_logo = "storage/uploads/vendor";
 
     /*
      * ---------------------------------------------
@@ -37,14 +39,14 @@ trait Upload{
         if(!is_dir($dir)){
             mkdir($dir,0777,true);
         }
-        
+
         if(!file_exists($dir.'index.php')){
             $file = fopen($dir.'index.php','w');
             fwrite($file," <?php \n /* \n Unauthorize Access \n @Developer: Sm Shahjalal Shaju \n Email: shajushahjalal@gmail.com \n */ ");
             fclose($file);
         }
     }
-    
+
     /*
      * ---------------------------------------------
      * Check the file If exists then Delete the file
@@ -59,12 +61,12 @@ trait Upload{
             }
         }
     }
-    
+
     /*
      * ---------------------------------------------
      * Upload an Image
      * Change Image height and width
-     * Send the null value in height or width to keep 
+     * Send the null value in height or width to keep
      * the Image Orginal Ratio.
      * ---------------------------------------------
      */
@@ -74,7 +76,7 @@ trait Upload{
         }
         $this->CheckDir($dir);
         $this->RemoveFile($oldFile);
-        
+
         ini_set('memory_limit', '1024M');
         $path_arr = [];
 
@@ -92,7 +94,7 @@ trait Upload{
                         Image::make($file)->resize($width,null,function($constant){
                             $constant->aspectRatio();
                         })->save($path);
-                    }        
+                    }
                     elseif( !empty($height) && empty($width) ){
                         Image::make($file)->resize(null,$height,function($constant){
                             $constant->aspectRatio();
@@ -111,7 +113,7 @@ trait Upload{
             $image = $request->file($fileName);
             $filename = $fileName.'_'.time().'.'.$image->getClientOriginalExtension();
             $path = $dir.$filename;
-           
+
             if( empty($height) && empty($width)){
                 Image::make($image)->save($path);
             }
@@ -119,7 +121,7 @@ trait Upload{
                 Image::make($image)->resize($width,null,function($constant){
                     $constant->aspectRatio();
                 })->save($path);
-            }        
+            }
             elseif( !empty($height) && empty($width) ){
                 Image::make($image)->resize(null,$height,function($constant){
                     $constant->aspectRatio();
@@ -140,7 +142,7 @@ trait Upload{
         }
         $this->CheckDir($dir);
         $this->RemoveFile($oldFile);
-        
+
         ini_set('memory_limit', '1024M');
         $path_arr = [];
 
@@ -157,7 +159,7 @@ trait Upload{
                     Image::make($image)->resize($width,null,function($constant){
                         $constant->aspectRatio();
                     })->save($path);
-                }        
+                }
                 elseif( !empty($height) && empty($width) ){
                     Image::make($image)->resize(null,$height,function($constant){
                         $constant->aspectRatio();
@@ -172,7 +174,7 @@ trait Upload{
             $image = $request->file($fileName);
             $filename = $fileName.'_'.time().'.'.$image->getClientOriginalExtension();
             $path = $dir.$filename;
-           
+
             if( empty($height) && empty($width)){
                 Image::make($image)->save($path);
             }
@@ -180,7 +182,7 @@ trait Upload{
                 Image::make($image)->resize($width,null,function($constant){
                     $constant->aspectRatio();
                 })->save($path);
-            }        
+            }
             elseif( !empty($height) && empty($width) ){
                 Image::make($image)->resize(null,$height,function($constant){
                     $constant->aspectRatio();
@@ -206,7 +208,7 @@ trait Upload{
         }
         return false;
     }
-    
+
     /*
      * ---------------------------------------------
      * Upload any Kind of file
@@ -218,13 +220,13 @@ trait Upload{
         }
         ini_set('memory_limit', '1024M');
         $this->CheckDir($dir);
-        $this->RemoveFile($oldFile); 
-        $file = $request->file($fileName);  
+        $this->RemoveFile($oldFile);
+        $file = $request->file($fileName);
         $new_file_name = 'file_'.time().'.'.$file->getClientOriginalExtension();
-        $file->move($dir,$new_file_name); 
+        $file->move($dir,$new_file_name);
         return $dir.$new_file_name;
     }
-    
-    
-    
+
+
+
 }
