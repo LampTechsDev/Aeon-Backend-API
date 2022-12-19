@@ -5,6 +5,8 @@ namespace App\Http\Controllers\V1\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ManualPoResource;
 use App\Models\ManualPo;
+use App\Models\ManualPoDeliveryDetails;
+use App\Models\ManualPoItemDetails;
 use App\Models\PoArtwork;
 use App\Models\PoPictureGarments;
 use Illuminate\Http\Request;
@@ -63,6 +65,8 @@ class ManualPoController extends Controller
             $manualpo->save();
             $this->saveFileInfo($request, $manualpo);
             $this->saveExtraFileInfo($request, $manualpo);
+            $this->deliveryDetails($request,$manualpo);
+
             DB::commit();
             $this->apiSuccess();
             $this->data = (new ManualPoResource($manualpo));
@@ -112,9 +116,24 @@ class ManualPoController extends Controller
     }
 
 
-     /*
-    Show
-    */
+    public function deliveryDetails($request, $manualpo){
+
+            $data = new ManualPoDeliveryDetails();
+            $data->po_id = $manualpo->id;
+            $data->ship_method = $request->ship_method;
+            $data->inco_terms = $request->inco_terms;
+            $data->landing_port = $request->landing_port;
+            $data->discharge_port = $request->discharge_port;
+            $data->country_of_origin = $request->country_of_origin;
+            $data->ex_factor_date = $request->ex_factor_date;
+            $data->care_label_date = $request->care_label_date;
+            $data->save();
+    }
+
+    
+        /*
+        Show
+        */
     public function show(Request $request)
     {
         try{
@@ -163,6 +182,8 @@ class ManualPoController extends Controller
             $manualpo->fabric_quality = $request->fabric_quality;
             $manualpo->fabric_content = $request->fabric_content;
             $manualpo->save();
+            $this->deliveryDetails($request,$manualpo);
+            $this->itemdetails($request,$manualpo);
             DB::commit();
             $this->apiSuccess();
             $this->data = (new ManualPoResource($manualpo));

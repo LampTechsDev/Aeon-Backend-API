@@ -29,6 +29,7 @@ class ManualPoItemDetailsController extends Controller
             $validator = Validator::make( $request->all(),[
                 //'name'          => ["required", "min:4"],
                 //'description'   => ["nullable", "min:4"],
+                "po_id"      => ["required", "exists:manual_pos,id"],
             ]);
                 
             if ($validator->fails()) {    
@@ -37,6 +38,7 @@ class ManualPoItemDetailsController extends Controller
    
             $manualpoItemDetails = new ManualPoItemDetails();
             $manualpoItemDetails->plm = $request->plm;
+            $manualpoItemDetails->po_id = $request->po_id;
             $manualpoItemDetails->style_no = $request->style_no;
             $manualpoItemDetails->colour = $request->colour;
             $manualpoItemDetails->item_no = $request->item_no;
