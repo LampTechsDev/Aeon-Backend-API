@@ -183,7 +183,7 @@ class ManualPoController extends Controller
             $manualpo->fabric_content = $request->fabric_content;
             $manualpo->save();
             $this->deliveryDetails($request,$manualpo);
-            $this->itemdetails($request,$manualpo);
+        
             DB::commit();
             $this->apiSuccess();
             $this->data = (new ManualPoResource($manualpo));
