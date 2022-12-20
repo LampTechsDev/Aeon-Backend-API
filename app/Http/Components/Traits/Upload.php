@@ -28,7 +28,7 @@ trait Upload{
     protected  $logo_dir = "storage/uploads/logo";
     protected  $others_dir = "storage/uploads/others";
     protected  $vendor_logo = "storage/uploads/vendor";
-    protected  $vendor_profile_logo = "storage/uploads/vendor";
+    protected  $vendor_profile_logo = "storage/uploads/vendorprofile";
 
     /*
      * ---------------------------------------------

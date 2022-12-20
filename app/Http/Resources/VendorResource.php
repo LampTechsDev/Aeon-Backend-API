@@ -26,11 +26,11 @@ class VendorResource extends JsonResource
     /**
      * Collection
      */
-    public static function collection($resource){
-        return tap(new AdminResourceCollection($resource), function ($collection) {
-            $collection->collects = __CLASS__;
-        });
-    }
+    // public static function collection($resource){
+    //     return tap(new VendorResource($resource), function ($collection) {
+    //         $collection->collects = __CLASS__;
+    //     });
+    // }
 
     /**
      * Transform the resource into an array.

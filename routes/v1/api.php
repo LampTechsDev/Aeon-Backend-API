@@ -96,7 +96,7 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
      * Compliance Audit
      */
     Route::prefix('compliance-audit')->group(function(){
-        
+
         Route::get('/list', [ComplianceAuditController::class, 'index']);
         Route::post('/store', [ComplianceAuditController::class, 'store']);
         Route::post('/update', [ComplianceAuditController::class, 'update']);
@@ -212,6 +212,8 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
      * Vendor Profile Section
      **/
     Route::prefix('vendor_profile')->group(function(){
+
+        Route::get('/list', [VendorProfileController::class, 'index']);
         Route::get('/show',   [VendorProfileController::class, "show"]);
         Route::post('/store', [VendorProfileController::class, "store"]);
         Route::post('/update/{id}', [VendorProfileController::class, "update"]);
@@ -221,6 +223,8 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
     // Vendor Contact People Section
 
         Route::prefix('vendor_contact')->group(function(){
+
+            Route::get('/list', [VendorContactPeopleController::class, 'index']);
             Route::get('/show',   [VendorContactPeopleController::class, "show"]);
             Route::post('/store', [VendorContactPeopleController::class, "store"]);
             Route::post('/update/{id}', [VendorContactPeopleController::class, "update"]);
