@@ -14,6 +14,9 @@ use App\Http\Controllers\V1\Admin\FabricContentController;
 use App\Http\Controllers\V1\Admin\FabricQualityController;
 use App\Http\Controllers\V1\Admin\VendorProfileController;
 use App\Http\Controllers\V1\Admin\ComplianceAuditController;
+use App\Http\Controllers\V1\Admin\CustomerContactPeopleController;
+use App\Http\Controllers\V1\Admin\CustomerController;
+use App\Http\Controllers\V1\Admin\CustomerDepartmentController;
 use App\Http\Controllers\V1\Admin\ManualPoItemDetailsController;
 use App\Http\Controllers\V1\Admin\VendorContactPeopleController;
 use App\Http\Controllers\V1\Admin\ManualPoDeliveryDetailsController;
@@ -96,7 +99,7 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
      * Compliance Audit
      */
     Route::prefix('compliance-audit')->group(function(){
-        
+
         Route::get('/list', [ComplianceAuditController::class, 'index']);
         Route::post('/store', [ComplianceAuditController::class, 'store']);
         Route::post('/update', [ComplianceAuditController::class, 'update']);
@@ -212,20 +215,68 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
      * Vendor Profile Section
      **/
     Route::prefix('vendor_profile')->group(function(){
-        Route::get('/show',   [VendorProfileController::class, "show"]);
-        Route::post('/store', [VendorProfileController::class, "store"]);
+
+        Route::get('/list',         [VendorProfileController::class, 'index']);
+        Route::get('/show',         [VendorProfileController::class, "show"]);
+        Route::post('/store',       [VendorProfileController::class, "store"]);
         Route::post('/update/{id}', [VendorProfileController::class, "update"]);
         Route::post('/delete/{id}', [VendorProfileController::class, "destroy"]);
     });
 
     // Vendor Contact People Section
 
-        Route::prefix('vendor_contact')->group(function(){
-            Route::get('/show',   [VendorContactPeopleController::class, "show"]);
-            Route::post('/store', [VendorContactPeopleController::class, "store"]);
-            Route::post('/update/{id}', [VendorContactPeopleController::class, "update"]);
-            Route::post('/delete/{id}', [VendorContactPeopleController::class, "destroy"]);
-        });
+    Route::prefix('vendor_contact')->group(function(){
+
+        Route::get('/list',         [VendorContactPeopleController::class, 'index']);
+        Route::get('/show',         [VendorContactPeopleController::class, "show"]);
+        Route::post('/store',       [VendorContactPeopleController::class, "store"]);
+        Route::post('/update/{id}', [VendorContactPeopleController::class, "update"]);
+        Route::post('/delete/{id}', [VendorContactPeopleController::class, "destroy"]);
+    });
+
+    /**
+     * Customer Section
+     */
+    Route::prefix('customer')->group(function(){
+
+        Route::get('/list',         [CustomerController::class, 'index']);
+        Route::get('/show',         [CustomerController::class, "show"]);
+        Route::post('/store',       [CustomerController::class, "store"]);
+        Route::post('/update/{id}', [CustomerController::class, "update"]);
+        Route::post('/delete/{id}', [CustomerController::class, "destroy"]);
+    });
+
+    /**
+     * Customer Contact People Section
+     */
+    Route::prefix('customer_contact')->group(function(){
+
+        Route::get('/list',         [CustomerContactPeopleController::class, 'index']);
+        Route::get('/show',         [CustomerContactPeopleController::class, "show"]);
+        Route::post('/store',       [CustomerContactPeopleController::class, "store"]);
+        Route::post('/update/{id}', [CustomerContactPeopleController::class, "update"]);
+        Route::post('/delete/{id}', [CustomerContactPeopleController::class, "destroy"]);
+    });
+
+
+    /**
+     * Customer Department Section
+     */
+    Route::prefix('customer_department')->group(function(){
+
+        Route::get('/list',         [CustomerDepartmentController::class, 'index']);
+        Route::get('/show',         [CustomerDepartmentController::class, "show"]);
+        Route::post('/store',       [CustomerDepartmentController::class, "store"]);
+        Route::post('/update/{id}', [CustomerDepartmentController::class, "update"]);
+        Route::post('/delete/{id}', [CustomerDepartmentController::class, "destroy"]);
+    });
+
+
+
+
+
+
+
 
 
 

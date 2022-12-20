@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class VendorContactPeopleResource extends JsonResource
+class CustomerDepartmentResource extends JsonResource
 {
     protected $withoutFields = [];
 
@@ -27,7 +27,7 @@ class VendorContactPeopleResource extends JsonResource
      * Collection
      */
     // public static function collection($resource){
-    //     return tap(new VendorContactPeopleCollection($resource), function ($collection) {
+    //     return tap(new CustomerDepartmentCollection($resource), function ($collection) {
     //         $collection->collects = __CLASS__;
     //     });
     // }
@@ -41,23 +41,21 @@ class VendorContactPeopleResource extends JsonResource
     public function toArray($request)
     {
         return $this->filter([
+
             "id"            => $this->id ?? "",
-            "vendor_id"            => $this->vendor_id ?? "",
-            "employee_id"            => $this->employee_id ?? "",
-            "first_name"          => $this->first_name ?? "",
-            "last_name"          => $this->last_name ?? "",
-            "designation"           => $this->designation ?? "",
-            "department"           => $this->department ?? "",
-            "category"           => $this->category ?? "",
-            "phone"         => $this->phone ?? "",
-            "email"         => $this->email ?? "",
-            "remarks"         => $this->remarks ?? "",
-            "status"         => $this->status ?? "",
+            "customer_id "  => $this->customer_id  ?? "",
+            "image"   => $this->image ?? "",
+            "contact_number"    => $this->contact_number ?? "",
+            "email "    => $this->email  ?? "",
+            "address"   => $this->address ?? "",
+            "remarks"       => $this->remarks ?? "",
+            "status "       => $this->status  ?? "",
 
             // "created_at"         => $this->created_at ?? "",
             // "updated_at"         => $this->updated_at ?? "",
             // "deleted_by"         => $this->deleted_by ?? "",
             // "deleted_date"         => $this->deleted_date ?? "",
+
             "created_by"    => isset($this->created_by) ? (new AdminResource($this->created_by))->hide(["created_by","updated_by,deleted_by,deleted_date"]) : null,
             "updated_by"    => isset($this->updated_by) ? (new AdminResource($this->updatedBy))->hide(["created_by","updated_by,deleted_by,deleted_date"]) : null,
             "deleted_by"    => isset($this->deleted_by) ? (new AdminResource($this->deleted_by))->hide(["created_by","updated_by,deleted_by,deleted_date"]) : null,

@@ -8,5 +8,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Customer extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory;
+    public function createdBy(){
+        return $this->belongsTo(Admin::class, "created_by")->withTrashed();
+    }
+    public function updatedBy(){
+        return $this->belongsTo(Admin::class, "updated_by")->withTrashed();
+    }
 }
