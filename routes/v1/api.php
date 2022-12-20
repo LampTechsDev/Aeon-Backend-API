@@ -20,6 +20,7 @@ use App\Http\Controllers\V1\Admin\CustomerDepartmentController;
 use App\Http\Controllers\V1\Admin\ManualPoItemDetailsController;
 use App\Http\Controllers\V1\Admin\VendorContactPeopleController;
 use App\Http\Controllers\V1\Admin\ManualPoDeliveryDetailsController;
+use App\Http\Controllers\V1\Admin\VendorCertificateController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,6 +32,7 @@ use App\Http\Controllers\V1\Admin\ManualPoDeliveryDetailsController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
 
 
 
@@ -271,6 +273,17 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
         Route::post('/delete/{id}', [CustomerDepartmentController::class, "destroy"]);
     });
 
+    /**
+     *Vendor Certificate Section
+     */
+    Route::prefix('vendor_certificate')->group(function(){
+
+        Route::get('/list',         [VendorCertificateController::class, 'index']);
+        Route::get('/show',         [VendorCertificateController::class, "show"]);
+        Route::post('/store',       [VendorCertificateController::class, "store"]);
+        Route::post('/update/{id}', [VendorCertificateController::class, "update"]);
+        Route::post('/delete/{id}', [VendorCertificateController::class, "destroy"]);
+    });
 
 
 
