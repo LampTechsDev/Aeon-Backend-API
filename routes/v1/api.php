@@ -20,6 +20,7 @@ use App\Http\Controllers\V1\Admin\CustomerDepartmentController;
 use App\Http\Controllers\V1\Admin\ManualPoItemDetailsController;
 use App\Http\Controllers\V1\Admin\VendorContactPeopleController;
 use App\Http\Controllers\V1\Admin\ManualPoDeliveryDetailsController;
+use App\Http\Controllers\V1\Admin\VendorCertificateController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,6 +32,7 @@ use App\Http\Controllers\V1\Admin\ManualPoDeliveryDetailsController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
 
 
 
