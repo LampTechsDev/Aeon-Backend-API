@@ -15,7 +15,7 @@ class CreateManualPoDeliveryDetailsTable extends Migration
     {
         Schema::create('manual_po_delivery_details', function (Blueprint $table) {
             $table->id();
-            $table->foreignId("po_id")->nullable()->references("id")->on("manual_pos");
+            $table->foreignId("po_id")->references("id")->on("manual_pos")->cascadeOnDelete();
             $table->string("ship_method");
             $table->string("inco_terms");
             $table->string("landing_port");
