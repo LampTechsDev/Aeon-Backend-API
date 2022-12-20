@@ -273,6 +273,17 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
         Route::post('/delete/{id}', [CustomerDepartmentController::class, "destroy"]);
     });
 
+    /**
+     *Vendor Certificate Section
+     */
+    Route::prefix('vendor_certificate')->group(function(){
+
+        Route::get('/list',         [VendorCertificateController::class, 'index']);
+        Route::get('/show',         [VendorCertificateController::class, "show"]);
+        Route::post('/store',       [VendorCertificateController::class, "store"]);
+        Route::post('/update/{id}', [VendorCertificateController::class, "update"]);
+        Route::post('/delete/{id}', [VendorCertificateController::class, "destroy"]);
+    });
 
 
 

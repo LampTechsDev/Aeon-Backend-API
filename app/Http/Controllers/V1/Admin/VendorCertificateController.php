@@ -44,7 +44,7 @@ class VendorCertificateController extends Controller
     {
 
         try{
-            
+
             DB::beginTransaction();
 
             $validator = Validator::make(
@@ -104,6 +104,7 @@ class VendorCertificateController extends Controller
     public function update(Request $request,$id)
     {
         try{
+            DB::beginTransaction();
         $validator = Validator::make($request->all(),[
             "vendor_id"                 => ["required"],
             "global_certificate_id"     => ["required"],
@@ -147,7 +148,9 @@ class VendorCertificateController extends Controller
 
             $this->data = (new VendorCertificateResource($certificate));
             return $this->apiOutput();
+            DB::commit();
         }catch(Exception $e){
+            DB::rollBack();
             return $this->apiOutput($this->getError( $e), 500);
         }
     }
