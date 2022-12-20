@@ -15,7 +15,7 @@ class CreateManualPoItemDetailsTable extends Migration
     {
         Schema::create('manual_po_item_details', function (Blueprint $table) {
             $table->id();
-            $table->foreignId("po_id")->references("id")->on("manual_pos")->cascadeOnDelete();
+            $table->foreignId("po_id")->nullable()->references("id")->on("manual_pos")->cascadeOnDelete();
             $table->string("plm");
             $table->string("style_no");
             $table->string("colour");
