@@ -26,11 +26,11 @@ class VendorContactPeopleResource extends JsonResource
     /**
      * Collection
      */
-    public static function collection($resource){
-        return tap(new VendorContactPeopleCollection($resource), function ($collection) {
-            $collection->collects = __CLASS__;
-        });
-    }
+    // public static function collection($resource){
+    //     return tap(new VendorContactPeopleCollection($resource), function ($collection) {
+    //         $collection->collects = __CLASS__;
+    //     });
+    // }
 
     /**
      * Transform the resource into an array.
