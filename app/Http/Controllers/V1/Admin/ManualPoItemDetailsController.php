@@ -74,6 +74,7 @@ class ManualPoItemDetailsController extends Controller
    
             $manualpoItemDetails = ManualPoItemDetails::find($request->id);
             $manualpoItemDetails->plm = $request->plm;
+            $manualpoItemDetails->po_id = $request->po_id;
             $manualpoItemDetails->style_no = $request->style_no;
             $manualpoItemDetails->colour = $request->colour;
             $manualpoItemDetails->item_no = $request->item_no;

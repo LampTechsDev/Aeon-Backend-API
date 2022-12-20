@@ -96,7 +96,7 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
      * Compliance Audit
      */
     Route::prefix('compliance-audit')->group(function(){
-
+        
         Route::get('/list', [ComplianceAuditController::class, 'index']);
         Route::post('/store', [ComplianceAuditController::class, 'store']);
         Route::post('/update', [ComplianceAuditController::class, 'update']);
