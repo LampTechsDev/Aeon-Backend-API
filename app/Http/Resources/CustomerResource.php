@@ -42,13 +42,13 @@ class CustomerResource extends JsonResource
     {
         return $this->filter([
             "id"             => $this->id ?? "",
-            "name "          => $this->name  ?? "",
+            "name"           => $this->name ?? "",
             "logo"           => $this->logo ?? "",
             "address"        => $this->address ?? "",
-            "email "         => $this->email  ?? "",
+            "email"          => $this->email ?? "",
             "contact_number" => $this->contact_number ?? "",
             "remarks"        => $this->remarks ?? "",
-            "status "        => $this->status  ?? "",
+            "status"         => $this->status ?? "",
 
             // "created_at"         => $this->created_at ?? "",
             // "updated_at"         => $this->updated_at ?? "",
