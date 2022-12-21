@@ -42,17 +42,17 @@ class CustomerContactPeopleResource extends JsonResource
     {
         return $this->filter([
             "id"            => $this->id ?? "",
-            "customer_id "  => $this->customer_id  ?? "",
+            "customer_id"   => $this->customer_id ?? "",
             "employee_id"   => $this->employee_id ?? "",
             "first_name"    => $this->first_name ?? "",
-            "last_name "    => $this->last_name  ?? "",
+            "last_name"     => $this->last_name ?? "",
             "designation"   => $this->designation ?? "",
             "department"    => $this->department ?? "",
             "category"      => $this->category ?? "",
             "phone"         => $this->phone ?? "",
             "email"         => $this->email ?? "",
             "remarks"       => $this->remarks ?? "",
-            "status "       => $this->status  ?? "",
+            "status"        => $this->status ?? "",
 
             // "created_at"         => $this->created_at ?? "",
             // "updated_at"         => $this->updated_at ?? "",
