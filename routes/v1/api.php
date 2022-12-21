@@ -17,6 +17,7 @@ use App\Http\Controllers\V1\Admin\ComplianceAuditController;
 use App\Http\Controllers\V1\Admin\CustomerContactPeopleController;
 use App\Http\Controllers\V1\Admin\CustomerController;
 use App\Http\Controllers\V1\Admin\CustomerDepartmentController;
+use App\Http\Controllers\V1\Admin\GlobalCertificateController;
 use App\Http\Controllers\V1\Admin\ManualPoItemDetailsController;
 use App\Http\Controllers\V1\Admin\VendorContactPeopleController;
 use App\Http\Controllers\V1\Admin\ManualPoDeliveryDetailsController;
@@ -32,7 +33,6 @@ use App\Http\Controllers\V1\Admin\VendorCertificateController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
 
 
 
@@ -284,6 +284,19 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
         Route::post('/update/{id}', [VendorCertificateController::class, "update"]);
         Route::post('/delete/{id}', [VendorCertificateController::class, "destroy"]);
     });
+
+    /**
+     *Global Certificate Section
+    */
+    Route::prefix('global_certificate')->group(function(){
+
+        Route::get('/list',         [GlobalCertificateController::class, 'index']);
+        Route::get('/show',         [GlobalCertificateController::class, "show"]);
+        Route::post('/store',       [GlobalCertificateController::class, "store"]);
+        Route::post('/update/{id}', [GlobalCertificateController::class, "update"]);
+        Route::post('/delete/{id}', [GlobalCertificateController::class, "destroy"]);
+    });
+
 
 
 
