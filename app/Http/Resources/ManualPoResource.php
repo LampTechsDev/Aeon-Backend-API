@@ -47,11 +47,15 @@ class ManualPoResource extends JsonResource
             "description"               => $this->description ?? null,
             "fabric_quality"            => $this->fabric_quality ?? null,
             "fabric_content"            => $this->fabric_content ?? null,
+            "currency"                  => $this->currency ?? null,
+            "payment_method"            => $this->payment_method ?? null,
+            "payment_terms"             => $this->payment_terms ?? null,
             "created_at"                => $this->created_at ?? null,
             "updated_at"                => $this->updated_at ?? null,
             "upload_files"              => PictureGarmentsResource::collection($this->fileInfo),
             "upload_files_artwork"      => PoArtworkResource::collection($this-> fileInfoArt),
             "manualPoDeliveryDetails"               => ManualPoDeliveryDetailsResource::collection($this->manualpoDeliveryDetails),
+
            
 
 
