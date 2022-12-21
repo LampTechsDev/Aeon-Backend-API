@@ -62,6 +62,9 @@ class ManualPoController extends Controller
             $manualpo->description = $request->description;
             $manualpo->fabric_quality = $request->fabric_quality;
             $manualpo->fabric_content = $request->fabric_content;
+            $manualpo->currency=$request->currency;
+            $manualpo->payment_method=$request->payment_method;
+            $manualpo->payment_terms=$request->payment_terms;
             $manualpo->save();
             $this->saveFileInfo($request, $manualpo);
             $this->saveExtraFileInfo($request, $manualpo);
