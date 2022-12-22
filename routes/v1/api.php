@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\V1\Admin\AeonContactController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\ManualPoDeliveryDetails;
@@ -200,6 +201,20 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
 
     });
 
+
+         /**
+     *Aeon Contact Section
+    */
+    Route::prefix('aeon-contact')->group(function(){
+
+        Route::get('/list', [AeonContactController::class, 'index']);
+        Route::get('/show',  [AeonContactController::class, "show"]);
+        Route::post('/store', [AeonContactController::class, "store"]);
+        Route::post('/update', [AeonContactController::class, "update"]);
+        Route::post('/delete', [AeonContactController::class, "delete"]);
+    });
+
+
     /**
      * Vendor
      */
@@ -296,6 +311,9 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
         Route::post('/update/{id}', [GlobalCertificateController::class, "update"]);
         Route::post('/delete/{id}', [GlobalCertificateController::class, "destroy"]);
     });
+
+
+
 
 
 
