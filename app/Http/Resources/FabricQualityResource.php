@@ -36,6 +36,7 @@ class FabricQualityResource extends JsonResource
             "name"          => $this->name ?? "",
             "details"       => $this->details?? "",
             "status"        => $this->status?? "",
+            "fabric_content"    => isset($this->fabricContent) ? (new FabricContentResource($this->fabricContent))->hide(["created_by", "updated_by"]) : null,
             "created_at"    => $this->created_at?? "",
             "updated_at"    => $this->updated_at?? "",
         ]);
