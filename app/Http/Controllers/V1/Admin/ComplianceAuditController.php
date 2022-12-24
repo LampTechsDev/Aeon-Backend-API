@@ -152,7 +152,7 @@ class ComplianceAuditController extends Controller
      /*
        Delete
     */
-    public function destroy(Request $request)
+    public function delete(Request $request)
     {
         Compliance::where("id", $request->id)->delete();
         $this->apiSuccess();

@@ -18,10 +18,12 @@ use App\Http\Controllers\V1\Admin\ComplianceAuditController;
 use App\Http\Controllers\V1\Admin\CustomerContactPeopleController;
 use App\Http\Controllers\V1\Admin\CustomerController;
 use App\Http\Controllers\V1\Admin\CustomerDepartmentController;
+use App\Http\Controllers\V1\Admin\FabricWeightController;
 use App\Http\Controllers\V1\Admin\GlobalCertificateController;
 use App\Http\Controllers\V1\Admin\ManualPoItemDetailsController;
 use App\Http\Controllers\V1\Admin\VendorContactPeopleController;
 use App\Http\Controllers\V1\Admin\ManualPoDeliveryDetailsController;
+use App\Http\Controllers\V1\Admin\SupplierController;
 use App\Http\Controllers\V1\Admin\VendorCertificateController;
 
 /*
@@ -202,6 +204,21 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
     });
 
 
+     /**
+     * Fabric Quality
+     */
+
+     Route::prefix('fabric-weight')->group(function(){
+
+        Route::get('/list', [FabricWeightController::class, 'index']);
+        Route::post('/store', [FabricWeightController::class, 'store']);
+        Route::post('/update', [FabricWeightController::class, 'update']);
+        Route::get('/show', [FabricWeightController::class, 'show']);
+        Route::post('/delete', [FabricWeightController::class, 'delete']);
+
+    });
+
+
          /**
      *Aeon Contact Section
     */
@@ -212,6 +229,19 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
         Route::post('/store', [AeonContactController::class, "store"]);
         Route::post('/update', [AeonContactController::class, "update"]);
         Route::post('/delete', [AeonContactController::class, "delete"]);
+    });
+
+
+        /**
+     *Aeon Contact Section
+    */
+    Route::prefix('supplier')->group(function(){
+
+        Route::get('/list', [SupplierController::class, 'index']);
+        Route::get('/show',  [SupplierController::class, "show"]);
+        Route::post('/store', [SupplierController::class, "store"]);
+        Route::post('/update', [SupplierController::class, "update"]);
+        Route::post('/delete', [SupplierController::class, "delete"]);
     });
 
 
