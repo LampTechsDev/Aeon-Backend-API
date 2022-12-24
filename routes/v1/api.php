@@ -22,6 +22,7 @@ use App\Http\Controllers\V1\Admin\GlobalCertificateController;
 use App\Http\Controllers\V1\Admin\ManualPoItemDetailsController;
 use App\Http\Controllers\V1\Admin\VendorContactPeopleController;
 use App\Http\Controllers\V1\Admin\ManualPoDeliveryDetailsController;
+use App\Http\Controllers\V1\Admin\SupplierController;
 use App\Http\Controllers\V1\Admin\VendorCertificateController;
 
 /*
@@ -212,6 +213,19 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
         Route::post('/store', [AeonContactController::class, "store"]);
         Route::post('/update', [AeonContactController::class, "update"]);
         Route::post('/delete', [AeonContactController::class, "delete"]);
+    });
+
+
+        /**
+     *Aeon Contact Section
+    */
+    Route::prefix('supplier')->group(function(){
+
+        Route::get('/list', [SupplierController::class, 'index']);
+        Route::get('/show',  [SupplierController::class, "show"]);
+        Route::post('/store', [SupplierController::class, "store"]);
+        Route::post('/update', [SupplierController::class, "update"]);
+        Route::post('/delete', [SupplierController::class, "delete"]);
     });
 
 
