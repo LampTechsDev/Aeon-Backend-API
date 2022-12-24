@@ -88,6 +88,7 @@ class FabricQualityController extends Controller
             $fabricquality->name = $request->name ;
             $fabricquality->details = $request->details;
             $fabricquality->status = $request->status;
+            $fabricquality->fabric_content_id =$request->fabric_content_id;
             $fabricquality->save();
             $this->apiSuccess();
             $this->data = (new FabricQualityResource($fabricquality));
