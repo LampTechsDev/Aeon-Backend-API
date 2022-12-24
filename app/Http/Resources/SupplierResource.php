@@ -35,7 +35,9 @@ class SupplierResource extends JsonResource
             "id"            => $this->id ?? "",
             "name"          => $this->name ?? "",
             "address"       => $this->address ?? "",
-            "telephone"     => $this->telephone ?? "", 
+            "telephone"     => $this->telephone ?? "",
+            "created_at"    => $this->created_at ?? "",
+            "updated_at"    => $this->updated_at ?? "",
         ]);
     }
 }

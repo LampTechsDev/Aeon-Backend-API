@@ -12,6 +12,19 @@ use Exception;
 class SupplierController extends Controller
 {
 
+    public function index()
+    {
+       try{
+    
+            $this->data = SupplierResource::collection(Supplier::all());
+            $this->apiSuccess("Supplier Loaded Successfully");
+            return $this->apiOutput();
+
+        }catch(Exception $e){
+            return $this->apiOutput($this->getError($e), 500);
+        }
+    }
+
     public function store(Request $request)
     {
      
@@ -65,5 +78,27 @@ class SupplierController extends Controller
         }catch(Exception $e){
             return $this->apiOutput($this->getError( $e), 500);
         }
+    }
+
+    public function show(Request $request)
+    {
+        try{
+            
+            $supplier = Supplier::find($request->id);
+            $this->data = (new SupplierResource($supplier));
+            $this->apiSuccess("Supplier Showed Successfully");
+            return $this->apiOutput();
+
+        }catch(Exception $e){
+            return $this->apiOutput($this->getError($e), 500);
+        }
+    }
+
+
+    public function delete(Request $request)
+    {
+        Supplier::where("id", $request->id)->delete();
+        $this->apiSuccess();
+        return $this->apiOutput("Supplier Deleted Successfully", 200);
     }
 }
