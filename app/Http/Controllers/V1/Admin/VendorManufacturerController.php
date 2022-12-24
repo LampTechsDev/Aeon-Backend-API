@@ -51,8 +51,7 @@ class VendorManufacturerController extends Controller
                 $request->all(),
                 [
                     "vendor_id"                    => ["required"],
-                    "vendor_contact_people_id"     => ["required"],
-                    "vendor_profile_id"            => ["required"],
+                    "name"                         => ["required"],
                     "status"                       => 'required',
 
                 ],[
@@ -66,17 +65,11 @@ class VendorManufacturerController extends Controller
                 $manufacturer = new VendorManufacturer();
 
                 $manufacturer->vendor_id                = $request->vendor_id;
-                $manufacturer->vendor_contact_people_id = $request->vendor_contact_people_id;
-                $manufacturer->vendor_profile_id        = $request->vendor_profile_id;
-                $manufacturer->vendor_certificate_id    = $request->vendor_certificate_id;
                 $manufacturer->name                     = $request->name;
                 $manufacturer->logo                     = $this->uploadFile($request, 'logo', $this->vendor_manufacturer_logo, 720);
                 $manufacturer->phone                    = $request->phone;
                 $manufacturer->email                    = $request->email;
                 $manufacturer->address                  = $request->address;
-                $manufacturer->designation              = $request->designation;
-                $manufacturer->department               = $request->department;
-                $manufacturer->category                 = $request->category;
 
                 $manufacturer->remarks                  = $request->remarks;
                 $manufacturer->status                   = $request->status;
@@ -110,8 +103,7 @@ class VendorManufacturerController extends Controller
             DB::beginTransaction();
         $validator = Validator::make($request->all(),[
             "vendor_id"                    => ["required"],
-            "vendor_contact_people_id"     => ["required"],
-            "vendor_profile_id"            => ["required"],
+            "name"                         => ["required"],
             "status"                       => 'required',
         ],[
             // "id"                  => "No Data Found for this Id",
@@ -126,17 +118,11 @@ class VendorManufacturerController extends Controller
             $manufacturer = VendorManufacturer::find($request->id);
 
             $manufacturer->vendor_id                = $request->vendor_id;
-            $manufacturer->vendor_contact_people_id = $request->vendor_contact_people_id;
-            $manufacturer->vendor_profile_id        = $request->vendor_profile_id;
-            $manufacturer->vendor_certificate_id    = $request->vendor_certificate_id;
             $manufacturer->name                     = $request->name;
             $manufacturer->logo                     = $this->uploadFile($request, 'logo', $this->vendor_manufacturer_logo, 720);
             $manufacturer->phone                    = $request->phone;
             $manufacturer->email                    = $request->email;
             $manufacturer->address                  = $request->address;
-            $manufacturer->designation              = $request->designation;
-            $manufacturer->department               = $request->department;
-            $manufacturer->category                 = $request->category;
 
             $manufacturer->remarks                  = $request->remarks;
             $manufacturer->status                   = $request->status;

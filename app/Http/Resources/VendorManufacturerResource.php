@@ -34,17 +34,11 @@ class VendorManufacturerResource extends JsonResource
         return $this->filter([
             "id"                         => $this->id ?? "",
             "vendor_id"                  => $this->vendor_id ?? "",
-            "vendor_contact_people_id"   => $this->vendor_contact_people_id ?? "",
-            "vendor_profile_id"          => $this->vendor_profile_id ?? "",
-            "vendor_certificate_id"      => $this->vendor_certificate_id ?? "",
             "name"                       => $this->name ?? "",
             "logo"                       => $this->logo ?? "",
             "phone"                      => $this->phone ?? "",
             "email"                      => $this->email ?? "",
             "address"                    => $this->address ?? "",
-            "designation"                => $this->designation ?? "",
-            "department"                 => $this->department ?? "",
-            "category"                   => $this->category ?? "",
 
             "remarks"                    => $this->remarks ?? "",
             "status"                     => $this->status ?? "",

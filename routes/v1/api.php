@@ -36,7 +36,17 @@ use App\Http\Controllers\V1\Admin\VendorManufacturerController;
 |
 */
 
+/**
+ *Vendor Manufacturer Section
+*/
+Route::prefix('vendor_manufacturer')->group(function(){
 
+    Route::get('/list',         [VendorManufacturerController::class, 'index']);
+    Route::get('/show',         [VendorManufacturerController::class, "show"]);
+    Route::post('/store',       [VendorManufacturerController::class, "store"]);
+    Route::post('/update/{id}', [VendorManufacturerController::class, "update"]);
+    Route::post('/delete/{id}', [VendorManufacturerController::class, "destroy"]);
+});
 
 
 /**
@@ -313,17 +323,7 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
         Route::post('/delete/{id}', [GlobalCertificateController::class, "destroy"]);
     });
 
-    /**
-     *Vendor Manufacturer Section
-    */
-    Route::prefix('vendor_manufacturer')->group(function(){
 
-        Route::get('/list',         [VendorManufacturerController::class, 'index']);
-        Route::get('/show',         [VendorManufacturerController::class, "show"]);
-        Route::post('/store',       [VendorManufacturerController::class, "store"]);
-        Route::post('/update/{id}', [VendorManufacturerController::class, "update"]);
-        Route::post('/delete/{id}', [VendorManufacturerController::class, "destroy"]);
-    });
 
 
 
