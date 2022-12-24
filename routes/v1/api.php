@@ -22,6 +22,7 @@ use App\Http\Controllers\V1\Admin\GlobalCertificateController;
 use App\Http\Controllers\V1\Admin\ManualPoItemDetailsController;
 use App\Http\Controllers\V1\Admin\VendorContactPeopleController;
 use App\Http\Controllers\V1\Admin\ManualPoDeliveryDetailsController;
+use App\Http\Controllers\V1\Admin\ManufacturerProfileController;
 use App\Http\Controllers\V1\Admin\VendorCertificateController;
 use App\Http\Controllers\V1\Admin\VendorManufacturerController;
 
@@ -312,17 +313,29 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
         Route::post('/delete/{id}', [GlobalCertificateController::class, "destroy"]);
     });
 
-/**
- *Vendor Manufacturer Section
-*/
-Route::prefix('vendor_manufacturer')->group(function(){
+    /**
+     *Vendor Manufacturer Section
+    */
+    Route::prefix('vendor_manufacturer')->group(function(){
 
-    Route::get('/list',         [VendorManufacturerController::class, 'index']);
-    Route::get('/show',         [VendorManufacturerController::class, "show"]);
-    Route::post('/store',       [VendorManufacturerController::class, "store"]);
-    Route::post('/update/{id}', [VendorManufacturerController::class, "update"]);
-    Route::post('/delete/{id}', [VendorManufacturerController::class, "destroy"]);
-});
+        Route::get('/list',         [VendorManufacturerController::class, 'index']);
+        Route::get('/show',         [VendorManufacturerController::class, "show"]);
+        Route::post('/store',       [VendorManufacturerController::class, "store"]);
+        Route::post('/update/{id}', [VendorManufacturerController::class, "update"]);
+        Route::post('/delete/{id}', [VendorManufacturerController::class, "destroy"]);
+    });
+
+     /**
+     * Manufacturar Profile Section
+     **/
+    Route::prefix('manufacturer_profile')->group(function(){
+
+        Route::get('/list',         [ManufacturerProfileController::class, 'index']);
+        Route::get('/show',         [ManufacturerProfileController::class, "show"]);
+        Route::post('/store',       [ManufacturerProfileController::class, "store"]);
+        Route::post('/update/{id}', [ManufacturerProfileController::class, "update"]);
+        Route::post('/delete/{id}', [ManufacturerProfileController::class, "destroy"]);
+    });
 
 
 
