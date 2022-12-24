@@ -109,7 +109,7 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
         Route::post('/store', [ComplianceAuditController::class, 'store']);
         Route::post('/update', [ComplianceAuditController::class, 'update']);
         Route::get('view', [ComplianceAuditController::class, 'show']);
-        Route::post('/delete', [ComplianceAuditController::class, 'delete']);
+        Route::post('/delete', [ComplianceAuditController::class, 'destroy']);
         Route::post('/updateFile', [ComplianceAuditController::class, 'updateComplianceFileInfo']);
         Route::post('/deleteFile', [ComplianceAuditController::class, 'deleteFileCompliance']);
     });
