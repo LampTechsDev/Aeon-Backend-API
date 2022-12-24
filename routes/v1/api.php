@@ -18,6 +18,7 @@ use App\Http\Controllers\V1\Admin\ComplianceAuditController;
 use App\Http\Controllers\V1\Admin\CustomerContactPeopleController;
 use App\Http\Controllers\V1\Admin\CustomerController;
 use App\Http\Controllers\V1\Admin\CustomerDepartmentController;
+use App\Http\Controllers\V1\Admin\FabricWeightController;
 use App\Http\Controllers\V1\Admin\GlobalCertificateController;
 use App\Http\Controllers\V1\Admin\ManualPoItemDetailsController;
 use App\Http\Controllers\V1\Admin\VendorContactPeopleController;
@@ -199,6 +200,21 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
         Route::post('/update', [FabricQualityController::class, 'update']);
         Route::get('/show', [FabricQualityController::class, 'show']);
         Route::post('/delete', [FabricQualityController::class, 'delete']);
+
+    });
+
+
+     /**
+     * Fabric Quality
+     */
+
+     Route::prefix('fabric-weight')->group(function(){
+
+        Route::get('/list', [FabricWeightController::class, 'index']);
+        Route::post('/store', [FabricWeightController::class, 'store']);
+        Route::post('/update', [FabricWeightController::class, 'update']);
+        Route::get('/show', [FabricWeightController::class, 'show']);
+        Route::post('/delete', [FabricWeightController::class, 'delete']);
 
     });
 
