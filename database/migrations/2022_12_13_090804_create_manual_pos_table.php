@@ -15,6 +15,10 @@ class CreateManualPosTable extends Migration
     {
         Schema::create('manual_pos', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('vendor_id')->nullable()->references("id")->on("vendors");
+            $table->foreignId('buyer_id')->nullable()->references("id")->on("customers");
+            $table->foreignId('supplier_id')->nullable()->references("id")->on("suppliers");
+            $table->foreignId('manufacturer_id')->nullable()->references("id")->on("vendor_manufacturers");
             $table->integer("buyer_id");
             $table->integer("vendor_id");
             $table->text("note");

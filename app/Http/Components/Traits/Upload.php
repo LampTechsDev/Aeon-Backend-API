@@ -230,7 +230,4 @@ trait Upload{
         $file->move($dir,$new_file_name);
         return $dir.$new_file_name;
     }
-
-
-
 }

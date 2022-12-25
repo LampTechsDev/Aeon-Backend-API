@@ -3,20 +3,20 @@
 namespace App\Http\Controllers\V1\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\FabricQualityResource;
-use App\Models\FabricQuality;
+use App\Http\Resources\FabricWeightResource;
+use App\Models\FabricWeight;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 use Exception;
+use Illuminate\Support\Facades\Validator;
 
-class FabricQualityController extends Controller
+class FabricWeightController extends Controller
 {
     public function index()
     {
        try{
 
-            $this->data = FabricQualityResource::collection(FabricQuality::all());
-            $this->apiSuccess("Fabric Content Loaded Successfully");
+            $this->data = FabricWeightResource::collection(FabricWeight::all());
+            $this->apiSuccess("Fabric Weight Loaded Successfully");
             return $this->apiOutput();
 
         }catch(Exception $e){
@@ -38,15 +38,15 @@ class FabricQualityController extends Controller
                 $this->apiOutput($this->getValidationError($validator), 400);
             }
    
-            $fabricquality = new FabricQuality();
-            $fabricquality->name = $request->name ;
-            $fabricquality->details = $request->details;
-            $fabricquality->status = $request->status;
-            $fabricquality->fabric_content_id =$request->fabric_content_id;
-            $fabricquality->save();
+            $fabricweight = new FabricWeight();
+            $fabricweight->name = $request->name ;
+            $fabricweight->details = $request->details;
+            $fabricweight->status = $request->status;
+            $fabricweight->fabric_content_id =$request->fabric_content_id;
+            $fabricweight->save();
             $this->apiSuccess();
-            $this->data = (new FabricQualityResource($fabricquality));
-            return $this->apiOutput("Fabric Quality Added Successfully");
+            $this->data = (new FabricWeightResource($fabricweight));
+            return $this->apiOutput("Fabric Weight Added Successfully");
         }catch(Exception $e){
             return $this->apiOutput($this->getError( $e), 500);
         }
@@ -57,10 +57,10 @@ class FabricQualityController extends Controller
     {
         try{
             
-            $fabricquality = FabricQuality::find($request->id);
+            $fabricweight = FabricWeight::find($request->id);
            
-            $this->data = (new FabricQualityResource($fabricquality));
-            $this->apiSuccess("Fabric Content Showed Successfully");
+            $this->data = (new FabricWeightResource($fabricweight));
+            $this->apiSuccess("Fabric Weight Showed Successfully");
             return $this->apiOutput();
 
         }catch(Exception $e){
@@ -84,15 +84,15 @@ class FabricQualityController extends Controller
             }
    
             
-            $fabricquality =  FabricQuality::find($request->id);
-            $fabricquality->name = $request->name ;
-            $fabricquality->details = $request->details;
-            $fabricquality->status = $request->status;
-            $fabricquality->fabric_content_id =$request->fabric_content_id;
-            $fabricquality->save();
+            $fabricweight =  FabricWeight::find($request->id);
+            $fabricweight->name = $request->name ;
+            $fabricweight->details = $request->details;
+            $fabricweight->status = $request->status;
+            $fabricweight->fabric_content_id =$request->fabric_content_id;
+            $fabricweight->save();
             $this->apiSuccess();
-            $this->data = (new FabricQualityResource($fabricquality));
-            return $this->apiOutput("Fabric Content Updated Successfully");
+            $this->data = (new FabricWeightResource($fabricweight));
+            return $this->apiOutput("Fabric Weight Updated Successfully");
         }catch(Exception $e){
             return $this->apiOutput($this->getError( $e), 500);
         }
@@ -101,8 +101,8 @@ class FabricQualityController extends Controller
 
     public function delete(Request $request)
     {
-        FabricQuality::where("id", $request->id)->delete();
+        FabricWeight::where("id", $request->id)->delete();
         $this->apiSuccess();
-        return $this->apiOutput("Fabric Deleted Successfully", 200);
+        return $this->apiOutput("Fabric Weight Deleted Successfully", 200);
     }
 }
