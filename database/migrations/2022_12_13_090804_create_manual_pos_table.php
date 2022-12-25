@@ -15,10 +15,6 @@ class CreateManualPosTable extends Migration
     {
         Schema::create('manual_pos', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('vendor_id')->nullable()->references("id")->on("vendors");
-            $table->foreignId('buyer_id')->nullable()->references("id")->on("customers");
-            $table->foreignId('supplier_id')->nullable()->references("id")->on("suppliers");
-            $table->foreignId('manufacturer_id')->nullable()->references("id")->on("vendor_manufacturers");
             $table->integer("buyer_id");
             $table->integer("vendor_id");
             $table->text("note");
@@ -33,6 +29,10 @@ class CreateManualPosTable extends Migration
             $table->text("description");
             $table->string("fabric_quality");
             $table->string("fabric_content");
+            $table->foreignId('vendor_id')->nullable()->references("id")->on("vendors");
+            $table->foreignId('buyer_id')->nullable()->references("id")->on("customers");
+            $table->foreignId('manufacturer_id')->nullable()->references("id")->on("vendor_manufacturers");
+            $table->foreignId('supplier_id')->nullable()->references("id")->on("suppliers");
             $table->foreignId('created_by')->nullable()->references("id")->on("admins");
             $table->foreignId('updated_by')->nullable()->references("id")->on("admins");
             $table->foreignId('deleted_by')->nullable()->references("id")->on("admins");
