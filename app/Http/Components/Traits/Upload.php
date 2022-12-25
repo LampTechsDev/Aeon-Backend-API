@@ -33,6 +33,7 @@ trait Upload{
     protected  $global_certificate_logo = "storage/uploads/globalcertificate";
     protected  $vendor_manufacturer_logo = "storage/uploads/vendormanufacturer";
     protected  $manufacturer_profile_logo = "storage/uploads/manufacturerprofile";
+    protected  $manufacturer_certificate_attachment = "storage/uploads/manufacturercertificate";
 
     /*
      * ---------------------------------------------

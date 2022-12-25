@@ -23,9 +23,11 @@ use App\Http\Controllers\V1\Admin\GlobalCertificateController;
 use App\Http\Controllers\V1\Admin\ManualPoItemDetailsController;
 use App\Http\Controllers\V1\Admin\VendorContactPeopleController;
 use App\Http\Controllers\V1\Admin\ManualPoDeliveryDetailsController;
+use App\Http\Controllers\V1\Admin\ManufacturerCertificateController;
 use App\Http\Controllers\V1\Admin\SupplierController;
 use App\Http\Controllers\V1\Admin\VendorCertificateController;
 use App\Http\Controllers\V1\Admin\VendorManufacturerController;
+use App\Http\Controllers\V1\Admin\ManufacturerProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,6 +39,7 @@ use App\Http\Controllers\V1\Admin\VendorManufacturerController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
 
 
 
@@ -357,15 +360,19 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
      /**
      * Manufacturar Profile Section
      **/
-    Route::prefix('manufacturer_profile')->group(function(){
+    Route::prefix('manufacturer_certificate')->group(function(){
 
-        Route::get('/list',         [ManufacturerProfileController::class, 'index']);
-        Route::get('/show',         [ManufacturerProfileController::class, "show"]);
-        Route::post('/store',       [ManufacturerProfileController::class, "store"]);
-        Route::post('/update/{id}', [ManufacturerProfileController::class, "update"]);
-        Route::post('/delete/{id}', [ManufacturerProfileController::class, "destroy"]);
+        Route::get('/list',         [ManufacturerCertificateController::class, 'index']);
+        Route::get('/show',         [ManufacturerCertificateController::class, "show"]);
+        Route::post('/store',       [ManufacturerCertificateController::class, "store"]);
+        Route::post('/update',      [ManufacturerCertificateController::class, "update"]);
+        Route::post('/delete',      [ManufacturerCertificateController::class, "delete"]);
     });
-    
+
+
+
+
+
 
 
 
