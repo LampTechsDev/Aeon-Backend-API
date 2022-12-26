@@ -17,6 +17,7 @@ use App\Http\Controllers\V1\Admin\ComplianceAuditController;
 use App\Http\Controllers\V1\Admin\CustomerContactPeopleController;
 use App\Http\Controllers\V1\Admin\CustomerController;
 use App\Http\Controllers\V1\Admin\CustomerDepartmentController;
+use App\Http\Controllers\V1\Admin\FileProcessingController;
 use App\Http\Controllers\V1\Admin\ManualPoItemDetailsController;
 use App\Http\Controllers\V1\Admin\VendorContactPeopleController;
 use App\Http\Controllers\V1\Admin\ManualPoDeliveryDetailsController;
@@ -152,7 +153,6 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
         Route::post('/update', [ManualPoDeliveryDetailsController::class, 'update']);
         Route::get('/show', [ManualPoDeliveryDetailsController::class, 'show']);
         Route::post('/delete', [ManualPoDeliveryDetailsController::class, 'delete']);
-
     });
 
 
@@ -285,8 +285,12 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
         Route::post('/delete/{id}', [VendorCertificateController::class, "destroy"]);
     });
 
-
-
+    /**
+     * PDF File Process
+     */
+    Route::prefix('pdf')->group(function(){
+        Route::post('process', [FileProcessingController::class, "process"]);
+    });
 
 
 
