@@ -30,6 +30,10 @@ trait Upload{
     protected  $vendor_logo = "storage/uploads/vendor";
     protected  $vendor_profile_logo = "storage/uploads/vendorprofile";
     protected  $customer_logo = "storage/uploads/customer";
+    protected  $global_certificate_logo = "storage/uploads/globalcertificate";
+    protected  $vendor_manufacturer_logo = "storage/uploads/vendormanufacturer";
+    protected  $manufacturer_profile_logo = "storage/uploads/manufacturerprofile";
+    protected  $manufacturer_certificate_attachment = "storage/uploads/manufacturercertificate";
 
     /*
      * ---------------------------------------------
@@ -227,7 +231,4 @@ trait Upload{
         $file->move($dir,$new_file_name);
         return $dir.$new_file_name;
     }
-
-
-
 }

@@ -32,9 +32,8 @@ class ManualPoResource extends JsonResource
     public function toArray($request)
     {
         return $this->filter([
+            
             "id"                        => $this->id ?? null,
-            "buyer_id"                  => $this->buyer_id ?? null,
-            "vendor_id"                 => $this->vendor_id ?? null,
             "note"                      => $this->note ?? null,
             "terms_conditions"          => $this->terms_conditions ?? null,
             "first_delivery_date"       => $this->first_delivery_date ?? null,
@@ -47,11 +46,19 @@ class ManualPoResource extends JsonResource
             "description"               => $this->description ?? null,
             "fabric_quality"            => $this->fabric_quality ?? null,
             "fabric_content"            => $this->fabric_content ?? null,
+            "currency"                  => $this->currency ?? null,
+            "payment_method"            => $this->payment_method ?? null,
+            "payment_terms"             => $this->payment_terms ?? null,
             "created_at"                => $this->created_at ?? null,
             "updated_at"                => $this->updated_at ?? null,
             "upload_files"              => PictureGarmentsResource::collection($this->fileInfo),
             "upload_files_artwork"      => PoArtworkResource::collection($this-> fileInfoArt),
             "manualPoDeliveryDetails"               => ManualPoDeliveryDetailsResource::collection($this->manualpoDeliveryDetails),
+            "buyer_info"                  =>isset($this->buyer) ? (new CustomerResource($this->buyer))->hide(["created_by", "updated_by"]) : null,
+            "vendor_info"                 =>isset($this->vendor) ? (new VendorResource($this->vendor))->hide(["created_by", "updated_by"]) : null,
+            "supplier_info"                =>isset($this->supplier) ? (new SupplierResource($this->supplier))->hide(["created_by", "updated_by"]) : null,
+            "manufacturer_info"            =>isset($this->manufacturer) ? (new VendorManufacturerResource($this->manufacturer))->hide(["created_by", "updated_by"]) : null,
+
            
 
 

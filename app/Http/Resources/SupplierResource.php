@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class FabricQualityResource extends JsonResource
+class SupplierResource extends JsonResource
 {
     protected $withoutFields = [];
 
@@ -34,11 +34,10 @@ class FabricQualityResource extends JsonResource
         return $this->filter([
             "id"            => $this->id ?? "",
             "name"          => $this->name ?? "",
-            "details"       => $this->details?? "",
-            "status"        => $this->status?? "",
-            "fabric_content"    => isset($this->fabricContent) ? (new FabricContentResource($this->fabricContent))->hide(["created_by", "updated_by"]) : null,
-            "created_at"    => $this->created_at?? "",
-            "updated_at"    => $this->updated_at?? "",
+            "address"       => $this->address ?? "",
+            "telephone"     => $this->telephone ?? "",
+            "created_at"    => $this->created_at ?? "",
+            "updated_at"    => $this->updated_at ?? "",
         ]);
     }
 }

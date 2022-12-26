@@ -5,10 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class VendorCertificate extends Model
+class AeonContact extends Model
 {
     use HasFactory;
-
     public function createdBy(){
         return $this->belongsTo(Admin::class, "created_by")->withTrashed();
     }

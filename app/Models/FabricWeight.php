@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class FabricQuality extends Model
+class FabricWeight extends Model
 {
     use HasFactory;
     public function fabricContent(){

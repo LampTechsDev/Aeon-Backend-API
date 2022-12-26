@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class FabricQualityResource extends JsonResource
+class FabricWeightResource extends JsonResource
 {
     protected $withoutFields = [];
 

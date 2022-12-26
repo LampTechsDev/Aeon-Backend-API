@@ -50,6 +50,8 @@ class ManualPoController extends Controller
             $manualpo = new ManualPo();
             $manualpo->buyer_id = $request->buyer_id;
             $manualpo->vendor_id = $request->vendor_id;
+            $manualpo->supplier_id = $request->supplier_id;
+            $manualpo->manufacturer_id = $request->manufacturer_id;
             $manualpo->	note = $request->note;
             $manualpo->terms_conditions = $request->terms_conditions;
             $manualpo->first_delivery_date = $request->first_delivery_date;
@@ -62,6 +64,9 @@ class ManualPoController extends Controller
             $manualpo->description = $request->description;
             $manualpo->fabric_quality = $request->fabric_quality;
             $manualpo->fabric_content = $request->fabric_content;
+            $manualpo->currency=$request->currency;
+            $manualpo->payment_method=$request->payment_method;
+            $manualpo->payment_terms=$request->payment_terms;
             $manualpo->save();
             $this->saveFileInfo($request, $manualpo);
             $this->saveExtraFileInfo($request, $manualpo);
@@ -169,6 +174,8 @@ class ManualPoController extends Controller
             $manualpo = ManualPo::find($request->id);
             $manualpo->buyer_id = $request->buyer_id;
             $manualpo->vendor_id = $request->vendor_id;
+            $manualpo->supplier_id = $request->supplier_id;
+            $manualpo->manufacturer_id = $request->manufacturer_id;
             $manualpo->	note = $request->note;
             $manualpo->terms_conditions = $request->terms_conditions;
             $manualpo->first_delivery_date = $request->first_delivery_date;

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\V1\Admin\AeonContactController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\ManualPoDeliveryDetails;
@@ -19,9 +20,16 @@ use App\Http\Controllers\V1\Admin\CustomerController;
 use App\Http\Controllers\V1\Admin\CustomerDepartmentController;
 use App\Http\Controllers\V1\Admin\FileProcessingController;
 use App\Http\Controllers\V1\Admin\ManualPoItemDetailsController;
+use App\Http\Controllers\V1\Admin\FabricWeightController;
+use App\Http\Controllers\V1\Admin\GlobalCertificateController;
 use App\Http\Controllers\V1\Admin\VendorContactPeopleController;
 use App\Http\Controllers\V1\Admin\ManualPoDeliveryDetailsController;
+use App\Http\Controllers\V1\Admin\ManufacturerCertificateController;
+use App\Http\Controllers\V1\Admin\ManufacturerContactPeopleController;
+use App\Http\Controllers\V1\Admin\SupplierController;
 use App\Http\Controllers\V1\Admin\VendorCertificateController;
+use App\Http\Controllers\V1\Admin\VendorManufacturerController;
+use App\Http\Controllers\V1\Admin\ManufacturerProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,17 +44,15 @@ use App\Http\Controllers\V1\Admin\VendorCertificateController;
 
 
 
-
-
-/**
- * Admin Login Section
- */
-Route::prefix("admin")->group(function(){
-    Route::get('/login', [AdminController::class, "login"]);
-    Route::post('/login', [AdminController::class, "login"]);
-    Route::post('/forget-password', [AdminController::class, "forgetPassword"]);
-    Route::post('/password-reset', [AdminController::class, "passwordReset"]);
-});
+    /**
+     * Admin Login Section
+     */
+    Route::prefix("admin")->group(function(){
+        Route::get('/login', [AdminController::class, "login"]);
+        Route::post('/login', [AdminController::class, "login"]);
+        Route::post('/forget-password', [AdminController::class, "forgetPassword"]);
+        Route::post('/password-reset', [AdminController::class, "passwordReset"]);
+    });
 
 /********************************************************************************
  * Protect the Route Throw Admin API Token
@@ -107,7 +113,7 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
         Route::post('/store', [ComplianceAuditController::class, 'store']);
         Route::post('/update', [ComplianceAuditController::class, 'update']);
         Route::get('view', [ComplianceAuditController::class, 'show']);
-        Route::post('/delete', [ComplianceAuditController::class, 'delete']);
+        Route::post('/delete', [ComplianceAuditController::class, 'destroy']);
         Route::post('/updateFile', [ComplianceAuditController::class, 'updateComplianceFileInfo']);
         Route::post('/deleteFile', [ComplianceAuditController::class, 'deleteFileCompliance']);
     });
@@ -200,6 +206,48 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
 
     });
 
+
+     /**
+     * Fabric Quality
+     */
+
+     Route::prefix('fabric-weight')->group(function(){
+
+        Route::get('/list', [FabricWeightController::class, 'index']);
+        Route::post('/store', [FabricWeightController::class, 'store']);
+        Route::post('/update', [FabricWeightController::class, 'update']);
+        Route::get('/show', [FabricWeightController::class, 'show']);
+        Route::post('/delete', [FabricWeightController::class, 'delete']);
+
+    });
+
+
+         /**
+     *Aeon Contact Section
+    */
+    Route::prefix('aeon-contact')->group(function(){
+
+        Route::get('/list', [AeonContactController::class, 'index']);
+        Route::get('/show',  [AeonContactController::class, "show"]);
+        Route::post('/store', [AeonContactController::class, "store"]);
+        Route::post('/update', [AeonContactController::class, "update"]);
+        Route::post('/delete', [AeonContactController::class, "delete"]);
+    });
+
+
+        /**
+     *Aeon Contact Section
+    */
+    Route::prefix('supplier')->group(function(){
+
+        Route::get('/list', [SupplierController::class, 'index']);
+        Route::get('/show',  [SupplierController::class, "show"]);
+        Route::post('/store', [SupplierController::class, "store"]);
+        Route::post('/update', [SupplierController::class, "update"]);
+        Route::post('/delete', [SupplierController::class, "delete"]);
+    });
+
+
     /**
      * Vendor
      */
@@ -286,19 +334,67 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
     });
 
     /**
-     * PDF File Process
+    * PDF File Process
      */
     Route::prefix('pdf')->group(function(){
         Route::post('process', [FileProcessingController::class, "process"]);
     });
 
+    /**
+     *Global Certificate Section
+    */
+    Route::prefix('global_certificate')->group(function(){
 
+        Route::get('/list',         [GlobalCertificateController::class, 'index']);
+        Route::get('/show',         [GlobalCertificateController::class, "show"]);
+        Route::post('/store',       [GlobalCertificateController::class, "store"]);
+        Route::post('/update/{id}', [GlobalCertificateController::class, "update"]);
+        Route::post('/delete/{id}', [GlobalCertificateController::class, "destroy"]);
+    });
 
+    /**
+     *Vendor Manufacturer Section
+    */
+    Route::prefix('vendor_manufacturer')->group(function(){
 
+        Route::get('/list',         [VendorManufacturerController::class, 'index']);
+        Route::get('/show',         [VendorManufacturerController::class, "show"]);
+        Route::post('/store',       [VendorManufacturerController::class, "store"]);
+        Route::post('/update/{id}', [VendorManufacturerController::class, "update"]);
+        Route::post('/delete/{id}', [VendorManufacturerController::class, "destroy"]);
+    });
 
+    Route::prefix('manufacturer_profile')->group(function(){
 
+        Route::get('/list',         [ManufacturerProfileController::class, 'index']);
+        Route::get('/show',         [ManufacturerProfileController::class, "show"]);
+        Route::post('/store',       [ManufacturerProfileController::class, "store"]);
+        Route::post('/update/{id}', [ManufacturerProfileController::class, "update"]);
+        Route::post('/delete/{id}', [ManufacturerProfileController::class, "destroy"]);
+    });
 
+     /**
+     * Manufacturar Certificate Section
+     **/
+    Route::prefix('manufacturer_certificate')->group(function(){
 
+        Route::get('/list',         [ManufacturerCertificateController::class, 'index']);
+        Route::get('/show',         [ManufacturerCertificateController::class, "show"]);
+        Route::post('/store',       [ManufacturerCertificateController::class, "store"]);
+        Route::post('/update',      [ManufacturerCertificateController::class, "update"]);
+        Route::post('/delete',      [ManufacturerCertificateController::class, "delete"]);
+    });
 
+     /**
+     * Manufacturar Contact People Section
+     **/
+    Route::prefix('manufacturer_contact')->group(function(){
+
+        Route::get('/list',         [ManufacturerContactPeopleController::class, 'index']);
+        Route::get('/show',         [ManufacturerContactPeopleController::class, "show"]);
+        Route::post('/store',       [ManufacturerContactPeopleController::class, "store"]);
+        Route::post('/update',      [ManufacturerContactPeopleController::class, "update"]);
+        Route::post('/delete',      [ManufacturerContactPeopleController::class, "delete"]);
+    });
 
 });
