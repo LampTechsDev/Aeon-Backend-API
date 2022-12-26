@@ -50,6 +50,8 @@ class ManualPoController extends Controller
             $manualpo = new ManualPo();
             $manualpo->buyer_id = $request->buyer_id;
             $manualpo->vendor_id = $request->vendor_id;
+            $manualpo->supplier_id = $request->supplier_id;
+            $manualpo->manufacturer_id = $request->manufacturer_id;
             $manualpo->	note = $request->note;
             $manualpo->terms_conditions = $request->terms_conditions;
             $manualpo->first_delivery_date = $request->first_delivery_date;
@@ -172,6 +174,8 @@ class ManualPoController extends Controller
             $manualpo = ManualPo::find($request->id);
             $manualpo->buyer_id = $request->buyer_id;
             $manualpo->vendor_id = $request->vendor_id;
+            $manualpo->supplier_id = $request->supplier_id;
+            $manualpo->manufacturer_id = $request->manufacturer_id;
             $manualpo->	note = $request->note;
             $manualpo->terms_conditions = $request->terms_conditions;
             $manualpo->first_delivery_date = $request->first_delivery_date;

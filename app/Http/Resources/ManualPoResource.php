@@ -32,9 +32,8 @@ class ManualPoResource extends JsonResource
     public function toArray($request)
     {
         return $this->filter([
+            
             "id"                        => $this->id ?? null,
-            "buyer_id"                  => $this->buyer_id ?? null,
-            "vendor_id"                 => $this->vendor_id ?? null,
             "note"                      => $this->note ?? null,
             "terms_conditions"          => $this->terms_conditions ?? null,
             "first_delivery_date"       => $this->first_delivery_date ?? null,
@@ -55,6 +54,10 @@ class ManualPoResource extends JsonResource
             "upload_files"              => PictureGarmentsResource::collection($this->fileInfo),
             "upload_files_artwork"      => PoArtworkResource::collection($this-> fileInfoArt),
             "manualPoDeliveryDetails"               => ManualPoDeliveryDetailsResource::collection($this->manualpoDeliveryDetails),
+            "buyer_info"                  =>isset($this->buyer) ? (new CustomerResource($this->buyer))->hide(["created_by", "updated_by"]) : null,
+            "vendor_info"                 =>isset($this->vendor) ? (new VendorResource($this->vendor))->hide(["created_by", "updated_by"]) : null,
+            "supplier_info"                =>isset($this->supplier) ? (new SupplierResource($this->supplier))->hide(["created_by", "updated_by"]) : null,
+            "manufacturer_info"            =>isset($this->manufacturer) ? (new VendorManufacturerResource($this->manufacturer))->hide(["created_by", "updated_by"]) : null,
 
            
 
