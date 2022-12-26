@@ -357,6 +357,15 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
         Route::post('/delete/{id}', [VendorManufacturerController::class, "destroy"]);
     });
 
+    Route::prefix('manufacturer_profile')->group(function(){
+
+        Route::get('/list',         [ManufacturerProfileController::class, 'index']);
+        Route::get('/show',         [ManufacturerProfileController::class, "show"]);
+        Route::post('/store',       [ManufacturerProfileController::class, "store"]);
+        Route::post('/update/{id}', [ManufacturerProfileController::class, "update"]);
+        Route::post('/delete/{id}', [ManufacturerProfileController::class, "destroy"]);
+    });
+
      /**
      * Manufacturar Certificate Section
      **/
