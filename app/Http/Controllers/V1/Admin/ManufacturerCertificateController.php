@@ -49,17 +49,17 @@ class ManufacturerCertificateController extends Controller
 
             DB::beginTransaction();
 
-            $validator = Validator::make(
-                $request->all(),
-                [
-                    "vendor_id"                 => ["required"],
-                    "global_certificate_id"     => ["required"],
-                    "status"                    => 'required',
+                $validator = Validator::make(
+                    $request->all(),
+                    [
+                        "vendor_id"                 => ["required"],
+                        "global_certificate_id"     => ["required"],
+                        "status"                    => 'required',
 
-                ],[
-                    // "group_id.exists"     => "No Record found under this group",
-                ]
-               );
+                    ],[
+                        // "group_id.exists"     => "No Record found under this group",
+                    ]
+                );
 
                 if ($validator->fails()) {
                     return $this->apiOutput($this->getValidationError($validator), 400);
