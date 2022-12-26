@@ -24,7 +24,10 @@ class AddColumnToFabricQuality extends Migration
      * @return void
      */
     public function down()
-    {
-         Schema::dropIfExists('fabric_qualities');
+    { 
+        Schema::table('fabric_qualities', function (Blueprint $table) {
+            $table->dropForeign("fabric_qualities_fabric_content_id_foreign");
+            $table->dropColumn('fabric_content_id');
+        });
     }
 }

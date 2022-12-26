@@ -23,9 +23,12 @@ use App\Http\Controllers\V1\Admin\GlobalCertificateController;
 use App\Http\Controllers\V1\Admin\ManualPoItemDetailsController;
 use App\Http\Controllers\V1\Admin\VendorContactPeopleController;
 use App\Http\Controllers\V1\Admin\ManualPoDeliveryDetailsController;
+use App\Http\Controllers\V1\Admin\ManufacturerCertificateController;
+use App\Http\Controllers\V1\Admin\ManufacturerContactPeopleController;
 use App\Http\Controllers\V1\Admin\SupplierController;
 use App\Http\Controllers\V1\Admin\VendorCertificateController;
 use App\Http\Controllers\V1\Admin\VendorManufacturerController;
+use App\Http\Controllers\V1\Admin\ManufacturerProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,15 +43,15 @@ use App\Http\Controllers\V1\Admin\VendorManufacturerController;
 
 
 
-/**
- * Admin Login Section
- */
-Route::prefix("admin")->group(function(){
-    Route::get('/login', [AdminController::class, "login"]);
-    Route::post('/login', [AdminController::class, "login"]);
-    Route::post('/forget-password', [AdminController::class, "forgetPassword"]);
-    Route::post('/password-reset', [AdminController::class, "passwordReset"]);
-});
+    /**
+     * Admin Login Section
+     */
+    Route::prefix("admin")->group(function(){
+        Route::get('/login', [AdminController::class, "login"]);
+        Route::post('/login', [AdminController::class, "login"]);
+        Route::post('/forget-password', [AdminController::class, "forgetPassword"]);
+        Route::post('/password-reset', [AdminController::class, "passwordReset"]);
+    });
 
 /********************************************************************************
  * Protect the Route Throw Admin API Token
@@ -354,9 +357,6 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
         Route::post('/delete/{id}', [VendorManufacturerController::class, "destroy"]);
     });
 
-     /**
-     * Manufacturar Profile Section
-     **/
     Route::prefix('manufacturer_profile')->group(function(){
 
         Route::get('/list',         [ManufacturerProfileController::class, 'index']);
@@ -365,7 +365,35 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
         Route::post('/update/{id}', [ManufacturerProfileController::class, "update"]);
         Route::post('/delete/{id}', [ManufacturerProfileController::class, "destroy"]);
     });
-    
+
+     /**
+     * Manufacturar Certificate Section
+     **/
+    Route::prefix('manufacturer_certificate')->group(function(){
+
+        Route::get('/list',         [ManufacturerCertificateController::class, 'index']);
+        Route::get('/show',         [ManufacturerCertificateController::class, "show"]);
+        Route::post('/store',       [ManufacturerCertificateController::class, "store"]);
+        Route::post('/update',      [ManufacturerCertificateController::class, "update"]);
+        Route::post('/delete',      [ManufacturerCertificateController::class, "delete"]);
+    });
+
+     /**
+     * Manufacturar Contact People Section
+     **/
+    Route::prefix('manufacturer_contact')->group(function(){
+
+        Route::get('/list',         [ManufacturerContactPeopleController::class, 'index']);
+        Route::get('/show',         [ManufacturerContactPeopleController::class, "show"]);
+        Route::post('/store',       [ManufacturerContactPeopleController::class, "store"]);
+        Route::post('/update',      [ManufacturerContactPeopleController::class, "update"]);
+        Route::post('/delete',      [ManufacturerContactPeopleController::class, "delete"]);
+    });
+
+
+
+
+
 
 
 
