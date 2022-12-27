@@ -214,46 +214,35 @@ class ManualPoController extends Controller
         return $this->apiOutput("ManualPo Deleted Successfully", 200);
     }
 
-    // public function manualPoWithBuyerVe(Request $request)
-    // {
-    //     try{
-    //         // if(!PermissionController::hasAccess("ticket_list")){
-    //         //     return $this->apiOutput("Permission Missing", 403);
-    //         // }
-
-    //         $validator = Validator::make( $request->all(),[
-    //             'patient_id'    => ['nullable', "exists:users,id"],
-    //             'therapist_id'  => ['nullable', "exists:therapists,id"],
-    //             "date"          => ["nullable", "date", "date_format:Y-m-d"]
-    //         ]);
-
-    //         if ($validator->fails()) {
-    //             $this->apiOutput($this->getValidationError($validator), 200);
-    //         }
-
-    //         $tickets = Ticket::orderBy("date", "DESC")->orderBy("id", "DESC");
-    //         if( !empty($request->date) ){
-    //             $tickets->where("date", $request->date);
-    //         }
-    //         if( !empty($request->therapist_id) ){
-    //             $tickets->whereHas("assignTherapist", function($qry) use($request){
-    //                 $qry->where("therapist_id", $request->therapist_id);
-    //             });
-    //         }
-    //         if( !empty($request->patient_id) ){
-    //             $tickets->where("patient_id", $request->patient_id);
-    //         }
-
-    //         $tickets = $tickets->get();
+    public function manualPoWithBuyerVenor(Request $request)
+    {
+        try{
             
-    //         $this->data = TicketResource::collection($tickets)->hide(["replies", "created_by", "updated_by"]);
-    //         $this->apiSuccess("Ticket Loaded Successfully");
-    //         return $this->apiOutput();
+            $validator = Validator::make( $request->all(),[
+                'vendor_id'    => ['nullable', "exists:vendors,id"],
+               
+            ]);
 
-    //     }catch(Exception $e){
-    //         return $this->apiOutput($this->getError($e), 500);
-    //     }
-    // }
+            if ($validator->fails()) {
+                $this->apiOutput($this->getValidationError($validator), 200);
+            }
+
+            $manualpo = ManualPo::orderBy("id", "DESC");
+            if( !empty($request->vendor_id) ){
+                $manualpo->where("vendor_id", $request->vendor_id);
+            }
+            
+
+            $manualpo = $manualpo->get();
+            
+            $this->data = ManualPoResource::collection($manualpo);
+            $this->apiSuccess("Manual Po Loaded Successfully");
+            return $this->apiOutput();
+
+        }catch(Exception $e){
+            return $this->apiOutput($this->getError($e), 500);
+        }
+    }
 
 
 
