@@ -52,6 +52,7 @@ class ManualPoController extends Controller
             $manualpo->vendor_id = $request->vendor_id;
             $manualpo->supplier_id = $request->supplier_id;
             $manualpo->manufacturer_id = $request->manufacturer_id;
+            $manualpo->customer_department_id = $request->customer_department_id;
             $manualpo->	note = $request->note;
             $manualpo->terms_conditions = $request->terms_conditions;
             $manualpo->first_delivery_date = $request->first_delivery_date;
@@ -176,6 +177,7 @@ class ManualPoController extends Controller
             $manualpo->vendor_id = $request->vendor_id;
             $manualpo->supplier_id = $request->supplier_id;
             $manualpo->manufacturer_id = $request->manufacturer_id;
+            $manualpo->customer_department_id = $request->customer_department_id;
             $manualpo->	note = $request->note;
             $manualpo->terms_conditions = $request->terms_conditions;
             $manualpo->first_delivery_date = $request->first_delivery_date;
@@ -211,6 +213,49 @@ class ManualPoController extends Controller
         $this->apiSuccess();
         return $this->apiOutput("ManualPo Deleted Successfully", 200);
     }
+
+    // public function manualPoWithBuyerVe(Request $request)
+    // {
+    //     try{
+    //         // if(!PermissionController::hasAccess("ticket_list")){
+    //         //     return $this->apiOutput("Permission Missing", 403);
+    //         // }
+
+    //         $validator = Validator::make( $request->all(),[
+    //             'patient_id'    => ['nullable', "exists:users,id"],
+    //             'therapist_id'  => ['nullable', "exists:therapists,id"],
+    //             "date"          => ["nullable", "date", "date_format:Y-m-d"]
+    //         ]);
+
+    //         if ($validator->fails()) {
+    //             $this->apiOutput($this->getValidationError($validator), 200);
+    //         }
+
+    //         $tickets = Ticket::orderBy("date", "DESC")->orderBy("id", "DESC");
+    //         if( !empty($request->date) ){
+    //             $tickets->where("date", $request->date);
+    //         }
+    //         if( !empty($request->therapist_id) ){
+    //             $tickets->whereHas("assignTherapist", function($qry) use($request){
+    //                 $qry->where("therapist_id", $request->therapist_id);
+    //             });
+    //         }
+    //         if( !empty($request->patient_id) ){
+    //             $tickets->where("patient_id", $request->patient_id);
+    //         }
+
+    //         $tickets = $tickets->get();
+            
+    //         $this->data = TicketResource::collection($tickets)->hide(["replies", "created_by", "updated_by"]);
+    //         $this->apiSuccess("Ticket Loaded Successfully");
+    //         return $this->apiOutput();
+
+    //     }catch(Exception $e){
+    //         return $this->apiOutput($this->getError($e), 500);
+    //     }
+    // }
+
+
 
 
     
