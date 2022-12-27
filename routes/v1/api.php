@@ -44,6 +44,7 @@ use App\Http\Controllers\V1\Admin\ManufacturerProfileController;
 
 
 
+
     /**
      * Admin Login Section
      */
@@ -329,8 +330,8 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
         Route::get('/list',         [VendorCertificateController::class, 'index']);
         Route::get('/show',         [VendorCertificateController::class, "show"]);
         Route::post('/store',       [VendorCertificateController::class, "store"]);
-        Route::post('/update/{id}', [VendorCertificateController::class, "update"]);
-        Route::post('/delete/{id}', [VendorCertificateController::class, "destroy"]);
+        Route::post('/update',      [VendorCertificateController::class, "update"]);
+        Route::post('/delete',      [VendorCertificateController::class, "delete"]);
     });
 
     /**
@@ -396,5 +397,7 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
         Route::post('/update',      [ManufacturerContactPeopleController::class, "update"]);
         Route::post('/delete',      [ManufacturerContactPeopleController::class, "delete"]);
     });
+
+
 
 });
