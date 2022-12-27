@@ -231,6 +231,10 @@ class ManualPoController extends Controller
             if( !empty($request->vendor_id) ){
                 $manualpo->where("vendor_id", $request->vendor_id);
             }
+
+            if( !empty($request->buyer_id) ){
+                $manualpo->where("buyer_id", $request->buyer_id);
+            }
             
 
             $manualpo = $manualpo->get();
