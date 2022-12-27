@@ -220,6 +220,7 @@ class ManualPoController extends Controller
             
             $validator = Validator::make( $request->all(),[
                 'vendor_id'    => ['nullable', "exists:vendors,id"],
+                'buyer_id'    => ['nullable', "exists:customers,id"],
                
             ]);
 
@@ -234,6 +235,14 @@ class ManualPoController extends Controller
 
             if( !empty($request->buyer_id) ){
                 $manualpo->where("buyer_id", $request->buyer_id);
+            }
+
+            if( !empty($request->buyer_id) ){
+                $manualpo->where("buyer_id", $request->buyer_id);
+            }
+            
+            if( !empty($request->customer_department_id)){
+                $manualpo->where("customer_department_id", $request->customer_department_id);
             }
             
 
