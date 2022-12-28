@@ -49,6 +49,7 @@ class VendorCertificateResource extends JsonResource
             "certificate_logo"        => $this->certificate_logo ?? "",
             "issue_date"              => $this->issue_date ?? "",
             "validity_start_date"     => $this->validity_start_date ?? "",
+            "validity_end_date"       => $this->validity_end_date ?? "",
             "renewal_date"            => $this->renewal_date ?? "",
             "attachment"              => $this->attachment ?? "",
             "score"                   => $this->score ?? "",
