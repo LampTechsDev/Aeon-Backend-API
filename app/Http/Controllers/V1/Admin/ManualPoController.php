@@ -244,6 +244,12 @@ class ManualPoController extends Controller
             if( !empty($request->customer_department_id)){
                 $manualpo->where("customer_department_id", $request->customer_department_id);
             }
+
+            if( !empty($request->ship_method)){
+                $manualpo->whereHas("manualpoDeliveryDetails",function($qry) use($request){
+                    $qry->where("ship_method",$request->ship_method);
+                });
+            }
             
 
             $manualpo = $manualpo->get();
