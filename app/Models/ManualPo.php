@@ -36,4 +36,7 @@ class ManualPo extends Model
     public function manufacturer(){
         return $this->belongsTo(VendorManufacturer::class, 'manufacturer_id');
     }
+    public function customerDepartment(){
+        return $this->belongsTo(CustomerDepartment::class, 'customer_department_id');
+    }
 }

@@ -52,6 +52,7 @@ class ManualPoController extends Controller
             $manualpo->vendor_id = $request->vendor_id;
             $manualpo->supplier_id = $request->supplier_id;
             $manualpo->manufacturer_id = $request->manufacturer_id;
+            $manualpo->customer_department_id = $request->customer_department_id;
             $manualpo->	note = $request->note;
             $manualpo->terms_conditions = $request->terms_conditions;
             $manualpo->first_delivery_date = $request->first_delivery_date;
@@ -175,6 +176,7 @@ class ManualPoController extends Controller
             $manualpo->vendor_id = $request->vendor_id;
             $manualpo->supplier_id = $request->supplier_id;
             $manualpo->manufacturer_id = $request->manufacturer_id;
+            $manualpo->customer_department_id = $request->customer_department_id;
             $manualpo->	note = $request->note;
             $manualpo->terms_conditions = $request->terms_conditions;
             $manualpo->first_delivery_date = $request->first_delivery_date;
@@ -210,6 +212,57 @@ class ManualPoController extends Controller
         $this->apiSuccess();
         return $this->apiOutput("ManualPo Deleted Successfully", 200);
     }
+
+    public function manualPoWithBuyerVenor(Request $request)
+    {
+        try{
+            
+            $validator = Validator::make( $request->all(),[
+                'vendor_id'    => ['nullable', "exists:vendors,id"],
+                'buyer_id'    => ['nullable', "exists:customers,id"],
+               
+            ]);
+
+            if ($validator->fails()) {
+                $this->apiOutput($this->getValidationError($validator), 200);
+            }
+
+            $manualpo = ManualPo::orderBy("id", "DESC");
+            if( !empty($request->vendor_id) ){
+                $manualpo->where("vendor_id", $request->vendor_id);
+            }
+
+            if( !empty($request->buyer_id) ){
+                $manualpo->where("buyer_id", $request->buyer_id);
+            }
+
+            if( !empty($request->buyer_id) ){
+                $manualpo->where("buyer_id", $request->buyer_id);
+            }
+            
+            if( !empty($request->customer_department_id)){
+                $manualpo->where("customer_department_id", $request->customer_department_id);
+            }
+
+            if( !empty($request->ship_method)){
+                $manualpo->whereHas("manualpoDeliveryDetails",function($qry) use($request){
+                    $qry->where("ship_method",$request->ship_method);
+                });
+            }
+            
+
+            $manualpo = $manualpo->get();
+            
+            $this->data = ManualPoResource::collection($manualpo);
+            $this->apiSuccess("Manual Po Loaded Successfully");
+            return $this->apiOutput();
+
+        }catch(Exception $e){
+            return $this->apiOutput($this->getError($e), 500);
+        }
+    }
+
+
 
 
 

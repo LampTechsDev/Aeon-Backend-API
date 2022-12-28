@@ -19,6 +19,7 @@ class CreateManualPosTable extends Migration
             $table->foreignId("buyer_id")->references("id")->on("customers");
             $table->foreignId("supplier_id")->references("id")->on("suppliers");
             $table->foreignId("manufacturer_id")->references("id")->on("vendor_manufacturers");
+            $table->foreignId("customer_department_id")->references("id")->on("customer_departments");
             $table->text("note");
             $table->text("terms_conditions");
             $table->date("first_delivery_date");

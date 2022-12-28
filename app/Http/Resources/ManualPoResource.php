@@ -58,6 +58,7 @@ class ManualPoResource extends JsonResource
             "vendor_info"                 =>isset($this->vendor) ? (new VendorResource($this->vendor))->hide(["created_by", "updated_by"]) : null,
             "supplier_info"                =>isset($this->supplier) ? (new SupplierResource($this->supplier))->hide(["created_by", "updated_by"]) : null,
             "manufacturer_info"            =>isset($this->manufacturer) ? (new VendorManufacturerResource($this->manufacturer))->hide(["created_by", "updated_by"]) : null,
+            "customer_department_info"            =>isset($this->customerDepartment) ? (new CustomerDepartmentResource($this->customerDepartment))->hide(["created_by", "updated_by"]) : null,
 
            
 
