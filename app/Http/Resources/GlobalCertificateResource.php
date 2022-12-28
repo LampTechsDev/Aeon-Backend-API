@@ -43,13 +43,13 @@ class GlobalCertificateResource extends JsonResource
         return $this->filter([
 
             "id"                      => $this->id ?? "",
-            "name "                   => $this->name  ?? "",
+            "name"                    => $this->name ?? "",
             "logo"                    => $this->logo ?? "",
             "details"                 => $this->details ?? "",
 
 
             "remarks"                 => $this->remarks ?? "",
-            "status "                 => $this->status  ?? "",
+            "status"                  => $this->status ?? "",
             // "created_at"           => $this->created_at ?? "",
             // "updated_at"           => $this->updated_at ?? "",
             // "deleted_by"           => $this->deleted_by ?? "",

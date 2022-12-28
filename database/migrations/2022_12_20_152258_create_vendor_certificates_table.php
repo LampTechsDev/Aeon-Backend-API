@@ -17,6 +17,8 @@ class CreateVendorCertificatesTable extends Migration
             $table->id();
             $table->integer('vendor_id');
             $table->integer('global_certificate_id');
+            $table->string('certificate_name')->nullable();
+            $table->string('certificate_logo')->nullable();
             $table->date('issue_date')->nullable();
             $table->dateTime('validity_start_date')->nullable();
             $table->dateTime('validity_end_date')->nullable();
@@ -28,9 +30,9 @@ class CreateVendorCertificatesTable extends Migration
             $table->string('remarks')->nullable();
             $table->enum('status',["Active","Inactive","Pending","Cencle","Delete"]);
             $table->string('created_by')->nullable();
-            // $table->date('create_date')->nullable();
+
             $table->string('updated_by')->nullable();
-            // $table->date('modified_date')->nullable();
+
             $table->timestamps();
             $table->string('deleted_by')->nullable();
             $table->date('deleted_date')->nullable();

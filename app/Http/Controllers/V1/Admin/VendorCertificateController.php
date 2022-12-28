@@ -4,6 +4,7 @@ namespace App\Http\Controllers\V1\Admin;
 
 use Exception;
 use Illuminate\Http\Request;
+use App\Models\PoPictureGarments;
 use App\Models\VendorCertificate;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -45,44 +46,42 @@ class VendorCertificateController extends Controller
 
         try{
 
-            DB::beginTransaction();
-
             $validator = Validator::make(
                 $request->all(),
                 [
                     "vendor_id"                 => ["required"],
                     "global_certificate_id"     => ["required"],
                     "status"                    => 'required',
-
-                ],[
-                    // "group_id.exists"     => "No Record found under this group",
-                ]
-               );
+                ]);
 
                 if ($validator->fails()) {
                     return $this->apiOutput($this->getValidationError($validator), 400);
                 }
+                DB::beginTransaction();
                 $certificate = new VendorCertificate();
 
                 $certificate->vendor_id             = $request->vendor_id;
                 $certificate->global_certificate_id = $request->global_certificate_id;
+                $certificate->certificate_name      = $request->certificate_name;
+                $certificate->certificate_logo      = $this->uploadFile($request, 'certificate_logo', $this->vendor_certificate_logo, 720);
                 $certificate->issue_date            = $request->issue_date;
                 $certificate->validity_start_date   = $request->validity_start_date;
                 $certificate->validity_end_date     = $request->validity_end_date;
                 $certificate->renewal_date          = $request->renewal_date;
-                $certificate->attachment            = $request->attachment;
+                $certificate->attachment            = $this->uploadFile($request, 'attachment', $this->vendor_certificate_attachment, 720);
                 $certificate->score                 = $request->score;
 
                 $certificate->remarks               = $request->remarks;
                 $certificate->status                = $request->status;
-             //    $customer->created_by = $request->created_by;
-             //    $customer->updated_by = $request->updated_by;
+
                 $certificate->created_at            = $request->created_at;
                 $certificate->updated_at            = $request->updated_at;
                 $certificate->deleted_by            = $request->deleted_by;
                 $certificate->deleted_date          = $request->deleted_date;
 
                 $certificate->save();
+                // $this->saveFileInfo($request, $certificate);
+                DB::commit();
 
             try{
                 event(new VendorCertificateResource($certificate));
@@ -90,8 +89,8 @@ class VendorCertificateController extends Controller
 
 
             }
-            DB::commit();
-            $this->apiSuccess("Certificate Added Successfully");
+
+            $this->apiSuccess("Vendor Certificate Added Successfully");
             $this->data = (new VendorCertificateResource($certificate));
             return $this->apiOutput();
 
@@ -101,66 +100,82 @@ class VendorCertificateController extends Controller
         }
     }
 
-    public function update(Request $request,$id)
+    public function update(Request $request)
     {
         try{
-            DB::beginTransaction();
+
         $validator = Validator::make($request->all(),[
             "vendor_id"                 => ["required"],
             "global_certificate_id"     => ["required"],
             "status"                    => 'required',
-        ],[
-            // "id"                  => "No Data Found for this Id",
-            // "group_id.exists"     => "No Record found under this group",
-        ]
-        );
+        ] );
 
            if ($validator->fails()) {
             $this->apiOutput($this->getValidationError($validator), 400);
            }
 
+            DB::beginTransaction();
             $certificate = VendorCertificate::find($request->id);
-            // if(empty($admin)){
-            //     return $this->apiOutput("No Data Found", $admin);
-            // }
 
             $certificate->vendor_id             = $request->vendor_id;
             $certificate->global_certificate_id = $request->global_certificate_id;
+            $certificate->certificate_name      = $request->certificate_name;
+            $certificate->certificate_logo      = $this->uploadFile($request, 'certificate_logo', $this->vendor_certificate_logo, 720);
             $certificate->issue_date            = $request->issue_date;
             $certificate->validity_start_date   = $request->validity_start_date;
             $certificate->validity_end_date     = $request->validity_end_date;
             $certificate->renewal_date          = $request->renewal_date;
-            $certificate->attachment            = $request->attachment;
+            $certificate->attachment            = $this->uploadFile($request, 'attachment', $this->vendor_certificate_attachment, 720);
             $certificate->score                 = $request->score;
 
             $certificate->remarks               = $request->remarks;
             $certificate->status                = $request->status;
-         //    $customer->created_by = $request->created_by;
-         //    $customer->updated_by = $request->updated_by;
+
             $certificate->created_at            = $request->created_at;
             $certificate->updated_at            = $request->updated_at;
             $certificate->deleted_by            = $request->deleted_by;
             $certificate->deleted_date          = $request->deleted_date;
 
             $certificate->save();
+            DB::commit();
 
             $this->apiSuccess("Vendor Certificate Updated Successfully");
-
             $this->data = (new VendorCertificateResource($certificate));
             return $this->apiOutput();
-            DB::commit();
+
         }catch(Exception $e){
             DB::rollBack();
             return $this->apiOutput($this->getError( $e), 500);
         }
     }
 
-    public function destroy(Request $request,$id)
+    /*
+       Save File Info
+    */
+        // public function saveFileInfo($request, $certificate){
+        //     $file_path = $this->uploadFile($request, 'file', $this->vendor_certificate_attachment, 720);
+
+        //     if( !is_array($file_path) ){
+        //         $file_path = (array) $file_path;
+        //     }
+        //     foreach($file_path as $path){
+        //         $data = new PoPictureGarments();
+        //         $data->po_id = $certificate->id;
+        //         $data->file_name    = $request->file_name ?? "PO_Picture_Garments Upload";
+        //         $data->file_url     = $path;
+        //         $data->type = $request->type;
+        //         $data->save();
+        //     }
+        // }
+
+    /*
+       Delete
+    */
+    public function delete(Request $request)
     {
-        $certificate = VendorCertificate::find($request->id);
-        $certificate->delete();
+        VendorCertificate::where("id", $request->id)->delete();
         $this->apiSuccess();
-        return $this->apiOutput("Certificate Deleted Successfully", 200);
+        return $this->apiOutput("Vendor Certificate Deleted Successfully", 200);
     }
 
 

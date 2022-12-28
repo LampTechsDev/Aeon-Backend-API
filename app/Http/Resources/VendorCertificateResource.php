@@ -43,20 +43,19 @@ class VendorCertificateResource extends JsonResource
         return $this->filter([
 
             "id"                      => $this->id ?? "",
-            "vendor_id "              => $this->vendor_id  ?? "",
+            "vendor_id"               => $this->vendor_id ?? "",
             "global_certificate_id"   => $this->global_certificate_id ?? "",
+            "certificate_name"        => $this->certificate_name ?? "",
+            "certificate_logo"        => $this->certificate_logo ?? "",
             "issue_date"              => $this->issue_date ?? "",
-            "validity_start_date "    => $this->validity_start_date  ?? "",
+            "validity_start_date"     => $this->validity_start_date ?? "",
             "renewal_date"            => $this->renewal_date ?? "",
             "attachment"              => $this->attachment ?? "",
             "score"                   => $this->score ?? "",
 
             "remarks"                 => $this->remarks ?? "",
-            "status "                 => $this->status  ?? "",
-            // "created_at"           => $this->created_at ?? "",
-            // "updated_at"           => $this->updated_at ?? "",
-            // "deleted_by"           => $this->deleted_by ?? "",
-            // "deleted_date"         => $this->deleted_date ?? "",
+            "status"                  => $this->status ?? "",
+
             "created_by"              => isset($this->created_by) ? (new AdminResource($this->created_by))->hide(["created_by","updated_by,deleted_by,deleted_date"]) : null,
             "updated_by"              => isset($this->updated_by) ? (new AdminResource($this->updatedBy))->hide(["created_by","updated_by,deleted_by,deleted_date"]) : null,
             "deleted_by"              => isset($this->deleted_by) ? (new AdminResource($this->deleted_by))->hide(["created_by","updated_by,deleted_by,deleted_date"]) : null,
