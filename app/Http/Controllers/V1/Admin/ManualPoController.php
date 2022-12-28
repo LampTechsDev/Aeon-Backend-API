@@ -20,11 +20,11 @@ class ManualPoController extends Controller
 
     public function index(){
         try{
-                
+
                 $this->data = ManualPoResource::collection(ManualPo::all());
                 $this->apiSuccess("Manual Po Loaded Successfully");
                 return $this->apiOutput();
-    
+
             }catch(Exception $e){
                 return $this->apiOutput($this->getError($e), 500);
             }
@@ -35,18 +35,18 @@ class ManualPoController extends Controller
     */
 
     public function store(Request $request){
-       
+
         try{
             $validator = Validator::make( $request->all(),[
                 //'name'          => ["required", "min:4"],
                 //'description'   => ["nullable", "min:4"],
             ]);
-                
-            if ($validator->fails()) {    
+
+            if ($validator->fails()) {
                 $this->apiOutput($this->getValidationError($validator), 400);
             }
             DB::beginTransaction();
-   
+
             $manualpo = new ManualPo();
             $manualpo->buyer_id = $request->buyer_id;
             $manualpo->vendor_id = $request->vendor_id;
@@ -87,7 +87,7 @@ class ManualPoController extends Controller
     // Save File Info
     public function saveFileInfo($request, $manualpo){
         $file_path = $this->uploadFile($request, 'file', $this->pogarments_uploads, 720);
-  
+
         if( !is_array($file_path) ){
             $file_path = (array) $file_path;
         }
@@ -98,7 +98,6 @@ class ManualPoController extends Controller
             $data->file_url     = $path;
             $data->type = $request->type;
             $data->save();
-           
         }
     }
 
@@ -106,7 +105,7 @@ class ManualPoController extends Controller
     // Save Extra File Info
     public function saveExtraFileInfo($request, $manualpo){
         $file_path = $this->uploadFile($request, 'poArtwork', $this->poartworks_uploads, 720);
-  
+
         if( !is_array($file_path) ){
             $file_path = (array) $file_path;
         }
@@ -117,7 +116,7 @@ class ManualPoController extends Controller
             $data->file_url     = $path;
             $data->type = $request->typeArtwork;
             $data->save();
-           
+
         }
     }
 
@@ -136,14 +135,14 @@ class ManualPoController extends Controller
             $data->save();
     }
 
-    
+
         /*
         Show
         */
     public function show(Request $request)
     {
         try{
-            
+
             $manualpo = ManualPo::find($request->id);
             $this->data = (new ManualPoResource($manualpo));
             $this->apiSuccess("ManualPo Showed Successfully");
@@ -160,18 +159,18 @@ class ManualPoController extends Controller
     */
 
     public function update(Request $request){
-       
+
         try{
             $validator = Validator::make( $request->all(),[
                 //'name'          => ["required", "min:4"],
                 //'description'   => ["nullable", "min:4"],
             ]);
-                
-            if ($validator->fails()) {    
+
+            if ($validator->fails()) {
                 $this->apiOutput($this->getValidationError($validator), 400);
             }
             DB::beginTransaction();
-   
+
             $manualpo = ManualPo::find($request->id);
             $manualpo->buyer_id = $request->buyer_id;
             $manualpo->vendor_id = $request->vendor_id;
@@ -192,7 +191,7 @@ class ManualPoController extends Controller
             $manualpo->fabric_content = $request->fabric_content;
             $manualpo->save();
             $this->deliveryDetails($request,$manualpo);
-        
+
             DB::commit();
             $this->apiSuccess();
             $this->data = (new ManualPoResource($manualpo));
@@ -266,5 +265,4 @@ class ManualPoController extends Controller
 
 
 
-    
 }
