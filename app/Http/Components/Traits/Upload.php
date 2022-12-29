@@ -31,6 +31,7 @@ trait Upload{
     protected  $vendor_profile_logo = "storage/uploads/vendorprofile";
     protected  $vendor_profile_attach_file_upload = "storage/uploads/vendorprofileattachfileupload";
     protected  $customer_logo = "storage/uploads/customer";
+    protected  $customer_department_image = "storage/uploads/customerdepartmentimage";
     protected  $global_certificate_logo = "storage/uploads/globalcertificate";
     protected  $vendor_certificate_logo = "storage/uploads/vendorcertificate";
     protected  $vendor_certificate_attachment = "storage/uploads/vendorattachment";

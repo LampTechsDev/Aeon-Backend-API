@@ -46,6 +46,7 @@ use App\Http\Controllers\V1\Admin\ManufacturerProfileController;
 
 
 
+
     /**
      * Admin Login Section
      */
@@ -336,8 +337,8 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
         Route::get('/list',         [CustomerDepartmentController::class, 'index']);
         Route::get('/show',         [CustomerDepartmentController::class, "show"]);
         Route::post('/store',       [CustomerDepartmentController::class, "store"]);
-        Route::post('/update/{id}', [CustomerDepartmentController::class, "update"]);
-        Route::post('/delete/{id}', [CustomerDepartmentController::class, "destroy"]);
+        Route::post('/update',      [CustomerDepartmentController::class, "update"]);
+        Route::post('/delete',      [CustomerDepartmentController::class, "delete"]);
     });
 
     /**
