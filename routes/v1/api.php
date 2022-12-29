@@ -266,9 +266,9 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
     });
 
 
-
-    // Vendor Contact People Section
-
+    /**
+    * Vendor Contact People Section
+    **/
     Route::prefix('vendor_contact')->group(function(){
 
         Route::get('/list',         [VendorContactPeopleController::class, 'index']);
@@ -288,7 +288,10 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
         Route::post('/store',       [VendorProfileController::class, "store"]);
         Route::post('/update',      [VendorProfileController::class, "update"]);
         Route::post('/delete',      [VendorProfileController::class, "delete"]);
+        Route::post('/updateFile',  [VendorProfileController::class, 'updateAttachFile']);
+        Route::post('/deleteFile',  [VendorProfileController::class, 'deleteAttachFile']);
     });
+
 
 
     /**

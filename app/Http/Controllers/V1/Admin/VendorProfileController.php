@@ -5,10 +5,12 @@ namespace App\Http\Controllers\V1\Admin;
 use Exception;
 use Illuminate\Http\Request;
 use App\Models\VendorProfile;
+use Illuminate\Support\Facades\DB;
 use App\Events\AccountRegistration;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\VendorProfileResource;
+use App\Models\VendorProfileAttachFileUpload;
 
 class VendorProfileController extends Controller
 {
@@ -72,6 +74,7 @@ class VendorProfileController extends Controller
                 if ($validator->fails()) {
                     return $this->apiOutput($this->getValidationError($validator), 400);
                 }
+                DB::beginTransaction();
                 $vendor_profile = new VendorProfile();
 
                 $vendor_profile->vendor_id            = $request->vendor_id;
@@ -94,19 +97,33 @@ class VendorProfileController extends Controller
                 $vendor_profile->deleted_date         = $request->deleted_date;
 
                 $vendor_profile->save();
+                $this->saveFileInfo($request, $vendor_profile);
+                DB::commit();
 
-
-            try{
-                event(new AccountRegistration($vendor_profile));
-            }catch(Exception $e){
-
-            }
-            $this->apiSuccess("Vendor Profile Added Successfully");
-            $this->data = (new VendorProfileResource($vendor_profile));
-            return $this->apiOutput();
+                $this->apiSuccess("Vendor Profile Added Successfully");
+                $this->data = (new VendorProfileResource($vendor_profile));
+                return $this->apiOutput();
 
         }catch(Exception $e){
+            DB::rollBack();
             return $this->apiOutput($this->getError( $e), 500);
+        }
+    }
+
+    // Save File Info
+    public function saveFileInfo($request, $vendor_profile){
+        $file_path = $this->uploadFile($request, 'file', $this->vendor_profile_attach_file_upload, 720);
+
+        if( !is_array($file_path) ){
+            $file_path = (array) $file_path;
+        }
+        foreach($file_path as $path){
+            $data = new VendorProfileAttachFileUpload();
+            $data->vendor_profile_id = $vendor_profile->id;
+            $data->file_name         = $request->file_name ?? "Vendor File Upload";
+            $data->file_url          = $path;
+            $data->save();
+
         }
     }
 
@@ -164,5 +181,78 @@ class VendorProfileController extends Controller
         $this->apiSuccess();
         return $this->apiOutput("Vendor Profile Deleted Successfully", 200);
     }
+
+    public function updateAttachFile(Request $request){
+        try{
+            $validator = Validator::make( $request->all(),[
+                "id"            => ["required"],
+
+            ]);
+
+            if ($validator->fails()) {
+                return $this->apiOutput($this->getValidationError($validator), 200);
+            }
+
+            $data =VendorProfileAttachFileUpload::find($request->id);
+
+            if($request->hasFile('picture')){
+                $data->file_url = $this->uploadFile($request, 'picture', $this->vendor_profile_attach_file_upload, null,null,$data->file_url);
+            }
+
+            $data->save();
+
+            $this->apiSuccess("Vendor Attact File Updated Successfully");
+            return $this->apiOutput();
+
+
+        }catch(Exception $e){
+            return $this->apiOutput($this->getError( $e), 500);
+        }
+    }
+
+
+
+    public function deleteAttachFile(Request $request){
+        try{
+
+            $validator = Validator::make( $request->all(),[
+                "id"            => ["required"],
+            ]);
+
+            if ($validator->fails()) {
+                return $this->apiOutput($this->getValidationError($validator), 200);
+            }
+
+
+            $vendorattachupload=VendorProfileAttachFileUpload::where('id',$request->id);
+            $vendorattachupload->delete();
+            $this->apiSuccess("Vendor Profile Attach File Deleted Successfully");
+            return $this->apiOutput();
+        }catch(Exception $e){
+            return $this->apiOutput($this->getError( $e), 500);
+        }
+    }
+
+
+    // public function addFileTicket(Request $request){
+    //     try{
+    //         $validator = Validator::make( $request->all(),[
+    //             "ticket_id"            => ["required"],
+
+    //         ]);
+
+    //         if ($validator->fails()) {
+    //             return $this->apiOutput($this->getValidationError($validator), 200);
+    //         }
+
+    //         $this->saveAddFileInfo($request);
+    //         $this->apiSuccess("Ticket File Added Successfully");
+    //         return $this->apiOutput();
+
+
+    //     }catch(Exception $e){
+    //         return $this->apiOutput($this->getError( $e), 500);
+    //     }
+    // }
 
 }
