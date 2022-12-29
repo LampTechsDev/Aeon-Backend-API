@@ -21,6 +21,12 @@ class CreateVendorProfilesTable extends Migration
             $table->string('contact_number')->nullable();
             $table->string('email')->nullable();
             $table->string('address')->nullable();
+            $table->text('business_segments')->nullable();
+            $table->text('manufacturing_unit')->nullable();
+            $table->text('buying_partners')->nullable();
+            $table->text('social_platform_link')->nullable();
+            $table->text('video_link')->nullable();
+
 
             $table->string('remarks')->nullable();
             $table->enum('status',["Active","Inactive","Pending","Cencle","Delete"]);
