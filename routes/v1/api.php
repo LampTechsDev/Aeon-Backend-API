@@ -265,7 +265,6 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
 
     });
 
-
     /**
     * Vendor Contact People Section
     **/
@@ -292,7 +291,17 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
         Route::post('/deleteFile',  [VendorProfileController::class, 'deleteAttachFile']);
     });
 
+     /**
+     * Vendor Profile Section
+     **/
+    Route::prefix('vendor_profile')->group(function(){
 
+        Route::get('/list',         [VendorProfileController::class, 'index']);
+        Route::get('/show',         [VendorProfileController::class, "show"]);
+        Route::post('/store',       [VendorProfileController::class, "store"]);
+        Route::post('/update',      [VendorProfileController::class, "update"]);
+        Route::post('/delete',      [VendorProfileController::class, "delete"]);
+    });
 
     /**
      * Customer Section
