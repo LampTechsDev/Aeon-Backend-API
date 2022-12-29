@@ -15,7 +15,7 @@ class CreateVendorProfileAttachFileUploadsTable extends Migration
     {
         Schema::create('vendor_profile_attach_file_uploads', function (Blueprint $table) {
             $table->id();
-            $table->foreignId("vendorprofile_id")->references("id")->on("vendor_profile")->cascadeOnDelete();
+            $table->foreignId("vendor_profile_id")->references("id")->on("vendor_profiles");
             $table->string("file_name");
             $table->string("file_url");
 
