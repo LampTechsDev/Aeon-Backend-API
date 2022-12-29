@@ -55,7 +55,7 @@ class VendorProfileResource extends JsonResource
             "video_link"           => $this->video_link ?? "",
             "remarks"              => $this->remarks ?? "",
             "status"               => $this->status ?? "",
-
+            "upload_files"         => VendorProfileAttachFileUploadResource::collection($this->fileInfo) ?? "",
             "created_by"    => isset($this->created_by) ? (new AdminResource($this->created_by))->hide(["created_by","updated_by,deleted_by,deleted_date"]) : null,
             "updated_by"    => isset($this->updated_by) ? (new AdminResource($this->updatedBy))->hide(["created_by","updated_by,deleted_by,deleted_date"]) : null,
             "deleted_by"    => isset($this->deleted_by) ? (new AdminResource($this->deleted_by))->hide(["created_by","updated_by,deleted_by,deleted_date"]) : null,
