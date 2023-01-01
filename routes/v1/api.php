@@ -41,9 +41,27 @@ use App\Http\Controllers\V1\Admin\ManufacturerProfileController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+    /**
+     *Vendor Manufacturer Section
+    */
+    Route::prefix('vendor_manufacturer')->group(function(){
+
+        Route::get('/list',         [VendorManufacturerController::class, 'index']);
+        Route::get('/show',         [VendorManufacturerController::class, "show"]);
+        Route::post('/store',       [VendorManufacturerController::class, "store"]);
+        Route::post('/update/{id}', [VendorManufacturerController::class, "update"]);
+        Route::post('/delete/{id}', [VendorManufacturerController::class, "destroy"]);
+    });
 
 
+    Route::prefix('manufacturer_contact')->group(function(){
 
+        Route::get('/list',         [ManufacturerContactPeopleController::class, 'index']);
+        Route::get('/show',         [ManufacturerContactPeopleController::class, "show"]);
+        Route::post('/store',       [ManufacturerContactPeopleController::class, "store"]);
+        Route::post('/update',      [ManufacturerContactPeopleController::class, "update"]);
+        Route::post('/delete',      [ManufacturerContactPeopleController::class, "delete"]);
+    });
 
 
 
@@ -372,17 +390,7 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
         Route::post('/delete/{id}', [GlobalCertificateController::class, "destroy"]);
     });
 
-    /**
-     *Vendor Manufacturer Section
-    */
-    Route::prefix('vendor_manufacturer')->group(function(){
 
-        Route::get('/list',         [VendorManufacturerController::class, 'index']);
-        Route::get('/show',         [VendorManufacturerController::class, "show"]);
-        Route::post('/store',       [VendorManufacturerController::class, "store"]);
-        Route::post('/update/{id}', [VendorManufacturerController::class, "update"]);
-        Route::post('/delete/{id}', [VendorManufacturerController::class, "destroy"]);
-    });
 
     Route::prefix('manufacturer_profile')->group(function(){
 
@@ -408,14 +416,7 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
      /**
      * Manufacturar Contact People Section
      **/
-    Route::prefix('manufacturer_contact')->group(function(){
 
-        Route::get('/list',         [ManufacturerContactPeopleController::class, 'index']);
-        Route::get('/show',         [ManufacturerContactPeopleController::class, "show"]);
-        Route::post('/store',       [ManufacturerContactPeopleController::class, "store"]);
-        Route::post('/update',      [ManufacturerContactPeopleController::class, "update"]);
-        Route::post('/delete',      [ManufacturerContactPeopleController::class, "delete"]);
-    });
 
 
 

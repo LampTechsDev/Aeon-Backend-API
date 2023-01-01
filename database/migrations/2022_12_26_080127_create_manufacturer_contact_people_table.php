@@ -16,6 +16,8 @@ class CreateManufacturerContactPeopleTable extends Migration
         Schema::create('manufacturer_contact_people', function (Blueprint $table) {
             $table->id();
             $table->integer('vendor_id');
+            // $table->integer('vendor_manufacturer_id');
+            $table->foreignId("vendor_manufacturer_id")->references("id")->on("vendor_manufacturers");
             $table->integer('employee_id');
             $table->string('first_name')->nullable();
             $table->string('last_name')->nullable();
