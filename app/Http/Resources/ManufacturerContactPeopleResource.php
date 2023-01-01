@@ -41,23 +41,24 @@ class ManufacturerContactPeopleResource extends JsonResource
     public function toArray($request)
     {
         return $this->filter([
-            "id"                   => $this->id ?? "",
-            "vendor_id"            => $this->vendor_id ?? "",
-            "employee_id"          => $this->employee_id ?? "",
-            "first_name"           => $this->first_name ?? "",
-            "last_name"            => $this->last_name ?? "",
-            "designation"          => $this->designation ?? "",
-            "department"           => $this->department ?? "",
-            "category"             => $this->category ?? "",
-            "phone"                => $this->phone ?? "",
-            "email"                => $this->email ?? "",
-            "remarks"              => $this->remarks ?? "",
-            "status"               => $this->status ?? "",
+            "id"                     => $this->id ?? "",
+            "vendor_id"              => $this->vendor_id ?? "",
+            "vendor_manufacturer_id" => $this->vendor_manufacturer_id ?? "",
+            "employee_id"            => $this->employee_id ?? "",
+            "first_name"             => $this->first_name ?? "",
+            "last_name"              => $this->last_name ?? "",
+            "designation"            => $this->designation ?? "",
+            "department"             => $this->department ?? "",
+            "category"               => $this->category ?? "",
+            "phone"                  => $this->phone ?? "",
+            "email"                  => $this->email ?? "",
+            "remarks"                => $this->remarks ?? "",
+            "status"                 => $this->status ?? "",
 
-            "created_by"           => isset($this->created_by) ? (new AdminResource($this->created_by))->hide(["created_by","updated_by,deleted_by,deleted_date"]) : null,
-            "updated_by"           => isset($this->updated_by) ? (new AdminResource($this->updatedBy))->hide(["created_by","updated_by,deleted_by,deleted_date"]) : null,
-            "deleted_by"           => isset($this->deleted_by) ? (new AdminResource($this->deleted_by))->hide(["created_by","updated_by,deleted_by,deleted_date"]) : null,
-            "deleted_date"         => isset($this->deleted_date) ? (new AdminResource($this->deleted_date))->hide(["created_by","updated_by,deleted_by,deleted_date"]) : null,
+            "created_by"             => isset($this->created_by) ? (new AdminResource($this->created_by))->hide(["created_by","updated_by,deleted_by,deleted_date"]) : null,
+            "updated_by"             => isset($this->updated_by) ? (new AdminResource($this->updatedBy))->hide(["created_by","updated_by,deleted_by,deleted_date"]) : null,
+            "deleted_by"             => isset($this->deleted_by) ? (new AdminResource($this->deleted_by))->hide(["created_by","updated_by,deleted_by,deleted_date"]) : null,
+            "deleted_date"           => isset($this->deleted_date) ? (new AdminResource($this->deleted_date))->hide(["created_by","updated_by,deleted_by,deleted_date"]) : null,
 
         ]);
     }
