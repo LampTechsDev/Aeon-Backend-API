@@ -45,6 +45,8 @@ use App\Http\Controllers\V1\Admin\ManufacturerProfileController;
 
 
 
+
+
     /**
      * Admin Login Section
      */
@@ -265,19 +267,8 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
     });
 
     /**
-     * Vendor Profile Section
-     **/
-    Route::prefix('vendor_profile')->group(function(){
-
-        Route::get('/list',         [VendorProfileController::class, 'index']);
-        Route::get('/show',         [VendorProfileController::class, "show"]);
-        Route::post('/store',       [VendorProfileController::class, "store"]);
-        Route::post('/update/{id}', [VendorProfileController::class, "update"]);
-        Route::post('/delete/{id}', [VendorProfileController::class, "destroy"]);
-    });
-
-    // Vendor Contact People Section
-
+    * Vendor Contact People Section
+    **/
     Route::prefix('vendor_contact')->group(function(){
 
         Route::get('/list',         [VendorContactPeopleController::class, 'index']);
@@ -285,6 +276,32 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
         Route::post('/store',       [VendorContactPeopleController::class, "store"]);
         Route::post('/update/{id}', [VendorContactPeopleController::class, "update"]);
         Route::post('/delete/{id}', [VendorContactPeopleController::class, "destroy"]);
+    });
+
+     /**
+     * Vendor Profile Section
+     **/
+    Route::prefix('vendor_profile')->group(function(){
+
+        Route::get('/list',         [VendorProfileController::class, 'index']);
+        Route::get('/show',         [VendorProfileController::class, "show"]);
+        Route::post('/store',       [VendorProfileController::class, "store"]);
+        Route::post('/update',      [VendorProfileController::class, "update"]);
+        Route::post('/delete',      [VendorProfileController::class, "delete"]);
+        Route::post('/updateFile',  [VendorProfileController::class, 'updateAttachFile']);
+        Route::post('/deleteFile',  [VendorProfileController::class, 'deleteAttachFile']);
+    });
+
+     /**
+     * Vendor Profile Section
+     **/
+    Route::prefix('vendor_profile')->group(function(){
+
+        Route::get('/list',         [VendorProfileController::class, 'index']);
+        Route::get('/show',         [VendorProfileController::class, "show"]);
+        Route::post('/store',       [VendorProfileController::class, "store"]);
+        Route::post('/update',      [VendorProfileController::class, "update"]);
+        Route::post('/delete',      [VendorProfileController::class, "delete"]);
     });
 
     /**
@@ -320,8 +337,8 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
         Route::get('/list',         [CustomerDepartmentController::class, 'index']);
         Route::get('/show',         [CustomerDepartmentController::class, "show"]);
         Route::post('/store',       [CustomerDepartmentController::class, "store"]);
-        Route::post('/update/{id}', [CustomerDepartmentController::class, "update"]);
-        Route::post('/delete/{id}', [CustomerDepartmentController::class, "destroy"]);
+        Route::post('/update',      [CustomerDepartmentController::class, "update"]);
+        Route::post('/delete',      [CustomerDepartmentController::class, "delete"]);
     });
 
     /**
