@@ -32,6 +32,7 @@ use App\Http\Controllers\V1\Admin\SupplierController;
 use App\Http\Controllers\V1\Admin\VendorCertificateController;
 use App\Http\Controllers\V1\Admin\VendorManufacturerController;
 use App\Http\Controllers\V1\Admin\ManufacturerProfileController;
+use App\Http\Controllers\V1\Admin\SeasonController;
 
 /*
 |--------------------------------------------------------------------------
@@ -272,6 +273,18 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
         Route::post('/store', [CriticalPathFabricTypeController::class, "store"]);
         Route::post('/update', [CriticalPathFabricTypeController::class, "update"]);
         Route::post('/delete', [CriticalPathFabricTypeController::class, "delete"]);
+    });
+
+    /**
+     *Critical Path Fabric Type
+    */
+    Route::prefix('season')->group(function(){
+
+        Route::get('/list', [SeasonController::class, 'index']);
+        Route::get('/show',  [SeasonController::class, "show"]);
+        Route::post('/store', [SeasonController::class, "store"]);
+        Route::post('/update', [SeasonController::class, "update"]);
+        Route::post('/delete', [SeasonController::class, "delete"]);
     });
 
 
