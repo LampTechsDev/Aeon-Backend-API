@@ -15,6 +15,8 @@ use App\Http\Controllers\V1\Admin\FabricContentController;
 use App\Http\Controllers\V1\Admin\FabricQualityController;
 use App\Http\Controllers\V1\Admin\VendorProfileController;
 use App\Http\Controllers\V1\Admin\ComplianceAuditController;
+use App\Http\Controllers\V1\Admin\CriticalPathDepartmentController;
+use App\Http\Controllers\V1\Admin\CriticalPathFabricTypeController;
 use App\Http\Controllers\V1\Admin\CustomerContactPeopleController;
 use App\Http\Controllers\V1\Admin\CustomerController;
 use App\Http\Controllers\V1\Admin\CustomerDepartmentController;
@@ -259,7 +261,7 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
 
 
         /**
-     *Aeon Contact Section
+     *Supplier Section
     */
     Route::prefix('supplier')->group(function(){
 
@@ -268,6 +270,30 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
         Route::post('/store', [SupplierController::class, "store"]);
         Route::post('/update', [SupplierController::class, "update"]);
         Route::post('/delete', [SupplierController::class, "delete"]);
+    });
+
+      /**
+     *Critical Path Department
+    */
+    Route::prefix('critical-path-department')->group(function(){
+
+        Route::get('/list', [CriticalPathDepartmentController::class, 'index']);
+        Route::get('/show',  [CriticalPathDepartmentController::class, "show"]);
+        Route::post('/store', [CriticalPathDepartmentController::class, "store"]);
+        Route::post('/update', [CriticalPathDepartmentController::class, "update"]);
+        Route::post('/delete', [CriticalPathDepartmentController::class, "delete"]);
+    });
+
+     /**
+     *Critical Path Fabric Type
+    */
+    Route::prefix('critical-path-fabric-type')->group(function(){
+
+        Route::get('/list', [CriticalPathFabricTypeController::class, 'index']);
+        Route::get('/show',  [CriticalPathFabricTypeController::class, "show"]);
+        Route::post('/store', [CriticalPathFabricTypeController::class, "store"]);
+        Route::post('/update', [CriticalPathFabricTypeController::class, "update"]);
+        Route::post('/delete', [CriticalPathFabricTypeController::class, "delete"]);
     });
 
 
