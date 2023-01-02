@@ -44,6 +44,7 @@ class CustomerDepartmentResource extends JsonResource
 
             "id"                => $this->id ?? "",
             "customer_id"       => $this->customer_id ?? "",
+            "department_name"   => $this->department_name ?? "",
             "image"             => $this->image ?? "",
             "contact_number"    => $this->contact_number ?? "",
             "email"             => $this->email ?? "",
