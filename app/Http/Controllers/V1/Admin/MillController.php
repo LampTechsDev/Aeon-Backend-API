@@ -11,6 +11,20 @@ use Exception;
 
 class MillController extends Controller
 {
+
+    public function index()
+    {
+       try{
+    
+            $this->data = MillResource::collection(Mill::all());
+            $this->apiSuccess("Mill Loaded Successfully");
+            return $this->apiOutput();
+
+        }catch(Exception $e){
+            return $this->apiOutput($this->getError($e), 500);
+        }
+    }
+
     public function store(Request $request){
         try{
 
@@ -59,5 +73,26 @@ class MillController extends Controller
         }catch(Exception $e){
             return $this->apiOutput($this->getError( $e), 500);
         }
+    }
+
+    public function show(Request $request)
+    {
+        try{
+          
+            $mill = Mill::find($request->id);
+            $this->data = (new MillResource($mill));
+            $this->apiSuccess("Mill Showed Successfully");
+            return $this->apiOutput();
+
+        }catch(Exception $e){
+            return $this->apiOutput($this->getError($e), 500);
+        }
+    }
+
+    public function delete(Request $request)
+    {
+        Mill::where("id", $request->id)->delete();
+        $this->apiSuccess();
+        return $this->apiOutput("Mill Deleted Successfully", 200);
     }
  }
