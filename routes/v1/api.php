@@ -327,18 +327,6 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
         Route::post('/deleteFile',  [VendorProfileController::class, 'deleteAttachFile']);
     });
 
-     /**
-     * Vendor Profile Section
-     **/
-    Route::prefix('vendor_profile')->group(function(){
-
-        Route::get('/list',         [VendorProfileController::class, 'index']);
-        Route::get('/show',         [VendorProfileController::class, "show"]);
-        Route::post('/store',       [VendorProfileController::class, "store"]);
-        Route::post('/update',      [VendorProfileController::class, "update"]);
-        Route::post('/delete',      [VendorProfileController::class, "delete"]);
-    });
-
     /**
      * Customer Section
      */
@@ -367,7 +355,14 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
     /**
      * Customer Department Section
      */
+     Route::prefix('customer_department')->group(function(){
 
+        Route::get('/list',         [CustomerDepartmentController::class, 'index']);
+        Route::get('/show',         [CustomerDepartmentController::class, "show"]);
+        Route::post('/store',       [CustomerDepartmentController::class, "store"]);
+        Route::post('/update',      [CustomerDepartmentController::class, "update"]);
+        Route::post('/delete',      [CustomerDepartmentController::class, "delete"]);
+    });
 
     /**
      *Vendor Certificate Section
