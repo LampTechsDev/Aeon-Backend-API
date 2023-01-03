@@ -39,4 +39,7 @@ class ManualPo extends Model
     public function customerDepartment(){
         return $this->belongsTo(CustomerDepartment::class, 'customer_department_id');
     }
+    public function season(){
+        return $this->belongsTo(Season::class, 'season_id');
+    }
 }

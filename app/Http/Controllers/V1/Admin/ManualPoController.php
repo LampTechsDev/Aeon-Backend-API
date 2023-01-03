@@ -70,6 +70,7 @@ class ManualPoController extends Controller
             $manualpo->payment_terms=$request->payment_terms;
             $manualpo->fabric_weight=$request->fabric_weight;
             $manualpo->po_no=$request->po_no;
+            $manualpo->season_id=$request->season_id;
             $manualpo->save();
             $this->saveFileInfo($request, $manualpo);
             $this->saveExtraFileInfo($request, $manualpo);
@@ -193,6 +194,7 @@ class ManualPoController extends Controller
             $manualpo->fabric_content = $request->fabric_content;
             $manualpo->fabric_weight=$request->fabric_weight;
             $manualpo->po_no=$request->po_no;
+            $manualpo->season_id=$request->season_id;
             $manualpo->save();
             $this->deliveryDetails($request,$manualpo);
 
