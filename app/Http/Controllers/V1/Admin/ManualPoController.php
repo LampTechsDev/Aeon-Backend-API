@@ -37,10 +37,16 @@ class ManualPoController extends Controller
     public function store(Request $request){
 
         try{
-            $validator = Validator::make( $request->all(),[
-                //'name'          => ["required", "min:4"],
-                //'description'   => ["nullable", "min:4"],
-            ]);
+            $validator = Validator::make( 
+                $request->all(),
+                 [
+                    "buyer_id"          => "required",
+                    "vendor_id"         => "required",
+                    "supplier_id"       => "required",
+                    "manufacturer_id"   => "required",
+                ]
+                
+            );
 
             if ($validator->fails()) {
                 $this->apiOutput($this->getValidationError($validator), 400);

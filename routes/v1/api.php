@@ -32,6 +32,7 @@ use App\Http\Controllers\V1\Admin\SupplierController;
 use App\Http\Controllers\V1\Admin\VendorCertificateController;
 use App\Http\Controllers\V1\Admin\VendorManufacturerController;
 use App\Http\Controllers\V1\Admin\ManufacturerProfileController;
+use App\Http\Controllers\V1\Admin\MillController;
 use App\Http\Controllers\V1\Admin\SeasonController;
 
 /*
@@ -276,7 +277,7 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
     });
 
     /**
-     *Critical Path Fabric Type
+     *Season
     */
     Route::prefix('season')->group(function(){
 
@@ -285,6 +286,18 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
         Route::post('/store', [SeasonController::class, "store"]);
         Route::post('/update', [SeasonController::class, "update"]);
         Route::post('/delete', [SeasonController::class, "delete"]);
+    });
+
+    /**
+     *Season
+    */
+    Route::prefix('mill')->group(function(){
+
+        Route::get('/list', [MillController::class, 'index']);
+        Route::get('/show',  [MillController::class, "show"]);
+        Route::post('/store', [MillController::class, "store"]);
+        Route::post('/update', [MillController::class, "update"]);
+        Route::post('/delete', [MillController::class, "delete"]);
     });
 
 
