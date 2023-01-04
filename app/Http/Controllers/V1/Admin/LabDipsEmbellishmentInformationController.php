@@ -14,6 +14,19 @@ use Illuminate\Support\Facades\DB;
 
 class LabDipsEmbellishmentInformationController extends Controller
 {
+
+    public function index(){
+        try{
+                
+            $this->data = LabDipsEmbellishmentInformationResource::collection(LabDipsEmbellishmentInformation::all());
+            $this->apiSuccess("LabDipsEmbellishmentInformation List Loaded Successfully");
+            return $this->apiOutput();
+
+        }catch(Exception $e){
+            return $this->apiOutput($this->getError($e), 500);
+        }
+    }
+
     public function store(Request $request)
     {
      
@@ -133,6 +146,27 @@ class LabDipsEmbellishmentInformationController extends Controller
         }catch(Exception $e){
             return $this->apiOutput($this->getError( $e), 500);
         }
+    }
+
+    public function show(Request $request)
+    {
+        try{
+           
+            $labDips = LabDipsEmbellishmentInformation::find($request->id);
+            $this->data = (new LabDipsEmbellishmentInformationResource($labDips));
+            $this->apiSuccess("LabdipsEmbellishmentInformation Showed Successfully");
+            return $this->apiOutput();
+
+        }catch(Exception $e){
+            return $this->apiOutput($this->getError($e), 500);
+        }
+    }
+
+    public function delete(Request $request)
+    {
+        LabDipsEmbellishmentInformation::where("id", $request->id)->delete();
+        $this->apiSuccess();
+        return $this->apiOutput("LabdipsEmbellishmentInformation  Deleted Successfully", 200);
     }
 }
 
