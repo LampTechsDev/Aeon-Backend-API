@@ -49,6 +49,8 @@ class LabDipsEmbellishmentInformationResource extends JsonResource
             "embellishment_so_dispatch_aob_number"              =>  $this->embellishment_so_dispatch_aob_number ?? "",
             "created_at"                                        =>  $this->created_at ?? "",
             "updated_at"                                        =>  $this->updated_at ?? "",
+            "labDips_upload_file"                               =>  LabDipImageResource::collection($this-> labDipfileInfo),
+            "embellishment_so_image"                            =>  EmbellishmentImageResource::collection($this->embellishMentfileInfo),
 
         ]);
     }

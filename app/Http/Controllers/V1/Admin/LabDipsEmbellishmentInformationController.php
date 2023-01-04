@@ -4,6 +4,8 @@ namespace App\Http\Controllers\V1\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\LabDipsEmbellishmentInformationResource;
+use App\Models\EmbellishmentImage;
+use App\Models\LabDipImage;
 use App\Models\LabDipsEmbellishmentInformation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -45,11 +47,47 @@ class LabDipsEmbellishmentInformationController extends Controller
             $labDips->embellishment_so_dispatch_sending_date = $request->embellishment_so_dispatch_sending_date;
             $labDips->embellishment_so_dispatch_aob_number = $request->embellishment_so_dispatch_aob_number;
             $labDips->save();
+            $this->saveLabDipFileInfo($request, $labDips);
+            $this->saveEmbellishmentFileInfo($request, $labDips);
             $this->apiSuccess();
             $this->data = (new LabDipsEmbellishmentInformationResource($labDips));
             return $this->apiOutput("Group Added Successfully");
         }catch(Exception $e){
             return $this->apiOutput($this->getError( $e), 500);
+        }
+    }
+
+     //LabDip Save File Info
+     public function saveLabDipFileInfo($request, $labDips){
+        $file_path = $this->uploadFile($request, 'labDipsfile', $this->labdips_uploads, 720);
+
+        if( !is_array($file_path) ){
+            $file_path = (array) $file_path;
+        }
+        foreach($file_path as $path){
+            $data = new LabDipImage();
+            $data->labdips_embellishment_id = $labDips->id;
+            $data->file_name    = $request->lab_dip_file_name ?? "LabDipImage File Upload";
+            $data->file_url     = $path;
+            $data->type = $request->lab_dip_file_type;
+            $data->save();
+        }
+    }
+
+    //Embellishment Save File Info
+    public function saveEmbellishmentFileInfo($request, $labDips){
+        $file_path = $this->uploadFile($request, 'embellishmentfile', $this->labdips_uploads, 720);
+
+        if( !is_array($file_path) ){
+            $file_path = (array) $file_path;
+        }
+        foreach($file_path as $path){
+            $data = new EmbellishmentImage();
+            $data->labdips_embellishment_id = $labDips->id;
+            $data->file_name    = $request->embellishment_file_name ?? "EmbellishmentImage File Upload";
+            $data->file_url     = $path;
+            $data->type = $request->embellishment_type;
+            $data->save();
         }
     }
 }
