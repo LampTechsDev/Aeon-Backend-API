@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\V1\Admin\AeonContactController;
+use App\Http\Controllers\V1\Admin\BulkFabricInformationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\ManualPoDeliveryDetails;
@@ -312,6 +313,19 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
         Route::post('/store', [LabDipsEmbellishmentInformationController::class, "store"]);
         Route::post('/update', [LabDipsEmbellishmentInformationController::class, "update"]);
         Route::post('/delete', [LabDipsEmbellishmentInformationController::class, "delete"]);
+    });
+
+
+     /**
+     *Bulk Fabric Information
+    */
+    Route::prefix('bulk-fabric-Information')->group(function(){
+
+        Route::get('/list', [BulkFabricInformationController::class, 'index']);
+        Route::get('/show',  [BulkFabricInformationController::class, "show"]);
+        Route::post('/store', [BulkFabricInformationController::class, "store"]);
+        Route::post('/update', [BulkFabricInformationController::class, "update"]);
+        Route::post('/delete', [BulkFabricInformationController::class, "delete"]);
     });
 
 
