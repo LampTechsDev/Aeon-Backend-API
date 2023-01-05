@@ -24,6 +24,7 @@ use App\Http\Controllers\V1\Admin\FileProcessingController;
 use App\Http\Controllers\V1\Admin\ManualPoItemDetailsController;
 use App\Http\Controllers\V1\Admin\FabricWeightController;
 use App\Http\Controllers\V1\Admin\GlobalCertificateController;
+use App\Http\Controllers\V1\Admin\LabDipsEmbellishmentInformationController;
 use App\Http\Controllers\V1\Admin\VendorContactPeopleController;
 use App\Http\Controllers\V1\Admin\ManualPoDeliveryDetailsController;
 use App\Http\Controllers\V1\Admin\ManufacturerCertificateController;
@@ -289,7 +290,7 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
     });
 
     /**
-     *Season
+     *Mill
     */
     Route::prefix('mill')->group(function(){
 
@@ -298,6 +299,19 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
         Route::post('/store', [MillController::class, "store"]);
         Route::post('/update', [MillController::class, "update"]);
         Route::post('/delete', [MillController::class, "delete"]);
+    });
+
+
+     /**
+     *LabDips Embellishment Information
+    */
+    Route::prefix('labdips-embellishment-Information')->group(function(){
+
+        Route::get('/list', [LabDipsEmbellishmentInformationController::class, 'index']);
+        Route::get('/show',  [LabDipsEmbellishmentInformationController::class, "show"]);
+        Route::post('/store', [LabDipsEmbellishmentInformationController::class, "store"]);
+        Route::post('/update', [LabDipsEmbellishmentInformationController::class, "update"]);
+        Route::post('/delete', [LabDipsEmbellishmentInformationController::class, "delete"]);
     });
 
 

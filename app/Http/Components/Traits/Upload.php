@@ -38,6 +38,8 @@ trait Upload{
     protected  $vendor_manufacturer_logo = "storage/uploads/vendormanufacturer";
     protected  $manufacturer_profile_logo = "storage/uploads/manufacturerprofile";
     protected  $manufacturer_certificate_attachment = "storage/uploads/manufacturercertificate";
+    protected  $labdips_uploads="storage/uploads/labdips";
+    protected  $embellishment_uploads="storage/uploads/embellishmentuploads";
 
     /*
      * ---------------------------------------------
