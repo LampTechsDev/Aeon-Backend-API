@@ -46,6 +46,8 @@ class BulkFabricInformationResource extends JsonResource
             "bulk_yarn_fabric_inhouse_actual"               => $this->bulk_yarn_fabric_inhouse_actual ?? "",
             "created_at"                                    => $this->created_at ?? "",
             "updated_at"                                    => $this->updated_at ?? "",
+            "upload_files"                                  => BulkFabricKnitDownImageResource::collection($this->fileInfo),
+
 
 
         ]);

@@ -8,4 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class BulkFabricInformation extends Model
 {
     use HasFactory;
+    public function fileInfo(){
+        return $this->hasMany(BulkFabricKnitDownImage::class, 'bulk_fabric_information_id');
+    }
 }

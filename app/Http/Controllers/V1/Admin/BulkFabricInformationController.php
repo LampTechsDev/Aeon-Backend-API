@@ -5,6 +5,7 @@ namespace App\Http\Controllers\V1\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\BulkFabricInformationResource;
 use App\Models\BulkFabricInformation;
+use App\Models\BulkFabricKnitDownImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Exception;
@@ -41,6 +42,7 @@ class BulkFabricInformationController extends Controller
             $bulkFabricInformation->bulk_yarn_fabric_inhouse_actual = $request->bulk_yarn_fabric_inhouse_actual;
 
             $bulkFabricInformation->save();
+            $this->saveFileInfo($request, $bulkFabricInformation );
             $this->apiSuccess();
             $this->data = (new BulkFabricInformationResource($bulkFabricInformation));
             return $this->apiOutput("BulkFabricInformation Added Successfully");
@@ -48,4 +50,24 @@ class BulkFabricInformationController extends Controller
             return $this->apiOutput($this->getError( $e), 500);
         }
     }
+
+
+    //BulkFabric Save File Info
+    public function saveFileInfo($request, $bulkFabricInformation){
+        $file_path = $this->uploadFile($request, 'file', $this->labdips_uploads, 720);
+
+        if( !is_array($file_path) ){
+            $file_path = (array) $file_path;
+        }
+        foreach($file_path as $path){
+            $data = new BulkFabricKnitDownImage();
+            $data->bulk_fabric_information_id = $bulkFabricInformation->id;
+            $data->file_name    = $request->file_name ?? "BulkFabricKnitDownImage File Upload";
+            $data->file_url     = $path;
+            $data->type = $request->type;
+            $data->save();
+        }
+    }
+
+
 }
