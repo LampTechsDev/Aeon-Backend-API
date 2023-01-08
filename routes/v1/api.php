@@ -36,6 +36,7 @@ use App\Http\Controllers\V1\Admin\VendorCertificateController;
 use App\Http\Controllers\V1\Admin\VendorManufacturerController;
 use App\Http\Controllers\V1\Admin\ManufacturerProfileController;
 use App\Http\Controllers\V1\Admin\MillController;
+use App\Http\Controllers\V1\Admin\SampleApprovalInformationController;
 use App\Http\Controllers\V1\Admin\SeasonController;
 
 /*
@@ -327,6 +328,19 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
         Route::post('/store', [BulkFabricInformationController::class, "store"]);
         Route::post('/update', [BulkFabricInformationController::class, "update"]);
         Route::post('/delete', [BulkFabricInformationController::class, "delete"]);
+    });
+
+
+    /**
+     *Sample Approval Information
+    */
+    Route::prefix('sample-approval-Information')->group(function(){
+
+        Route::get('/list', [SampleApprovalInformationController::class, 'index']);
+        Route::get('/show',  [SampleApprovalInformationController::class, "show"]);
+        Route::post('/store', [SampleApprovalInformationController::class, "store"]);
+        Route::post('/update', [SampleApprovalInformationController::class, "update"]);
+        Route::post('/delete', [SampleApprovalInformationController::class, "delete"]);
     });
 
 
