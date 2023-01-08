@@ -16,6 +16,7 @@ use App\Http\Controllers\V1\Admin\FabricContentController;
 use App\Http\Controllers\V1\Admin\FabricQualityController;
 use App\Http\Controllers\V1\Admin\VendorProfileController;
 use App\Http\Controllers\V1\Admin\ComplianceAuditController;
+use App\Http\Controllers\V1\Admin\CriticalPathController;
 use App\Http\Controllers\V1\Admin\CriticalPathDepartmentController;
 use App\Http\Controllers\V1\Admin\CriticalPathFabricTypeController;
 use App\Http\Controllers\V1\Admin\CustomerContactPeopleController;
@@ -327,6 +328,20 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
         Route::post('/update', [BulkFabricInformationController::class, "update"]);
         Route::post('/delete', [BulkFabricInformationController::class, "delete"]);
     });
+
+
+    /**
+     *Critical Path
+    */
+    Route::prefix('critical-path')->group(function(){
+
+        Route::get('/list', [CriticalPathController::class, 'index']);
+        Route::get('/show',  [CriticalPathController::class, "show"]);
+        Route::post('/store', [CriticalPathController::class, "store"]);
+        Route::post('/update', [CriticalPathController::class, "update"]);
+        Route::post('/delete', [CriticalPathController::class, "delete"]);
+    });
+
 
 
     /**
