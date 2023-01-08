@@ -33,10 +33,10 @@ class CriticalPathResource extends JsonResource
     {
         return $this->filter([
             "id"                                     => $this->id ?? "",
-            "po_id"                                  => isset($this->poId) ? (new ManualPoResource($this->poId))->hide(["created_by","updated_by"]) : null,
-            "labdips_embellishment_id"               => isset($this->labdipsEmbellishment) ? (new LabDipsEmbellishmentInformationResource($this->labdipsEmbellishment))->hide(["created_by","updated_by"]) : null,
-            "bulk_fabric_information_id"             => isset($this->bulkFabricInformation) ? (new BulkFabricInformationResource($this->bulkFabricInformation))->hide(["created_by","updated_by"]) : null,
-            "fabric_mill_id"                         => isset($this->mill) ?(new MillResource($this->mill))->hide(["created_by","updated_by"]) : null,
+            "po_info"                                  => isset($this->poId) ? (new ManualPoResource($this->poId))->hide(["created_by","updated_by"]) : null,
+            "labdips_embellishment_info"               => isset($this->labdipsEmbellishment) ? (new LabDipsEmbellishmentInformationResource($this->labdipsEmbellishment))->hide(["created_by","updated_by"]) : null,
+            "bulk_fabric_information_info"             => isset($this->bulkFabricInformation) ? (new BulkFabricInformationResource($this->bulkFabricInformation))->hide(["created_by","updated_by"]) : null,
+            "fabric_mill_info"                         => isset($this->mill) ?(new MillResource($this->mill))->hide(["created_by","updated_by"]) : null,
             "lead_times"                             => $this->lead_times?? "",
             "lead_type"                              => $this->lead_type?? "",
             "official_po_plan"                       => $this->official_po_plan??"",
