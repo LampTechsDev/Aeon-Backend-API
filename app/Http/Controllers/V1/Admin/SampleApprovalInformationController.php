@@ -4,6 +4,7 @@ namespace App\Http\Controllers\V1\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\SampleApprovalInformationResource;
+use App\Models\PhotoSample;
 use App\Models\SampleApprovalInformation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -48,11 +49,29 @@ class SampleApprovalInformationController extends Controller
             $sampleApproval->pp_sample_sending_date = $request->pp_sample_sending_date;
             $sampleApproval->pp_sample_courier_aob_number = $request->pp_sample_courier_aob_number;
             $sampleApproval->save();
+            $this->savePhotoSampleFileInfo($request, $sampleApproval);
             $this->apiSuccess();
             $this->data = (new SampleApprovalInformationResource($sampleApproval));
             return $this->apiOutput("SampleApprovalInformation Added Successfully");
         }catch(Exception $e){
             return $this->apiOutput($this->getError( $e), 500);
+        }
+    }
+
+      // Save File Info
+      public function savePhotoSampleFileInfo($request, $sampleApproval){
+        $file_path = $this->uploadFile($request, 'photosampleImageFile', $this->sampleImage_uploads, 720);
+
+        if( !is_array($file_path) ){
+            $file_path = (array) $file_path;
+        }
+        foreach($file_path as $path){
+            $data = new PhotoSample();
+            $data->sample_approval_id  = $sampleApproval->id;
+            $data->file_name    = $request->photo_sample_file_name ?? "Sample_Approval Upload";
+            $data->file_url     = $path;
+            $data->type = $request->photo_sample_image_type;
+            $data->save();
         }
     }
 }

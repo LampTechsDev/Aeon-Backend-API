@@ -53,6 +53,7 @@ class SampleApprovalInformationResource extends JsonResource
             "pp_sample_courier_aob_number"                => $this->pp_sample_courier_aob_number ?? "",
             "created_at"                                  => $this->created_at ?? "",
             "updated_at"                                  => $this->updated_at ?? "",
+            "photo_sample_image"                          => PhotoSampleImageResource::collection($this->samplefileInfo),
 
 
         ]);

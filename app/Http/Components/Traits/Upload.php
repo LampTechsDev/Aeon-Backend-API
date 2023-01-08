@@ -40,6 +40,9 @@ trait Upload{
     protected  $manufacturer_certificate_attachment = "storage/uploads/manufacturercertificate";
     protected  $labdips_uploads="storage/uploads/labdips";
     protected  $embellishment_uploads="storage/uploads/embellishmentuploads";
+    protected  $sampleImage_uploads="storage/uploads/sampleImage_uploads";
+    
+    
 
     /*
      * ---------------------------------------------
