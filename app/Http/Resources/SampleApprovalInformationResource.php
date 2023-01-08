@@ -54,6 +54,10 @@ class SampleApprovalInformationResource extends JsonResource
             "created_at"                                  => $this->created_at ?? "",
             "updated_at"                                  => $this->updated_at ?? "",
             "photo_sample_image"                          => PhotoSampleImageResource::collection($this->samplefileInfo),
+            "fit_sample_image"                            => FitSampleImageResource::collection($this->fitSampleImagefileInfo),
+            "size_set_sample_image"                       => SizeSetSampleImageResource::collection($this->sizeSetSampleImagefileInfo),
+            "pp_sample_image"                             => PpImageResource::collection($this->ppSampleImagefileInfo),
+            
 
 
         ]);

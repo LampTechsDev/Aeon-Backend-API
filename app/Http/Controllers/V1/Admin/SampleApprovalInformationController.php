@@ -4,8 +4,11 @@ namespace App\Http\Controllers\V1\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\SampleApprovalInformationResource;
+use App\Models\FitSampleImage;
 use App\Models\PhotoSample;
+use App\Models\PpSampleImage;
 use App\Models\SampleApprovalInformation;
+use App\Models\SizeSetSampleImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Exception;
@@ -50,6 +53,9 @@ class SampleApprovalInformationController extends Controller
             $sampleApproval->pp_sample_courier_aob_number = $request->pp_sample_courier_aob_number;
             $sampleApproval->save();
             $this->savePhotoSampleFileInfo($request, $sampleApproval);
+            $this->saveFitSampleFileInfo($request, $sampleApproval);
+            $this->saveSizeSetSampleImageFileInfo($request, $sampleApproval);
+            $this->savePpSampleImageFileInfo($request, $sampleApproval);
             $this->apiSuccess();
             $this->data = (new SampleApprovalInformationResource($sampleApproval));
             return $this->apiOutput("SampleApprovalInformation Added Successfully");
@@ -58,7 +64,7 @@ class SampleApprovalInformationController extends Controller
         }
     }
 
-      // Save File Info
+      // Photo Sample Image File Info
       public function savePhotoSampleFileInfo($request, $sampleApproval){
         $file_path = $this->uploadFile($request, 'photosampleImageFile', $this->sampleImage_uploads, 720);
 
@@ -71,6 +77,57 @@ class SampleApprovalInformationController extends Controller
             $data->file_name    = $request->photo_sample_file_name ?? "Sample_Approval Upload";
             $data->file_url     = $path;
             $data->type = $request->photo_sample_image_type;
+            $data->save();
+        }
+    }
+
+    // Fit Sample Image File Info
+    public function saveFitSampleFileInfo($request, $sampleApproval){
+        $file_path = $this->uploadFile($request, 'fitsampleImageFile', $this->sampleImage_uploads, 720);
+
+        if( !is_array($file_path) ){
+            $file_path = (array) $file_path;
+        }
+        foreach($file_path as $path){
+            $data = new FitSampleImage();
+            $data->sample_approval_id  = $sampleApproval->id;
+            $data->file_name    = $request->file_name ?? "Sample_Approval Upload";
+            $data->file_url     = $path;
+            $data->type = $request->fit_sample_image_type;
+            $data->save();
+        }
+    }
+
+    // Size Set Sample Image File Info
+    public function saveSizeSetSampleImageFileInfo($request, $sampleApproval){
+        $file_path = $this->uploadFile($request, 'sizeSetsampleImageFile', $this->sizeSetsampleImage_uploads, 720);
+
+        if( !is_array($file_path) ){
+            $file_path = (array) $file_path;
+        }
+        foreach($file_path as $path){
+            $data = new SizeSetSampleImage();
+            $data->sample_approval_id  = $sampleApproval->id;
+            $data->file_name    = $request->file_name ?? "Sample_Approval Upload";
+            $data->file_url     = $path;
+            $data->type = $request->size_set_sample_image_type;
+            $data->save();
+        }
+    }
+
+    //Size PP Sample Image File Info
+    public function savePpSampleImageFileInfo($request, $sampleApproval){
+        $file_path = $this->uploadFile($request, 'ppsampleImageFile', $this->ppsampleImage_uploads, 720);
+
+        if( !is_array($file_path) ){
+            $file_path = (array) $file_path;
+        }
+        foreach($file_path as $path){
+            $data = new PpSampleImage();
+            $data->sample_approval_id  = $sampleApproval->id;
+            $data->file_name    = $request->file_name ?? "Sample_Approval Upload";
+            $data->file_url     = $path;
+            $data->type = $request->pp_sample_image_type;
             $data->save();
         }
     }
