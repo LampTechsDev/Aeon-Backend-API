@@ -42,6 +42,7 @@ class PpMeetingResource extends JsonResource
             "pp_meeting_schedule"               => $this->pp_meeting_schedule ?? "",
             "created_at"                        => $this->created_at ?? "",
             "updated_at"                        => $this->updated_at ?? "",
+            "upload_fiels"                      =>  PpMeetingUploadResource::collection($this->fileInfo),
         ]);
     }
 }
