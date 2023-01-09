@@ -15,7 +15,8 @@ class CreateManufacturerProfilesTable extends Migration
     {
         Schema::create('manufacturer_profiles', function (Blueprint $table) {
             $table->id();
-            $table->integer('vendor_id');
+           // $table->integer('vendor_id');
+            $table->foreignId("vendor_id")->references("id")->on("vendors");
             $table->string('factory_profile_name')->nullable();
             $table->string('logo')->nullable();
             $table->string('contact_number')->nullable();

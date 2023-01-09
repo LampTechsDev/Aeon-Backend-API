@@ -446,7 +446,7 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
         Route::post('/update/{id}', [ManufacturerProfileController::class, "update"]);
         Route::post('/delete/{id}', [ManufacturerProfileController::class, "destroy"]);
     });
-    
+
     /**
      *Vendor Manufacturer Section
     */

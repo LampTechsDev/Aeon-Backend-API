@@ -18,4 +18,7 @@ class VendorProfile extends Model
     public function fileInfo(){
         return $this->hasMany(VendorProfileAttachFileUpload::class, 'vendor_profile_id');
     }
+    public function manufacturerprofile(){
+        return $this->belongsTo(ManufacturerProfile::class, "vendor_id");
+    }
 }
