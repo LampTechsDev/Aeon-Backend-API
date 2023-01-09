@@ -17,10 +17,14 @@ class CriticalPath extends Model
     }
 
     public function bulkFabricInformation(){
-        return $this->belongsTo(BulkFabricInformation::class,"bulk_fabric_information_id ");
+        return $this->belongsTo(BulkFabricInformation::class,"bulk_fabric_information_id");
     }
 
     public function mill(){
         return $this->belongsTo(Mill::class,"fabric_mill_id");
+    }
+
+    public function sampleApproval(){
+        return $this->belongsTo(SampleApprovalInformation::class,"sample_approval_id");
     }
 }
