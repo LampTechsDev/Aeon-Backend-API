@@ -44,6 +44,7 @@ class CriticalPathController extends Controller
             $criticalPath->labdips_embellishment_id=$request->labdips_embellishment_id;
             $criticalPath->bulk_fabric_information_id =$request->bulk_fabric_information_id;
             $criticalPath->fabric_mill_id = $request->fabric_mill_id;
+            $criticalPath->sample_approval_id=$request->sample_approval_id;
             $criticalPath->	lead_times=$request->lead_times;
             $criticalPath->lead_type=$request->lead_type;
             $criticalPath->	official_po_plan=$request->official_po_plan;
@@ -75,6 +76,7 @@ class CriticalPathController extends Controller
             $criticalPath->labdips_embellishment_id=$request->labdips_embellishment_id;
             $criticalPath->bulk_fabric_information_id =$request->bulk_fabric_information_id;
             $criticalPath->fabric_mill_id = $request->fabric_mill_id;
+            $criticalPath->sample_approval_id=$request->sample_approval_id;
             $criticalPath->	lead_times=$request->lead_times;
             $criticalPath->lead_type=$request->lead_type;
             $criticalPath->	official_po_plan=$request->official_po_plan;

@@ -37,14 +37,15 @@ class CriticalPathResource extends JsonResource
             "labdips_embellishment_info"               => isset($this->labdipsEmbellishment) ? (new LabDipsEmbellishmentInformationResource($this->labdipsEmbellishment))->hide(["created_by","updated_by"]) : null,
             "bulk_fabric_information_info"             => isset($this->bulkFabricInformation) ? (new BulkFabricInformationResource($this->bulkFabricInformation))->hide(["created_by","updated_by"]) : null,
             "fabric_mill_info"                         => isset($this->mill) ?(new MillResource($this->mill))->hide(["created_by","updated_by"]) : null,
-            "lead_times"                             => $this->lead_times?? "",
-            "lead_type"                              => $this->lead_type?? "",
-            "official_po_plan"                       => $this->official_po_plan??"",
-            "official_po_actual"                     => $this->official_po_actual??"",
-            "created_at"                             => $this->created_at ?? "",
-            "updated_at"                             => $this->updated_at ?? "",
-            "created_by"                             => isset($this->created_by) ? (new AdminResource($this->createdBy))->hide(["groupId","department", "created_by","updated_by"]) : null,
-            "updated_by"                             => isset($this->updated_by) ? (new AdminResource($this->updatedBy))->hide(["groupId","department", "created_by","updated_by"]) : null
+            "sample_approval_info"                     => isset($this->sampleApproval) ?(new SampleApprovalInformationResource($this->sampleApproval))->hide(["created_by","updated_by"]) : null,
+            "lead_times"                               => $this->lead_times?? "",
+            "lead_type"                                => $this->lead_type?? "",
+            "official_po_plan"                         => $this->official_po_plan??"",
+            "official_po_actual"                       => $this->official_po_actual??"",
+            "created_at"                               => $this->created_at ?? "",
+            "updated_at"                               => $this->updated_at ?? "",
+            "created_by"                               => isset($this->created_by) ? (new AdminResource($this->createdBy))->hide(["groupId","department", "created_by","updated_by"]) : null,
+            "updated_by"                               => isset($this->updated_by) ? (new AdminResource($this->updatedBy))->hide(["groupId","department", "created_by","updated_by"]) : null
         ]);
     }
 }
