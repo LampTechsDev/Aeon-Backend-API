@@ -37,6 +37,7 @@ use App\Http\Controllers\V1\Admin\VendorManufacturerController;
 use App\Http\Controllers\V1\Admin\ManufacturerProfileController;
 use App\Http\Controllers\V1\Admin\MillController;
 use App\Http\Controllers\V1\Admin\PpMeetingController;
+use App\Http\Controllers\V1\Admin\ProductionInformationController;
 use App\Http\Controllers\V1\Admin\SampleApprovalInformationController;
 use App\Http\Controllers\V1\Admin\SeasonController;
 
@@ -354,6 +355,18 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
         Route::post('/store', [PpMeetingController::class, "store"]);
         Route::post('/update', [PpMeetingController::class, "update"]);
         Route::post('/delete', [PpMeetingController::class, "delete"]);
+    });
+
+    /**
+     *Production Information Details Information
+    */
+    Route::prefix('production-information-details')->group(function(){
+
+        Route::get('/list', [ProductionInformationController::class, 'index']);
+        Route::get('/show',  [ProductionInformationController::class, "show"]);
+        Route::post('/store', [ProductionInformationController::class, "store"]);
+        Route::post('/update', [ProductionInformationController::class, "update"]);
+        Route::post('/delete', [ProductionInformationController::class, "delete"]);
     });
 
 
