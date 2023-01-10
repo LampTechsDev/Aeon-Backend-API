@@ -27,4 +27,12 @@ class CriticalPath extends Model
     public function sampleApproval(){
         return $this->belongsTo(SampleApprovalInformation::class,"sample_approval_id");
     }
+
+    public function ppMeeting(){
+        return $this->belongsTo(PpMeeting::class,"pp_meeting_id");
+    }
+
+    public function productInformation(){
+        return $this->belongsTo(ProductionInformation::class,"production_information_id");
+    }
 }
