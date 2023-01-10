@@ -43,16 +43,17 @@ class ManufacturerCertificateResource extends JsonResource
         return $this->filter([
 
             "id"                      => $this->id ?? "",
-            "vendor_id"              => $this->vendor_id  ?? "",
+            "vendor_id"               => $this->vendor_id ?? "",
+            "vendor_manufacturer_id"  => $this->vendor_manufacturer_id ?? "",
             "global_certificate_id"   => $this->global_certificate_id ?? "",
             "issue_date"              => $this->issue_date ?? "",
-            "validity_start_date"    => $this->validity_start_date  ?? "",
+            "validity_start_date"     => $this->validity_start_date ?? "",
             "renewal_date"            => $this->renewal_date ?? "",
             "attachment"              => $this->attachment ?? "",
             "score"                   => $this->score ?? "",
 
             "remarks"                 => $this->remarks ?? "",
-            "status"                 => $this->status  ?? "",
+            "status"                  => $this->status  ?? "",
             "created_by"              => isset($this->created_by) ? (new AdminResource($this->created_by))->hide(["created_by","updated_by,deleted_by,deleted_date"]) : null,
             "updated_by"              => isset($this->updated_by) ? (new AdminResource($this->updatedBy))->hide(["created_by","updated_by,deleted_by,deleted_date"]) : null,
             "deleted_by"              => isset($this->deleted_by) ? (new AdminResource($this->deleted_by))->hide(["created_by","updated_by,deleted_by,deleted_date"]) : null,
