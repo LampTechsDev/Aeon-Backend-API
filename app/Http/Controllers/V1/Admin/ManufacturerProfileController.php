@@ -78,6 +78,7 @@ class ManufacturerProfileController extends Controller
 
                 $manufacturer_profile->vendor_id            = $request->vendor_id;
                 $manufacturer_profile->factory_profile_name = $request->factory_profile_name;
+                $manufacturer_profile->vendor_manufacturer_id = $request->vendor_manufacturer_id;
                 $manufacturer_profile->logo                 = $this->uploadFile($request, 'logo', $this->manufacturer_profile_logo, 720);
                 $manufacturer_profile->contact_number       = $request->contact_number ;
                 $manufacturer_profile->email                = $request->email;
@@ -132,6 +133,7 @@ class ManufacturerProfileController extends Controller
 
             $manufacturer_profile->vendor_id            = $request->vendor_id;
             $manufacturer_profile->factory_profile_name = $request->factory_profile_name;
+            $manufacturer_profile->vendor_manufacturer_id = $request->vendor_manufacturer_id;
             $manufacturer_profile->logo                 = $this->uploadFile($request, 'logo', $this->manufacturer_profile_logo, 720);
             $manufacturer_profile->contact_number       = $request->contact_number ;
             $manufacturer_profile->email                = $request->email;

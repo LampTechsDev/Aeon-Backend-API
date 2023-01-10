@@ -17,6 +17,7 @@ class CreateManufacturerProfilesTable extends Migration
             $table->id();
            // $table->integer('vendor_id');
             $table->foreignId("vendor_id")->references("id")->on("vendors");
+            $table->foreignId("vendor_manufacturer_id")->references("id")->on("vendor_manufacturers");
             $table->string('factory_profile_name')->nullable();
             $table->string('logo')->nullable();
             $table->string('contact_number')->nullable();

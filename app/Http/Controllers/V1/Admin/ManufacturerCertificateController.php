@@ -68,6 +68,7 @@ class ManufacturerCertificateController extends Controller
 
                 $certificate->vendor_id             = $request->vendor_id;
                 $certificate->global_certificate_id = $request->global_certificate_id;
+                $certificate->vendor_manufacturer_id= $request->vendor_manufacturer_id ;
                 $certificate->issue_date            = $request->issue_date;
                 $certificate->validity_start_date   = $request->validity_start_date;
                 $certificate->validity_end_date     = $request->validity_end_date;
@@ -121,6 +122,7 @@ class ManufacturerCertificateController extends Controller
 
             $certificate->vendor_id             = $request->vendor_id;
             $certificate->global_certificate_id = $request->global_certificate_id;
+            $certificate->vendor_manufacturer_id= $request->vendor_manufacturer_id;
             $certificate->issue_date            = $request->issue_date;
             $certificate->validity_start_date   = $request->validity_start_date;
             $certificate->validity_end_date     = $request->validity_end_date;
