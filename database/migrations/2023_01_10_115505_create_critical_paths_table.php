@@ -20,6 +20,8 @@ class CreateCriticalPathsTable extends Migration
             $table->foreignId("bulk_fabric_information_id")->references("id")->on("bulk_fabric_information")->cascadeOnDelete();
             $table->foreignId("fabric_mill_id")->references("id")->on("mills")->cascadeOnDelete();
             $table->foreignId("sample_approval_id")->references("id")->on("sample_approval_information")->cascadeOnDelete();
+            $table->foreignId("pp_meeting_id")->references("id")->on("pp_meetings")->cascadeOnDelete();
+            $table->foreignId("production_information_id")->references("id")->on("production_information")->cascadeOnDelete();
             $table->string("lead_times");
             $table->enum('lead_type',["Regular","Short"]);
             $table->date("official_po_plan");

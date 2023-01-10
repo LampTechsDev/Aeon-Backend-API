@@ -45,6 +45,8 @@ class CriticalPathController extends Controller
             $criticalPath->bulk_fabric_information_id =$request->bulk_fabric_information_id;
             $criticalPath->fabric_mill_id = $request->fabric_mill_id;
             $criticalPath->sample_approval_id=$request->sample_approval_id;
+            $criticalPath->pp_meeting_id=$request->pp_meeting_id;
+            $criticalPath->production_information_id=$request->production_information_id;
             $criticalPath->	lead_times=$request->lead_times;
             $criticalPath->lead_type=$request->lead_type;
             $criticalPath->	official_po_plan=$request->official_po_plan;
@@ -77,6 +79,8 @@ class CriticalPathController extends Controller
             $criticalPath->bulk_fabric_information_id =$request->bulk_fabric_information_id;
             $criticalPath->fabric_mill_id = $request->fabric_mill_id;
             $criticalPath->sample_approval_id=$request->sample_approval_id;
+            $criticalPath->pp_meeting_id=$request->pp_meeting_id;
+            $criticalPath->production_information_id=$request->production_information_id;
             $criticalPath->	lead_times=$request->lead_times;
             $criticalPath->lead_type=$request->lead_type;
             $criticalPath->	official_po_plan=$request->official_po_plan;

@@ -38,6 +38,8 @@ class CriticalPathResource extends JsonResource
             "bulk_fabric_information_info"             => isset($this->bulkFabricInformation) ? (new BulkFabricInformationResource($this->bulkFabricInformation))->hide(["created_by","updated_by"]) : null,
             "fabric_mill_info"                         => isset($this->mill) ?(new MillResource($this->mill))->hide(["created_by","updated_by"]) : null,
             "sample_approval_info"                     => isset($this->sampleApproval) ?(new SampleApprovalInformationResource($this->sampleApproval))->hide(["created_by","updated_by"]) : null,
+            "pp_meeting_info"                          => isset($this->ppMeeting) ?(new PpMeetingResource($this->ppMeeting))->hide(["created_by","updated_by"]) : null,
+            "production_information_info"              => isset($this->productInformation) ?(new ProductInformationResource($this->productInformation))->hide(["created_by","updated_by"]) : null,
             "lead_times"                               => $this->lead_times?? "",
             "lead_type"                                => $this->lead_type?? "",
             "official_po_plan"                         => $this->official_po_plan??"",
