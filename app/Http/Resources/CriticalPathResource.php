@@ -32,7 +32,7 @@ class CriticalPathResource extends JsonResource
     public function toArray($request)
     {
         return $this->filter([
-            "id"                                     => $this->id ?? "",
+            "id"                                       => $this->id ?? "",
             "po_info"                                  => isset($this->poId) ? (new ManualPoResource($this->poId))->hide(["created_by","updated_by"]) : null,
             "labdips_embellishment_info"               => isset($this->labdipsEmbellishment) ? (new LabDipsEmbellishmentInformationResource($this->labdipsEmbellishment))->hide(["created_by","updated_by"]) : null,
             "bulk_fabric_information_info"             => isset($this->bulkFabricInformation) ? (new BulkFabricInformationResource($this->bulkFabricInformation))->hide(["created_by","updated_by"]) : null,

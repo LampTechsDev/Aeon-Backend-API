@@ -36,6 +36,7 @@ use App\Http\Controllers\V1\Admin\VendorCertificateController;
 use App\Http\Controllers\V1\Admin\VendorManufacturerController;
 use App\Http\Controllers\V1\Admin\ManufacturerProfileController;
 use App\Http\Controllers\V1\Admin\MillController;
+use App\Http\Controllers\V1\Admin\PpMeetingController;
 use App\Http\Controllers\V1\Admin\SampleApprovalInformationController;
 use App\Http\Controllers\V1\Admin\SeasonController;
 
@@ -341,6 +342,18 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
         Route::post('/store', [SampleApprovalInformationController::class, "store"]);
         Route::post('/update', [SampleApprovalInformationController::class, "update"]);
         Route::post('/delete', [SampleApprovalInformationController::class, "delete"]);
+    });
+
+    /**
+     *PP Meeting Details Information
+    */
+    Route::prefix('pp-meeting-details')->group(function(){
+
+        Route::get('/list', [PpMeetingController::class, 'index']);
+        Route::get('/show',  [PpMeetingController::class, "show"]);
+        Route::post('/store', [PpMeetingController::class, "store"]);
+        Route::post('/update', [PpMeetingController::class, "update"]);
+        Route::post('/delete', [PpMeetingController::class, "delete"]);
     });
 
 
