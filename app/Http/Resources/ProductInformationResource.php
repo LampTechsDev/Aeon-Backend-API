@@ -41,6 +41,10 @@ class ProductInformationResource extends JsonResource
             "sewing_start_date_actual"              => $this->sewing_start_date_actual ?? "",
             "sewing_complete_date_plan"             => $this->sewing_complete_date_plan ?? "",
             "sewing_complete_date_actual"           => $this->sewing_complete_date_actual ?? "",
+            "washing_complete_date_plan"            => $this->washing_complete_date_plan ?? "",
+            "washing_complete_date_actual"          => $this->washing_complete_date_actual ?? "",
+            "finishing_complete_date_plan"          => $this->finishing_complete_date_plan ?? "",
+            "finishing_complete_date_actual"        => $this->finishing_complete_date_actual ?? "",
             "created_at"                            => $this->created_at ?? "",
             "updated_at"                            => $this->updated_at ?? "",
         ]);
