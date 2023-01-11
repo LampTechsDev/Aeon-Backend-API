@@ -26,6 +26,7 @@ use App\Http\Controllers\V1\Admin\FileProcessingController;
 use App\Http\Controllers\V1\Admin\ManualPoItemDetailsController;
 use App\Http\Controllers\V1\Admin\FabricWeightController;
 use App\Http\Controllers\V1\Admin\GlobalCertificateController;
+use App\Http\Controllers\V1\Admin\InspectionInformationController;
 use App\Http\Controllers\V1\Admin\LabDipsEmbellishmentInformationController;
 use App\Http\Controllers\V1\Admin\VendorContactPeopleController;
 use App\Http\Controllers\V1\Admin\ManualPoDeliveryDetailsController;
@@ -367,6 +368,18 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
         Route::post('/store', [ProductionInformationController::class, "store"]);
         Route::post('/update', [ProductionInformationController::class, "update"]);
         Route::post('/delete', [ProductionInformationController::class, "delete"]);
+    });
+
+    /**
+     *Inspection Information Details Information
+    */
+    Route::prefix('inspection-information')->group(function(){
+
+        Route::get('/list', [InspectionInformationController::class, 'index']);
+        Route::get('/show',  [InspectionInformationController::class, "show"]);
+        Route::post('/store', [InspectionInformationController::class, "store"]);
+        Route::post('/update', [InspectionInformationController::class, "update"]);
+        Route::post('/delete', [InspectionInformationController::class, "delete"]);
     });
 
 
