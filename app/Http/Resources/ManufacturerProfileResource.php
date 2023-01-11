@@ -43,6 +43,7 @@ class ManufacturerProfileResource extends JsonResource
         return $this->filter([
             "id"                      => $this->id ?? "",
             "vendor_id"               => $this->vendor_id ?? "",
+            "vendor_manufacturer_id"  => $this->vendor_manufacturer_id ?? "",
             "factory_profile_name"    => $this->factory_profile_name ?? "",
             "logo"                    => $this->logo ?? "",
             "contact_number"          => $this->contact_number ?? "",

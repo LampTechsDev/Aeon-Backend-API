@@ -18,4 +18,11 @@ class VendorManufacturer extends Model
     public function vendormenufacturer(){
         return $this->belongsTo(ManufacturerContactPeople::class, "vendor_manufacturer_id");
     }
+    public function menufacturercertificate(){
+        return $this->belongsTo(ManufacturerCertificate::class, "vendor_manufacturer_id");
+    }
+
+    public function menufacturerprofile(){
+        return $this->belongsTo(ManufacturerProfile::class, "vendor_manufacturer_id");
+    }
 }

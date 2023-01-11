@@ -16,6 +16,7 @@ class CreateManufacturerCertificatesTable extends Migration
         Schema::create('manufacturer_certificates', function (Blueprint $table) {
             $table->id();
             $table->integer('vendor_id');
+            $table->foreignId("vendor_manufacturer_id")->references("id")->on("vendor_manufacturers");
             $table->integer('global_certificate_id');
             $table->date('issue_date')->nullable();
             $table->dateTime('validity_start_date')->nullable();
