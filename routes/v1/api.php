@@ -53,6 +53,7 @@ use App\Http\Controllers\V1\Admin\SeasonController;
 */
 
 
+
     /**
      * Admin Login Section
      */
@@ -491,16 +492,20 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
         Route::post('/delete/{id}', [GlobalCertificateController::class, "destroy"]);
     });
 
-
-
+    /**
+     *Manufacturer Profile Section
+    */
     Route::prefix('manufacturer_profile')->group(function(){
 
         Route::get('/list',         [ManufacturerProfileController::class, 'index']);
         Route::get('/show',         [ManufacturerProfileController::class, "show"]);
         Route::post('/store',       [ManufacturerProfileController::class, "store"]);
-        Route::post('/update/{id}', [ManufacturerProfileController::class, "update"]);
-        Route::post('/delete/{id}', [ManufacturerProfileController::class, "destroy"]);
+        Route::post('/update',      [ManufacturerProfileController::class, "update"]);
+        Route::post('/delete',      [ManufacturerProfileController::class, "delete"]);
+        Route::post('/updateFile',  [ManufacturerProfileController::class, 'updateAttachFile']);
+        Route::post('/deleteFile',  [ManufacturerProfileController::class, 'deleteAttachFile']);
     });
+
 
     /**
      *Vendor Manufacturer Section
