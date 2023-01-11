@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ManufacturerProfile extends Model
+class ManufacturerProfileAttachFileUpload extends Model
 {
     use HasFactory;
     public function createdBy(){
@@ -14,8 +14,7 @@ class ManufacturerProfile extends Model
     public function updatedBy(){
         return $this->belongsTo(Admin::class, "updated_by")->withTrashed();
     }
-    public function fileInfo(){
-        return $this->hasMany(ManufacturerProfileAttachFileUpload::class, 'manufactur_p_id');
+    public function manufacturerattachfileupload(){
+        return $this->belongsTo(ManufacturerProfile::class, 'manufacturer_p_id');
     }
-
 }
