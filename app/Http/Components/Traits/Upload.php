@@ -37,14 +37,15 @@ trait Upload{
     protected  $vendor_certificate_attachment = "storage/uploads/vendorattachment";
     protected  $vendor_manufacturer_logo = "storage/uploads/vendormanufacturer";
     protected  $manufacturer_profile_logo = "storage/uploads/manufacturerprofile";
+    protected  $manufacturer_profile_attach_file_upload = "storage/uploads/manufacturerprofileattachfileupload";
     protected  $manufacturer_certificate_attachment = "storage/uploads/manufacturercertificate";
     protected  $labdips_uploads="storage/uploads/labdips";
     protected  $embellishment_uploads="storage/uploads/embellishmentuploads";
     protected  $sampleImage_uploads="storage/uploads/sampleImage_uploads";
     protected  $sizeSetsampleImage_uploads="storage/uploads/sizeSetsampleImage_uploads";
     protected  $ppsampleImage_uploads="storage/uploads/ppsampleImage_uploads";
-    
-    
+
+
 
     /*
      * ---------------------------------------------

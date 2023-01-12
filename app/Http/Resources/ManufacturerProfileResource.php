@@ -49,8 +49,13 @@ class ManufacturerProfileResource extends JsonResource
             "contact_number"          => $this->contact_number ?? "",
             "email"                   => $this->email ?? "",
             "address"                 => $this->address ?? "",
+            "business_segments"       => $this->business_segments ?? "",
+            "buying_partners"         => $this->buying_partners ?? "",
+            "social_platform_link"    => $this->social_platform_link ?? "",
+            "video_link"              => $this->video_link ?? "",
             "remarks"                 => $this->remarks ?? "",
             "status"                  => $this->status ?? "",
+            "upload_files"            => ManufacturerProfileAttachFileUploadResource::collection($this->fileInfo) ?? "",
 
             "created_by"              => isset($this->created_by) ? (new AdminResource($this->created_by))->hide(["created_by","updated_by,deleted_by,deleted_date"]) : null,
             "updated_by"              => isset($this->updated_by) ? (new AdminResource($this->updatedBy))->hide(["created_by","updated_by,deleted_by,deleted_date"]) : null,
