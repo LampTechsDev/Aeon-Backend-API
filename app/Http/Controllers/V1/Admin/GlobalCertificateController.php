@@ -2,29 +2,16 @@
 
 namespace App\Http\Controllers\V1\Admin;
 
+use Exception;
 use Illuminate\Http\Request;
 use App\Models\GlobalCertificate;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\GlobalCertificateResource;
-use Exception;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Resources\GlobalCertificateResource;
 
 class GlobalCertificateController extends Controller
 {
-
-/**
-* Show Login
-*/
-public function showLogin(Request $request){
-    $this->data = [
-        "email"     => "required",
-        "password"  => "required",
-    ];
-    $this->apiSuccess("This credentials are required for Login ");
-    return $this->apiOutput(200);
-  }
-
-
   public function index()
   {
     try{
@@ -52,108 +39,91 @@ public function showLogin(Request $request){
     }
   }
 
+    /**
+    * Store Section
+    **/
+
   public function store(Request $request)
   {
 
     try{
         $validator = Validator::make(
-            $request->all(),
-            [
-                "name"                      => ["required"],
-                "status"                    => 'required',
-
-            ],[
-                // "group_id.exists"     => "No Record found under this group",
-            ]
-           );
-
-            if ($validator->fails()) {
-                return $this->apiOutput($this->getValidationError($validator), 400);
-            }
-            $global_certificate = new GlobalCertificate();
-
-            $global_certificate->name                  = $request->name;
-            $global_certificate->logo                  = $this->uploadFile($request, 'logo', $this->global_certificate_logo, 720);
-            $global_certificate->details               = $request->details;
-
-
-            $global_certificate->remarks               = $request->remarks;
-            $global_certificate->status                = $request->status;
-         //    $customer->created_by = $request->created_by;
-         //    $customer->updated_by = $request->updated_by;
-            $global_certificate->created_at            = $request->created_at;
-            $global_certificate->updated_at            = $request->updated_at;
-            $global_certificate->deleted_by            = $request->deleted_by;
-            $global_certificate->deleted_date          = $request->deleted_date;
-
-            $global_certificate->save();
-
-        try{
-            event(new GlobalCertificateResource($global_certificate));
-        }catch(Exception $e){
-
+        $request->all(),
+        ["name"                      => ["required"],
+            "status"                    => 'required',
+        ]);
+        if ($validator->fails()) {
+            return $this->apiOutput($this->getValidationError($validator), 400);
         }
+        DB::beginTransaction();
+        $global_certificate = new GlobalCertificate();
+        $global_certificate->name                  = $request->name;
+        $global_certificate->logo                  = $this->uploadFile($request, 'logo', $this->global_certificate_logo, 720);
+        $global_certificate->details               = $request->details;
+        $global_certificate->remarks               = $request->remarks;
+        $global_certificate->status                = $request->status;
+
+        $global_certificate->created_at            = $request->created_at;
+        $global_certificate->updated_at            = $request->updated_at;
+        $global_certificate->deleted_by            = $request->deleted_by;
+        $global_certificate->deleted_date          = $request->deleted_date;
+        $global_certificate->save();
+        DB::commit();
+
         $this->apiSuccess(" Global Certificate Added Successfully");
         $this->data = (new GlobalCertificateResource($global_certificate));
         return $this->apiOutput();
-
     }catch(Exception $e){
+        DB::rollBack();
         return $this->apiOutput($this->getError( $e), 500);
     }
   }
 
-  public function update(Request $request,$id)
+    /**
+    * Update Section
+    **/
+
+  public function update(Request $request)
   {
     try{
     $validator = Validator::make($request->all(),[
       "name"                      => ["required"],
       "status"                    => 'required',
-    ],[
-        // "id"                  => "No Data Found for this Id",
-        // "group_id.exists"     => "No Record found under this group",
-    ]
-    );
-
+    ]);
        if ($validator->fails()) {
         $this->apiOutput($this->getValidationError($validator), 400);
        }
-
+        DB::beginTransaction();
         $global_certificate = GlobalCertificate::find($request->id);
-        // if(empty($admin)){
-        //     return $this->apiOutput("No Data Found", $admin);
-        // }
-
         $global_certificate->name                  = $request->name;
         $global_certificate->logo                  = $this->uploadFile($request, 'logo', $this->global_certificate_logo, 720);
         $global_certificate->details               = $request->details;
 
-
         $global_certificate->remarks               = $request->remarks;
         $global_certificate->status                = $request->status;
-     //    $customer->created_by = $request->created_by;
-     //    $customer->updated_by = $request->updated_by;
         $global_certificate->created_at            = $request->created_at;
         $global_certificate->updated_at            = $request->updated_at;
         $global_certificate->deleted_by            = $request->deleted_by;
         $global_certificate->deleted_date          = $request->deleted_date;
-
         $global_certificate->save();
+        DB::commit();
 
         $this->apiSuccess(" Global Certificate Updated Successfully");
-
         $this->data = (new GlobalCertificateResource($global_certificate));
         return $this->apiOutput();
     }catch(Exception $e){
+        DB::rollBack();
         return $this->apiOutput($this->getError( $e), 500);
     }
   }
-
-  public function destroy(Request $request,$id)
-  {
-    $global_certificate = GlobalCertificate::find($request->id);
-    $global_certificate->delete();
-    $this->apiSuccess();
-    return $this->apiOutput(" Global Certificate Deleted Successfully", 200);
-  }
+    /**
+    * Delete Section
+    **/
+    public function delete(Request $request)
+    {
+        GlobalCertificate::where("id", $request->id)->delete();
+        $this->apiSuccess();
+        return $this->apiOutput("Global Certificate Deleted Successfully", 200);
+    }
 
 }
