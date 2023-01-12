@@ -4,7 +4,11 @@ namespace App\Http\Controllers\V1\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\InspectionInformationResource;
+use App\Models\FinalAqlReportUpload;
+use App\Models\FinishingReportUpload;
 use App\Models\InspectionInformation;
+use App\Models\PreFinalAqlReportUpload;
+use App\Models\sewing_report_upload;
 use Illuminate\Http\Request;
 use Exception;
 use Illuminate\Support\Facades\Validator;
@@ -37,8 +41,8 @@ class InspectionInformationController extends Controller
             // }
 
             $validator = Validator::make( $request->all(),[
-                'name'          => ["required", "min:4"],
-                'description'   => ["nullable", "min:4"],
+                // 'name'          => ["required", "min:4"],
+                // 'description'   => ["nullable", "min:4"],
             ]);
                 
             if ($validator->fails()) {    
@@ -59,11 +63,83 @@ class InspectionInformationController extends Controller
             $inspection->final_aql_date_actual = $request->final_aql_date_actual;
             $inspection->final_aql_schedule=$request->final_aql_schedule;
             $inspection->save();
+            $this->saveFileInfo($request, $inspection);
+            $this->saveFinishingFileInfo($request, $inspection);
+            $this->savePreFinalFileInfo($request, $inspection);
+            $this->saveFinalAqlFileInfo($request, $inspection);
             $this->apiSuccess();
             $this->data = (new InspectionInformationResource($inspection));
             return $this->apiOutput("Inspection Information Added Successfully");
         }catch(Exception $e){
             return $this->apiOutput($this->getError( $e), 500);
+        }
+    }
+
+     // Save File Info
+     public function saveFileInfo($request, $inspection){
+        $file_path = $this->uploadFile($request, 'file', $this->inspection_uploads, 720);
+
+        if( !is_array($file_path) ){
+            $file_path = (array) $file_path;
+        }
+        foreach($file_path as $path){
+            $data = new sewing_report_upload();
+            $data->inspection_information_id = $inspection->id;
+            $data->file_name    = $request->file_name ?? "Sewing_Picture_Upload";
+            $data->file_url     = $path;
+            $data->type = $request->type;
+            $data->save();
+        }
+    }
+
+    // Save File Info
+    public function saveFinishingFileInfo($request, $inspection){
+        $file_path = $this->uploadFile($request, 'finishingfile', $this->inspection_uploads, 720);
+
+        if( !is_array($file_path) ){
+            $file_path = (array) $file_path;
+        }
+        foreach($file_path as $path){
+            $data = new FinishingReportUpload();
+            $data->inspection_information_id = $inspection->id;
+            $data->file_name    = $request->file_name ?? "Sewing_Picture_Upload";
+            $data->file_url     = $path;
+            $data->type = $request->finishing_file_type;
+            $data->save();
+        }
+    }
+
+    // Save File Info
+    public function savePreFinalFileInfo($request, $inspection){
+        $file_path = $this->uploadFile($request, 'preFinalfile', $this->inspection_uploads, 720);
+
+        if( !is_array($file_path) ){
+            $file_path = (array) $file_path;
+        }
+        foreach($file_path as $path){
+            $data = new PreFinalAqlReportUpload();
+            $data->inspection_information_id = $inspection->id;
+            $data->file_name    = $request->file_name ?? "Sewing_Picture_Upload";
+            $data->file_url     = $path;
+            $data->type = $request->pre_final_type;
+            $data->save();
+        }
+    }
+
+    // Save File Info
+    public function saveFinalAqlFileInfo($request, $inspection){
+        $file_path = $this->uploadFile($request, 'finalAqlfile', $this->inspection_uploads, 720);
+
+        if( !is_array($file_path) ){
+            $file_path = (array) $file_path;
+        }
+        foreach($file_path as $path){
+            $data = new FinalAqlReportUpload();
+            $data->inspection_information_id = $inspection->id;
+            $data->file_name    = $request->file_name ?? "Sewing_Picture_Upload";
+            $data->file_url     = $path;
+            $data->type = $request->final_aql_type;
+            $data->save();
         }
     }
 

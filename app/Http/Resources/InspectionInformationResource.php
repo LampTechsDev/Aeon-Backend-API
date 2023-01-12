@@ -2,6 +2,8 @@
 
 namespace App\Http\Resources;
 
+use App\Models\FinishingReportUpload;
+use App\Models\PreFinalAqlReportUpload;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class InspectionInformationResource extends JsonResource
@@ -47,6 +49,10 @@ class InspectionInformationResource extends JsonResource
             "final_aql_schedule"                      => $this->final_aql_schedule ?? "",
             "created_at"                              => $this->created_at ?? "",
             "updated_at"                              => $this->updated_at ?? "",
+            "sewing_upload_files"                     => SewingReportUploadResource::collection($this->fileInfo),
+            "finishing_report_upload_files"           => FinishingReportUploadResource::collection($this->finishingReportInfo),
+            "pre_final_report_upload_files"           => PreFinalAqlReportUploadResource::collection($this->preFinalReportInfo),
+            "final_aql_upload_files"                  => FinalAqlUploadResource::collection($this->finalAqlReportInfo),
 
         ]);
     }
