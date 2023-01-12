@@ -44,6 +44,7 @@ trait Upload{
     protected  $sampleImage_uploads="storage/uploads/sampleImage_uploads";
     protected  $sizeSetsampleImage_uploads="storage/uploads/sizeSetsampleImage_uploads";
     protected  $ppsampleImage_uploads="storage/uploads/ppsampleImage_uploads";
+    protected  $inspection_uploads="storage/uploads/inspection_uploads";
 
 
 
