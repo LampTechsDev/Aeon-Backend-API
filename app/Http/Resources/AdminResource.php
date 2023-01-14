@@ -57,6 +57,7 @@ class AdminResource extends JsonResource
             "id"            => $this->id ?? "",
             "name"          => $this->name ?? "",
             "bio"           => $this->bio ?? "",
+            "image_url"         => asset($this->profile_pic),
             "email"         => $this->email ?? "",
             "groupId"       => $this->group_id ?? "",
             "department"    => isset($this->group_id) ? (new GroupResource($this->groupId))->hide(["created_by", "updated_by"]) : null,

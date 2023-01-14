@@ -45,6 +45,7 @@ trait Upload{
     protected  $sizeSetsampleImage_uploads="storage/uploads/sizeSetsampleImage_uploads";
     protected  $ppsampleImage_uploads="storage/uploads/ppsampleImage_uploads";
     protected  $inspection_uploads="storage/uploads/inspection_uploads";
+    protected  $admin_uploads ="storage/uploads/admin_uploads";
 
 
 

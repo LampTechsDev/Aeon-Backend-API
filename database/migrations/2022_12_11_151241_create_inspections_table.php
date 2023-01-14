@@ -26,7 +26,7 @@ class CreateInspectionsTable extends Migration
             $table->date("inspection_date");
             $table->date("inspection_time");
             $table->text("inspection_note");
-            $table->string("status");
+            $table->string("status")->nullable();
             $table->string("remarks")->nullable();
             $table->foreignId('created_by')->nullable()->references("id")->on("admins");
             $table->foreignId('updated_by')->nullable()->references("id")->on("admins");
