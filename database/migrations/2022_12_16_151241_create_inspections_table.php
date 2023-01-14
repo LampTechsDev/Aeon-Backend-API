@@ -15,13 +15,7 @@ class CreateInspectionsTable extends Migration
     {
         Schema::create('inspections', function (Blueprint $table) {
             $table->id();
-            $table->text("meeting_name");
-            $table->integer("po_number");
-            $table->integer("vendor_id");
-            $table->integer("factory_id");
-            $table->integer("buyer_id");
-            $table->integer("style_name_id");
-            $table->integer("department_id");
+            $table->foreignId("item_details_id")->nullable()->references("id")->on("manual_po_item_details")->cascadeOnDelete();
             $table->string("inspection_name");
             $table->date("inspection_date");
             $table->date("inspection_time");

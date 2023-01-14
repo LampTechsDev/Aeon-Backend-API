@@ -39,13 +39,7 @@ class InspectionController extends Controller
             
    
             $inspection = new Inspection();
-            $inspection->meeting_name = $request->meeting_name;
-            $inspection->po_number = $request->po_number;
-            $inspection->vendor_id = $request->vendor_id;
-            $inspection->factory_id = $request->factory_id;
-            $inspection->buyer_id = $request->buyer_id;
-            $inspection->style_name_id = $request->style_name_id;
-            $inspection->department_id = $request->department_id;
+            $inspection->item_details_id=$request->item_details_id;
             $inspection->inspection_name = $request->inspection_name;
             $inspection->inspection_date = $request->inspection_date;
             $inspection->inspection_time = $request->inspection_time;
@@ -78,13 +72,7 @@ class InspectionController extends Controller
             
    
             $inspection = Inspection::find($request->id);
-            $inspection->meeting_name = $request->meeting_name;
-            $inspection->po_number = $request->po_number;
-            $inspection->vendor_id = $request->vendor_id;
-            $inspection->factory_id = $request->factory_id;
-            $inspection->buyer_id = $request->buyer_id;
-            $inspection->style_name_id = $request->style_name_id;
-            $inspection->department_id = $request->department_id;
+            $inspection->item_details_id=$request->item_details_id;
             $inspection->inspection_name = $request->inspection_name;
             $inspection->inspection_date = $request->inspection_date;
             $inspection->inspection_time = $request->inspection_time;
