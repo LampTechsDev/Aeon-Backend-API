@@ -54,7 +54,6 @@ use App\Http\Controllers\V1\Admin\SeasonController;
 */
 
 
-
     /**
      * Admin Login Section
      */
@@ -501,8 +500,8 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
         Route::get('/list',         [GlobalCertificateController::class, 'index']);
         Route::get('/show',         [GlobalCertificateController::class, "show"]);
         Route::post('/store',       [GlobalCertificateController::class, "store"]);
-        Route::post('/update/{id}', [GlobalCertificateController::class, "update"]);
-        Route::post('/delete/{id}', [GlobalCertificateController::class, "destroy"]);
+        Route::post('/update',      [GlobalCertificateController::class, "update"]);
+        Route::post('/delete',      [GlobalCertificateController::class, "delete"]);
     });
 
     /**
