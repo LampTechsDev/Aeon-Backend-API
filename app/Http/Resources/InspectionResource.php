@@ -32,22 +32,17 @@ class InspectionResource extends JsonResource
     public function toArray($request)
     {
         return $this->filter([
-            "id"                    => $this->id ?? null,
-            "meeting_name"          => $this->meeting_name ?? null,
-            "po_number"             => $this->po_number ?? null,
-            "vendor_id"             => $this->vendor_id ?? null,
-            "factory_id"            => $this->factory_id ?? null,
-            "buyer_id"              => $this->buyer_id ?? null,
-            "style_name_id"         => $this->style_name_id ?? null,
-            "department_id"         => $this->department_id ?? null,
-            "inspection_name"       => $this->inspection_name ?? null,
-            "inspection_date"       => $this->inspection_date ?? null,
-            "inspection_time"       => $this->inspection_time ?? null,
-            "inspection_note"       => $this->inspection_note ?? null,
-            "status"                => $this->status ?? null,
-            "remarks"               => $this->remarks ?? null,
-            "created_at"            => $this->created_at ?? null,
-            "updated_at"            => $this->updated_at ?? null,
+
+                "id"                    => $this->id ?? null,
+                "inspection_name"       => $this->inspection_name ?? null,
+                "inspection_date"       => $this->inspection_date ?? null,
+                "inspection_time"       => $this->inspection_time ?? null,
+                "inspection_note"       => $this->inspection_note ?? null,
+                "item_details_information"        =>  isset($this->itemDetails) ? (new ManualPoItemDetailsResource($this->itemDetails))->hide(["created_by","updated_by","po_id","plm","colour","item_no","size","qty_order","inner_qty","outer_case_qty","value","selling_price","created_at","updated_at"]) : null,
+                "status"                => $this->status ?? null,
+                "remarks"               => $this->remarks ?? null,
+                "created_at"            => $this->created_at ?? null,
+                "updated_at"            => $this->updated_at ?? null,
 
 
         ]);
