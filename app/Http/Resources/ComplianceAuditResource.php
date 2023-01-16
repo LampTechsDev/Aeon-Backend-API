@@ -38,7 +38,7 @@ class ComplianceAuditResource extends JsonResource
             "manufacture_unit"                  => $this->manufacture_unit,
             "vendor_id"                         => isset($this->vendor) ? (new VendorResource($this->vendor))->hide(["created_by","updated_by"]) : null,
             "manufacturer_id"                   => isset($this->manufacture) ? (new VendorManufacturerResource($this->manufacture))->hide(["created_by","updated_by"]) : null,
-            "factory_concern_person_name"       => $this->factory_concern_name,
+            "factory_concern_person_name"       => isset($this->factoryConcern) ? (new ManufacturerContactPeopleResource($this->factoryConcern))->hide(["created_by","updated_by"]) : null,
             "audit_name"                        => $this->audit_name,
             "audit_conducted_by"                => isset($this->audit) ? (new AdminResource($this->audit))->hide(["created_by","updated_by"]) : null,
             "audit_requirement_details"         => $this->audit_requirement_details,

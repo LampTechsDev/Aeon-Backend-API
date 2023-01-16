@@ -20,7 +20,8 @@ class CreateCompliancesTable extends Migration
                 $table->string("manufacture_unit")->nullable();
                 $table->foreignId("vendor_id")->nullable()->references("id")->on("vendors")->cascadeOnDelete();
                 $table->foreignId("manufacturer_id")->nullable()->references("id")->on("vendor_manufacturers")->cascadeOnDelete();
-                $table->string('factory_concern_name');
+                $table->foreignId("manufacturer_contact_people_id")->nullable()->references("id")->on("manufacturer_contact_people")->cascadeOnDelete();
+                $table->string("factory_concern_name")->nullable();
                 $table->string('audit_name');
                 $table->foreignId('audit_conducted_by')->nullable()->references("id")->on("admins");
                 $table->text('audit_requirement_details');

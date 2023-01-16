@@ -15,6 +15,8 @@ class CreateProductionInformationTable extends Migration
     {
         Schema::create('production_information', function (Blueprint $table) {
             $table->id();
+            $table->string("po_number");
+            $table->integer("po_id");
             $table->date("cutting_date_plan");
             $table->date("cutting_date_actual");
             $table->date("embellishment_plan");

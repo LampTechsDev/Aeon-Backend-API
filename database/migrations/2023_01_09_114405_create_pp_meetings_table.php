@@ -15,6 +15,8 @@ class CreatePpMeetingsTable extends Migration
     {
         Schema::create('pp_meetings', function (Blueprint $table) {
             $table->id();
+            $table->string("po_number");
+            $table->integer("po_id");
             $table->date("care_label_approval_plan");
             $table->date("care_label_approval_actual");
             $table->date("material_inhouse_date_plan");

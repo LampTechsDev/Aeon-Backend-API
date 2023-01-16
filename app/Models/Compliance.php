@@ -23,4 +23,8 @@ class Compliance extends Model
     public function audit(){
         return $this->belongsTo(Admin::class, 'audit_conducted_by');
     }
+
+    public function factoryConcern(){
+        return $this->belongsTo(ManufacturerContactPeople::class, 'manufacturer_contact_people_id');
+    }
 }

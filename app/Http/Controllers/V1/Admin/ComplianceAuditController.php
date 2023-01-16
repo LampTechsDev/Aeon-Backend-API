@@ -49,6 +49,7 @@ class ComplianceAuditController extends Controller
                 $complianceAudit->manufacture_unit=$request->manufacture_unit;
                 $complianceAudit->vendor_id = $request->vendor_id;
                 $complianceAudit->manufacturer_id = $request->manufacturer_id;
+                $complianceAudit->manufacturer_contact_people_id=$request->manufacturer_contact_people_id;
                 $complianceAudit->factory_concern_name = $request->factory_concern_name;
                 $complianceAudit->audit_name = $request->audit_name;
                 $complianceAudit->audit_conducted_by = $request->audit_conducted_by;
@@ -126,18 +127,21 @@ class ComplianceAuditController extends Controller
             // if(empty($compliance)){
             //     return $this->apiOutput("No Data Found", $complianceAudit);
             // }
-            $complianceAudit->factory_name = $request->factory_name;
-            $complianceAudit->factory_concern_person_name = $request->factory_concern_person_name;
-            $complianceAudit->status = $request->status;
-            $complianceAudit->email = $request->email;
-            $complianceAudit->phone = $request->phone;
-            $complianceAudit->audit_name = $request->audit_name;
             $complianceAudit->vendor_name = $request->vendor_name;
+            $complianceAudit->manufacture_unit=$request->manufacture_unit;
+            $complianceAudit->vendor_id = $request->vendor_id;
+            $complianceAudit->manufacturer_id = $request->manufacturer_id;
+            $complianceAudit->manufacturer_contact_people_id=$request->manufacturer_contact_people_id;
+            $complianceAudit->factory_concern_name = $request->factory_concern_name;
+            $complianceAudit->audit_name = $request->audit_name;
             $complianceAudit->audit_conducted_by = $request->audit_conducted_by;
-            $complianceAudit->audit_request_date = $request->audit_request_date;
-            $complianceAudit->requirement_date = $request->requirement_date;
-            $complianceAudit->requirement_details = $request->requirement_details;
-            $complianceAudit->note_remarks = $request->note_remarks;
+            $complianceAudit->audit_requirement_details = $request->audit_requirement_details;
+            $complianceAudit->audit_date=$request->audit_date;
+            $complianceAudit->audit_time=$request->audit_time;
+            $complianceAudit->email = $request->email;
+            $complianceAudit->phone = $request->phone;  
+            $complianceAudit->note = $request->note;
+            $complianceAudit->type = $request->type;
             $complianceAudit->save();
             //$group->created_by = $request->user()->id ;
             //$group->created_at = Carbon::Now();
