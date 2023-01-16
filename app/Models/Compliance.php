@@ -11,4 +11,20 @@ class Compliance extends Model
     public function fileInfo(){
         return $this->hasMany(ComplianceAuditUpload::class, 'complianceaudit_id');
     }
+
+    public function vendor(){
+        return $this->belongsTo(Vendor::class, 'vendor_id');
+    }
+
+    public function manufacture(){
+        return $this->belongsTo(VendorManufacturer::class, 'manufacturer_id');
+    }
+
+    public function audit(){
+        return $this->belongsTo(Admin::class, 'audit_conducted_by');
+    }
+
+    public function factoryConcern(){
+        return $this->belongsTo(ManufacturerContactPeople::class, 'manufacturer_contact_people_id');
+    }
 }

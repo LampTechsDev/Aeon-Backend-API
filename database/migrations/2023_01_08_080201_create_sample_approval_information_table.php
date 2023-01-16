@@ -15,6 +15,8 @@ class CreateSampleApprovalInformationTable extends Migration
     {
         Schema::create('sample_approval_information', function (Blueprint $table) {
             $table->id();
+            $table->string("po_number");
+            $table->integer("po_id");
             $table->date("development_photo_sample_sent_plan");
             $table->date("development_photo_sample_sent_actual");
             $table->text("development_photo_sample_dispatch_details");

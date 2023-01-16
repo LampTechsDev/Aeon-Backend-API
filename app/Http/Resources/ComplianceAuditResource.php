@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\ComplianceAuditUpload;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ComplianceAuditResource extends JsonResource
@@ -32,20 +33,23 @@ class ComplianceAuditResource extends JsonResource
     public function toArray($request)
     {
         return $this->filter([
-            "id"                            => $this->id ,
-            "factory_name"                  => $this->factory_name,
-            "factory_concern_person_name"   => $this->factory_concern_person_name,
-            "status"                        => $this->status,
-            "email"                         => $this->email,
-            "phone"                         => $this->phone,
-            "audit_name"                    => $this->audit_name,
-            "vendor_name"                   => $this->vendor_name,
-            "audit_conducted_by"            => $this->audit_conducted_by,
-            "audit_request_date"            => $this->audit_request_date,
-            "requirement_date"              => $this->requirement_date,
-            "requirement_details"           => $this->requirement_details,
-            "upload_files"                  => ComplianceAuditUploadResource::collection($this->fileInfo),
-            "note_remarks"                  => $this->note_remarks,
+            "id"                                => $this->id ,
+            "vendor_name"                       => $this->vendor_name,
+            "manufacture_unit"                  => $this->manufacture_unit,
+            "vendor_id"                         => isset($this->vendor) ? (new VendorResource($this->vendor))->hide(["created_by","updated_by"]) : null,
+            "manufacturer_id"                   => isset($this->manufacture) ? (new VendorManufacturerResource($this->manufacture))->hide(["created_by","updated_by"]) : null,
+            "factory_concern_person_name"       => isset($this->factoryConcern) ? (new ManufacturerContactPeopleResource($this->factoryConcern))->hide(["created_by","updated_by"]) : null,
+            "audit_name"                        => $this->audit_name,
+            "audit_conducted_by"                => isset($this->audit) ? (new AdminResource($this->audit))->hide(["created_by","updated_by"]) : null,
+            "audit_requirement_details"         => $this->audit_requirement_details,
+            "audit_date"                        => $this->audit_date,
+            "audit_time"                        => $this->audit_time,
+            "email"                             => $this->email,
+            "phone"                             => $this->phone,
+            "note"                              => $this->note,
+            "type"                              => $this->type,
+            "upload_files"                      => ComplianceAuditUploadResource::collection($this->fileInfo),
+            
         ]);
     }
 }
