@@ -12,7 +12,7 @@ use App\Models\SizeSetSampleImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Exception;
-
+use Illuminate\Support\Facades\DB;
 
 class SampleApprovalInformationController extends Controller
 {
@@ -45,8 +45,11 @@ class SampleApprovalInformationController extends Controller
             if ($validator->fails()) {    
                 $this->apiOutput($this->getValidationError($validator), 400);
             }
-   
+            DB::beginTransaction();
+
             $sampleApproval = new SampleApprovalInformation();
+            $sampleApproval->po_id=$request->po_id;
+            $sampleApproval->po_number=$request->po_number;
             $sampleApproval->development_photo_sample_sent_plan = $request->development_photo_sample_sent_plan;
             $sampleApproval->development_photo_sample_sent_actual = $request->development_photo_sample_sent_actual;
             $sampleApproval->development_photo_sample_dispatch_details = $request->development_photo_sample_dispatch_details;
@@ -70,6 +73,8 @@ class SampleApprovalInformationController extends Controller
             $this->saveFitSampleFileInfo($request, $sampleApproval);
             $this->saveSizeSetSampleImageFileInfo($request, $sampleApproval);
             $this->savePpSampleImageFileInfo($request, $sampleApproval);
+
+            DB::commit();
             $this->apiSuccess();
             $this->data = (new SampleApprovalInformationResource($sampleApproval));
             return $this->apiOutput("SampleApprovalInformation Added Successfully");
