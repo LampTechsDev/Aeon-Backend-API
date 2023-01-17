@@ -8,6 +8,7 @@ use App\Models\PpMeeting;
 use App\Models\PpMeetingReportUpload;
 use Illuminate\Http\Request;
 use Exception;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class PpMeetingController extends Controller
@@ -40,8 +41,11 @@ class PpMeetingController extends Controller
             if ($validator->fails()) {    
                 $this->apiOutput($this->getValidationError($validator), 400);
             }
-   
+            DB::beginTransaction();
+
             $ppMeeting = new PpMeeting();
+            $ppMeeting->po_id=$request->po_id;
+            $ppMeeting->po_number=$request->po_number;
             $ppMeeting->care_label_approval_plan = $request->care_label_approval_plan;
             $ppMeeting->care_label_approval_actual = $request->care_label_approval_actual;
             $ppMeeting->material_inhouse_date_plan = $request->material_inhouse_date_plan;
@@ -51,6 +55,8 @@ class PpMeetingController extends Controller
             $ppMeeting->pp_meeting_schedule = $request->pp_meeting_schedule;
             $ppMeeting->save();
             $this->saveFileInfo($request, $ppMeeting);
+
+            DB::commit();
             $this->apiSuccess();
             $this->data = (new PpMeetingResource($ppMeeting));
             return $this->apiOutput("PP Meeting Added Successfully");

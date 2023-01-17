@@ -33,6 +33,8 @@ class ProductInformationResource extends JsonResource
     {
         return $this->filter([
             "id"                                    => $this->id ?? "",
+            "po_id"                                 => $this->po_id ?? "",
+            "po_number"                             => $this->po_number ?? "",
             "cutting_date_plan"                     => $this->cutting_date_plan ?? "",
             "cutting_date_actual"                   => $this->cutting_date_actual ?? "",
             "embellishment_plan"                    => $this->embellishment_plan ?? "",
