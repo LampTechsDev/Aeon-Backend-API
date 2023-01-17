@@ -18,7 +18,7 @@ class CreateInspectionsTable extends Migration
             $table->foreignId("item_details_id")->nullable()->references("id")->on("manual_po_item_details")->cascadeOnDelete();
             $table->string("inspection_name");
             $table->date("inspection_date");
-            $table->date("inspection_time");
+            $table->string("inspection_time");
             $table->text("inspection_note");
             $table->string("status")->nullable();
             $table->string("remarks")->nullable();
