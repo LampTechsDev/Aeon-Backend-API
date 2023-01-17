@@ -46,6 +46,7 @@ trait Upload{
     protected  $ppsampleImage_uploads="storage/uploads/ppsampleImage_uploads";
     protected  $inspection_uploads="storage/uploads/inspection_uploads";
     protected  $admin_uploads ="storage/uploads/admin_uploads";
+    protected  $temp_uploads ="storage/uploads/temp";
 
 
 
@@ -129,25 +130,30 @@ trait Upload{
                 $path_arr[] = $path;
             }
         }else{
-            $image = $request->file($fileName);
-            $filename = $fileName.'_'.time().'.'.$image->getClientOriginalExtension();
+            $file = $request->file($fileName);
+            $filename = $fileName.'_'.time().'.'.$file->getClientOriginalExtension();
             $path = $dir.$filename;
 
-            if( empty($height) && empty($width)){
-                Image::make($image)->save($path);
-            }
-            elseif( empty($height) && !empty($width) ){
-                Image::make($image)->resize($width,null,function($constant){
-                    $constant->aspectRatio();
-                })->save($path);
-            }
-            elseif( !empty($height) && empty($width) ){
-                Image::make($image)->resize(null,$height,function($constant){
-                    $constant->aspectRatio();
-                })->save($path);
-            }
-            else{
-                Image::make($image)->resize($width,$height)->save($path);
+            if($this->isImage($path)){
+                if( empty($height) && empty($width)){
+                    Image::make($image)->save($path);
+                }
+                elseif( empty($height) && !empty($width) ){
+                    Image::make($image)->resize($width,null,function($constant){
+                        $constant->aspectRatio();
+                    })->save($path);
+                }
+                elseif( !empty($height) && empty($width) ){
+                    Image::make($image)->resize(null,$height,function($constant){
+                        $constant->aspectRatio();
+                    })->save($path);
+                }
+                else{
+                    Image::make($image)->resize($width,$height)->save($path);
+                }
+            }else{
+                $_dir = trim(str_replace("storage/", "", $dir), "/");
+                $path = "storage/".Storage::disk("public")->putFile($_dir, $file);
             }
             $path_arr   = $path;
         }
