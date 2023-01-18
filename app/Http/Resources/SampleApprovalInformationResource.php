@@ -33,6 +33,8 @@ class SampleApprovalInformationResource extends JsonResource
     {
         return $this->filter([
             "id"            => $this->id ?? "",
+            "po_id"                             => $this->po_id ?? "",
+            "po_number"                         => $this->po_number ?? "",
             "development_photo_sample_sent_plan"          => $this->development_photo_sample_sent_plan ?? "",
             "development_photo_sample_sent_actual "       => $this->development_photo_sample_sent_actual ?? "",
             "development_photo_sample_dispatch_details"   => $this->development_photo_sample_dispatch_details ?? "",

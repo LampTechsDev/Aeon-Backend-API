@@ -26,7 +26,7 @@ class CreateCompliancesTable extends Migration
                 $table->foreignId('audit_conducted_by')->nullable()->references("id")->on("admins");
                 $table->text('audit_requirement_details');
                 $table->date('audit_date');
-                $table->date('audit_time');
+                $table->string('audit_time');
                 $table->string('email')->unique();
                 $table->string('phone');
                 $table->text('note')->nullable();

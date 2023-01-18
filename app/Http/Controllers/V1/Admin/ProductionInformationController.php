@@ -8,6 +8,7 @@ use App\Models\ProductionInformation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Exception;
+use Illuminate\Support\Facades\DB;
 
 class ProductionInformationController extends Controller
 {
@@ -42,8 +43,11 @@ class ProductionInformationController extends Controller
                 if ($validator->fails()) {    
                     $this->apiOutput($this->getValidationError($validator), 400);
                 }
-    
+                
+
                 $production = new ProductionInformation();
+                $production->po_id=$request->po_id;
+                $production->po_number=$request->po_number;
                 $production->cutting_date_plan = $request->cutting_date_plan;
                 $production->cutting_date_actual = $request->cutting_date_actual;
                 $production->embellishment_plan = $request->embellishment_plan;

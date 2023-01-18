@@ -33,6 +33,8 @@ class PpMeetingResource extends JsonResource
     {
         return $this->filter([
             "id"                                => $this->id ?? "",
+            "po_id"                             => $this->po_id ?? "",
+            "po_number"                         => $this->po_number ?? "",
             "care_label_approval_plan"          => $this->care_label_approval_plan ?? "",
             "care_label_approval_actual"        => $this->care_label_approval_actual ?? "",
             "material_inhouse_date_plan"        => $this->material_inhouse_date_plan ?? "",
