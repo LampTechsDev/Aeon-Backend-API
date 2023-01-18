@@ -11,4 +11,7 @@ class Inspection extends Model
     public function itemDetails(){
         return $this->belongsTo(ManualPoItemDetails::class, 'item_details_id');
     }
+    public function assignUser(){
+        return $this->belongsTo(Admin::class, "assign_to_user");
+    }
 }
