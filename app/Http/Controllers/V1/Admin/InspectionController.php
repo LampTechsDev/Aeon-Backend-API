@@ -44,6 +44,7 @@ class InspectionController extends Controller
             $inspection->inspection_date = $request->inspection_date;
             $inspection->inspection_time = $request->inspection_time;
             $inspection->inspection_note = $request->inspection_note;
+            $inspection->assign_to_user= $request->assign_to_user;
             $inspection->status = $request->status;
             $inspection->remarks=$request->remarks;
             $inspection->save();
@@ -77,6 +78,7 @@ class InspectionController extends Controller
             $inspection->inspection_date = $request->inspection_date;
             $inspection->inspection_time = $request->inspection_time;
             $inspection->inspection_note = $request->inspection_note;
+            $inspection->assign_to_user= $request->assign_to_user;
             $inspection->status = $request->status;
             $inspection->remarks=$request->remarks;
             $inspection->save();
