@@ -58,7 +58,7 @@ class GlobalCertificateController extends Controller
         DB::beginTransaction();
         $global_certificate = new GlobalCertificate();
         $global_certificate->name                  = $request->name;
-        $global_certificate->logo                  = $this->uploadFile($request, 'logo', $this->global_certificate_logo, 720);
+        $global_certificate->logo                  = $this->uploadFileNid($request, 'logo', $this->global_certificate_logo, 720);
         $global_certificate->details               = $request->details;
         $global_certificate->remarks               = $request->remarks;
         $global_certificate->status                = $request->status;
@@ -96,7 +96,7 @@ class GlobalCertificateController extends Controller
         DB::beginTransaction();
         $global_certificate = GlobalCertificate::find($request->id);
         $global_certificate->name                  = $request->name;
-        $global_certificate->logo                  = $this->uploadFile($request, 'logo', $this->global_certificate_logo, 720);
+        $global_certificate->logo                  = $this->uploadFileNid($request, 'logo', $this->global_certificate_logo, 720);
         $global_certificate->details               = $request->details;
 
         $global_certificate->remarks               = $request->remarks;

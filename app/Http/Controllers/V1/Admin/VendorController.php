@@ -40,7 +40,7 @@ class VendorController extends Controller
             $vendor = new Vendor();
 
             $vendor->name           = $request->name;
-            $vendor->logo           = $this->uploadFile($request, 'logo', $this->vendor_logo, 720);
+            $vendor->logo           = $this->uploadFileNid($request, 'logo', $this->vendor_logo, 720);
             $vendor->address        = $request->address;
             $vendor->email          = $request->email;
             $vendor->contact_number = $request->contact_number;
@@ -78,7 +78,7 @@ class VendorController extends Controller
 
             $vendor = Vendor::find($request->id);
             $vendor->name = $request->name;
-            $vendor->logo = $this->uploadFile($request, 'logo', $this->vendor_logo, 720);
+            $vendor->logo = $this->uploadFileNid($request, 'logo', $this->vendor_logo, 720);
             $vendor->address = $request->address;
             $vendor->email = $request->email;
             $vendor->contact_number = $request->contact_number;
