@@ -16,7 +16,7 @@ class CreateVendorCertificatesTable extends Migration
         Schema::create('vendor_certificates', function (Blueprint $table) {
             $table->id();
             $table->foreignId("vendor_id")->nullable()->references("id")->on("vendors");
-            $table->foreignId("global_certificate_id")->nullable()->references("id")->on("global_certificates");
+            $table->foreignId("global_certificate_id")->references("id")->on("global_certificates");
             $table->string('certificate_name')->nullable();
             $table->string('certificate_logo')->nullable();
             $table->date('issue_date')->nullable();
