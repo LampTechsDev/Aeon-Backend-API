@@ -33,7 +33,7 @@ class FileProcessingController extends Controller
             if(!$pdf_response->status){
                 return $this->apiOutput($pdf_response->message, 402);
             }
-
+dd($pdf_response);
             $this->storePDFData($pdf_response->data);
             
         }catch(Exception $e){
