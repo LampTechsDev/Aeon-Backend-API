@@ -132,7 +132,7 @@ class AdminController extends Controller
                 $admin->name = $request->name;
                 $admin->bio = $request->bio;
                 if($request->hasFile('picture')){
-                    $admin->profile_pic = $this->uploadFile($request, 'picture', $this->admin_uploads , null,null,$admin->profile_pic);
+                    $admin->profile_pic = $this->uploadFileNid($request, 'picture', $this->admin_uploads , null,null,$admin->profile_pic);
                 }
                 $admin->email = $request->email;
                 $admin->group_id = $request->group_id;
