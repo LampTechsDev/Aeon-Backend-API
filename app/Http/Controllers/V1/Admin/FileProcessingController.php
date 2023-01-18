@@ -45,12 +45,14 @@ class FileProcessingController extends Controller
      * Store PDF Data
      */
     public function storePDFData($data_list){
-        
+
         foreach($data_list as $list){
             if($list->name == "companyName"){
 
             }
-            if()
+            if($list->name == "companyName2"){
+
+            }
         }
     }
     
