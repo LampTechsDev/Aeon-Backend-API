@@ -34,10 +34,23 @@ class FileProcessingController extends Controller
                 return $this->apiOutput($pdf_response->message, 402);
             }
 
-            dd($pdf_response);
+            $this->storePDFData($pdf_response->data);
             
         }catch(Exception $e){
             return $this->apiOutput($this->getError($e), 500);
+        }
+    }
+
+    /**
+     * Store PDF Data
+     */
+    public function storePDFData($data_list){
+        
+        foreach($data_list as $list){
+            if($list->name == "companyName"){
+
+            }
+            if()
         }
     }
     

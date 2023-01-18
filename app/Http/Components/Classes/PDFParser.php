@@ -96,7 +96,7 @@ class PDFParser{
             "x-api-key"     => $this->pdf_parser_api_key
         ];
         $rqst_body = [
-            "url"           => "https://bytescout-com.s3-us-west-2.amazonaws.com/files/demo-files/cloud-api/document-parser/sample-invoice.pdf",
+            "url"           => $this->file_url,
             "outputFormat"  => "JSON",
             "templateId"    => "1",
             "async"         => false,
