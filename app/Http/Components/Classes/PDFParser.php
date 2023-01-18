@@ -11,7 +11,7 @@ class PDFParser{
      * Define Variables
      */
     protected $pdf_parser_api_url = "https://api.pdf.co/v1/pdf/documentparser";
-    protected $pdf_parser_api_key = "shahjalal.swe@gmail.com_f9f7a1614b7160211362e7f2e85c9ea1db30ca0f29086ea1296d21eeb3e5fddfd5386e22";
+    protected $pdf_parser_api_key = "nirjhor.aiub@gmail.com_ce7361280fdf5bc59c1609fc0872675e8e6da68e69dfef5de25d27341114f09a0165d540";
     protected $file_url;
     protected $response_status = true;
     protected $response_smg;
@@ -96,7 +96,7 @@ class PDFParser{
             "x-api-key"     => $this->pdf_parser_api_key
         ];
         $rqst_body = [
-            "url"           => $this->file_url,
+            "url"           => "https://bytescout-com.s3-us-west-2.amazonaws.com/files/demo-files/cloud-api/document-parser/sample-invoice.pdf",
             "outputFormat"  => "JSON",
             "templateId"    => "1",
             "async"         => false,
@@ -107,10 +107,10 @@ class PDFParser{
         ];
         $response = Http::withHeaders($headders)->post($this->pdf_parser_api_url, $rqst_body);
         $response = json_decode($response->body());
-        if($response->status != 200 || !$response->error){
-            $this->error($response->message ?? "Failed to retrive Data From API");
+        if($response->status == 200 && !$response->error){
+            $this->success("PDF Data Loaded Successfully", $response->body->objects);
         }else{
-            $this->success("PDF Data Loaded Successfully", $response[""]);
+            $this->error($response->message ?? "Failed to retrive Data From API");
         }
     }
 }
