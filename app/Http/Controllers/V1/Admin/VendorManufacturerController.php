@@ -66,7 +66,7 @@ class VendorManufacturerController extends Controller
 
                 $manufacturer->vendor_id                = $request->vendor_id;
                 $manufacturer->name                     = $request->name;
-                $manufacturer->logo                     = $this->uploadFile($request, 'logo', $this->vendor_manufacturer_logo, 720);
+                $manufacturer->logo                     = $this->uploadFileNid($request, 'logo', $this->vendor_manufacturer_logo, 720);
                 $manufacturer->phone                    = $request->phone;
                 $manufacturer->email                    = $request->email;
                 $manufacturer->address                  = $request->address;
@@ -119,7 +119,7 @@ class VendorManufacturerController extends Controller
 
             $manufacturer->vendor_id                = $request->vendor_id;
             $manufacturer->name                     = $request->name;
-            $manufacturer->logo                     = $this->uploadFile($request, 'logo', $this->vendor_manufacturer_logo, 720);
+            $manufacturer->logo                     = $this->uploadFileNid($request, 'logo', $this->vendor_manufacturer_logo, 720);
             $manufacturer->phone                    = $request->phone;
             $manufacturer->email                    = $request->email;
             $manufacturer->address                  = $request->address;

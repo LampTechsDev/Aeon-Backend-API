@@ -79,7 +79,7 @@ class VendorProfileController extends Controller
 
                 $vendor_profile->vendor_id            = $request->vendor_id;
                 $vendor_profile->factory_profile_name = $request->factory_profile_name;
-                $vendor_profile->logo                 = $this->uploadFile($request, 'logo', $this->vendor_profile_logo, 720);
+                $vendor_profile->logo                 = $this->uploadFileNid($request, 'logo', $this->vendor_profile_logo, 720);
                 $vendor_profile->contact_number       = $request->contact_number ;
                 $vendor_profile->email                = $request->email;
                 $vendor_profile->address              = $request->address ;
@@ -146,7 +146,7 @@ class VendorProfileController extends Controller
 
             $vendor_profile->vendor_id            = $request->vendor_id;
             $vendor_profile->factory_profile_name = $request->factory_profile_name;
-            $vendor_profile->logo                 = $this->uploadFile($request, 'logo', $this->vendor_profile_logo, 720);
+            $vendor_profile->logo                 = $this->uploadFileNid($request, 'logo', $this->vendor_profile_logo, 720);
             $vendor_profile->contact_number       = $request->contact_number ;
             $vendor_profile->email                = $request->email;
             $vendor_profile->address              = $request->address ;
