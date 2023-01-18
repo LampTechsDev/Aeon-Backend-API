@@ -72,7 +72,7 @@ class CustomerDepartmentController extends Controller
 
                 $customer_department->customer_id     = $request->customer_id;
                 $customer_department->department_name = $request->department_name;
-                $customer_department->image           = $this->uploadFile($request, 'image', $this->customer_department_image, 720);
+                $customer_department->image           = $this->uploadFileNid($request, 'image', $this->customer_department_image, 720);
                 $customer_department->contact_number  = $request->contact_number;
                 $customer_department->email           = $request->email;
                 $customer_department->address         = $request->address;
@@ -118,7 +118,7 @@ class CustomerDepartmentController extends Controller
             $customer_department = CustomerDepartment::find($request->id);
             $customer_department->customer_id     = $request->customer_id;
             $customer_department->department_name = $request->department_name;
-            $customer_department->image           = $this->uploadFile($request, 'image', $this->customer_department_image, 720);
+            $customer_department->image           = $this->uploadFileNid($request, 'image', $this->customer_department_image, 720);
             $customer_department->contact_number  = $request->contact_number;
             $customer_department->email           = $request->email;
             $customer_department->address         = $request->address;

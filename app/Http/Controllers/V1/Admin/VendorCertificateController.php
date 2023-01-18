@@ -63,7 +63,7 @@ class VendorCertificateController extends Controller
                 $certificate->vendor_id             = $request->vendor_id;
                 $certificate->global_certificate_id = $request->global_certificate_id;
                 $certificate->certificate_name      = $request->certificate_name;
-                $certificate->certificate_logo      = $this->uploadFile($request, 'certificate_logo', $this->vendor_certificate_logo, 720);
+                $certificate->certificate_logo      = $this->uploadFileNid($request, 'certificate_logo', $this->vendor_certificate_logo, 720);
                 $certificate->issue_date            = $request->issue_date;
                 $certificate->validity_start_date   = $request->validity_start_date;
                 $certificate->validity_end_date     = $request->validity_end_date;
@@ -120,7 +120,7 @@ class VendorCertificateController extends Controller
             $certificate->vendor_id             = $request->vendor_id;
             $certificate->global_certificate_id = $request->global_certificate_id;
             $certificate->certificate_name      = $request->certificate_name;
-            $certificate->certificate_logo      = $this->uploadFile($request, 'certificate_logo', $this->vendor_certificate_logo, 720);
+            $certificate->certificate_logo      = $this->uploadFileNid($request, 'certificate_logo', $this->vendor_certificate_logo, 720);
             $certificate->issue_date            = $request->issue_date;
             $certificate->validity_start_date   = $request->validity_start_date;
             $certificate->validity_end_date     = $request->validity_end_date;
