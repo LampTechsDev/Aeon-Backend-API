@@ -39,6 +39,7 @@ class InspectionResource extends JsonResource
                 "inspection_time"       => $this->inspection_time ?? null,
                 "inspection_note"       => $this->inspection_note ?? null,
                 "item_details_information"        =>  isset($this->itemDetails) ? (new ManualPoItemDetailsResource($this->itemDetails))->hide(["created_by","updated_by","po_id","plm","colour","item_no","size","qty_order","inner_qty","outer_case_qty","value","selling_price","created_at","updated_at"]) : null,
+                "assign_to_user"                  =>  isset($this->assignUser) ? (new AdminResource($this->assignUser))->hide(["groupId","department", "created_by","updated_by"]) : null,
                 "status"                => $this->status ?? null,
                 "remarks"               => $this->remarks ?? null,
                 "created_at"            => $this->created_at ?? null,
