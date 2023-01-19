@@ -41,6 +41,7 @@ class CriticalPathController extends Controller
    
             $criticalPath = new CriticalPath();
             $criticalPath->po_id=$request->po_id;
+            $criticalPath->inspection_information_id=$request->inspection_information_id;
             $criticalPath->labdips_embellishment_id=$request->labdips_embellishment_id;
             $criticalPath->bulk_fabric_information_id =$request->bulk_fabric_information_id;
             $criticalPath->fabric_mill_id = $request->fabric_mill_id;
@@ -75,6 +76,7 @@ class CriticalPathController extends Controller
    
             $criticalPath = CriticalPath::find($request->id);
             $criticalPath->po_id=$request->po_id;
+            $criticalPath->inspection_information_id=$request->inspection_information_id;
             $criticalPath->labdips_embellishment_id=$request->labdips_embellishment_id;
             $criticalPath->bulk_fabric_information_id =$request->bulk_fabric_information_id;
             $criticalPath->fabric_mill_id = $request->fabric_mill_id;

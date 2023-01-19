@@ -35,4 +35,8 @@ class CriticalPath extends Model
     public function productInformation(){
         return $this->belongsTo(ProductionInformation::class,"production_information_id");
     }
+
+    public function inspectionInfo(){
+        return $this->belongsTo(InspectionInformation::class,"inspection_information_id");
+    }
 }

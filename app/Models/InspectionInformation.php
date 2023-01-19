@@ -20,5 +20,6 @@ class InspectionInformation extends Model
     public function finalAqlReportInfo(){
         return $this->hasMany(FinalAqlReportUpload::class, 'inspection_information_id');
     }
+    
 
 }
