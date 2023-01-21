@@ -39,6 +39,7 @@ use App\Http\Controllers\V1\Admin\ManufacturerProfileController;
 use App\Http\Controllers\V1\Admin\MillController;
 use App\Http\Controllers\V1\Admin\PpMeetingController;
 use App\Http\Controllers\V1\Admin\ProductionInformationController;
+use App\Http\Controllers\V1\Admin\ProductionSampleShippingApprovalController;
 use App\Http\Controllers\V1\Admin\SampleApprovalInformationController;
 use App\Http\Controllers\V1\Admin\SeasonController;
 
@@ -382,6 +383,17 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
         Route::post('/delete', [InspectionInformationController::class, "delete"]);
     });
 
+    /**
+     *Inspection Information Details Information
+    */
+    Route::prefix('shipping-approval-information')->group(function(){
+
+        Route::get('/list', [ProductionSampleShippingApprovalController::class, 'index']);
+        Route::get('/show',  [ProductionSampleShippingApprovalController::class, "show"]);
+        Route::post('/store', [ProductionSampleShippingApprovalController::class, "store"]);
+        Route::post('/update', [ProductionSampleShippingApprovalController::class, "update"]);
+        Route::post('/delete', [ProductionSampleShippingApprovalController::class, "delete"]);
+    });
 
     /**
      *Critical Path
