@@ -37,8 +37,10 @@ use App\Http\Controllers\V1\Admin\VendorCertificateController;
 use App\Http\Controllers\V1\Admin\VendorManufacturerController;
 use App\Http\Controllers\V1\Admin\ManufacturerProfileController;
 use App\Http\Controllers\V1\Admin\MillController;
+use App\Http\Controllers\V1\Admin\PaymentInfoController;
 use App\Http\Controllers\V1\Admin\PpMeetingController;
 use App\Http\Controllers\V1\Admin\ProductionInformationController;
+use App\Http\Controllers\V1\Admin\ProductionSampleShippingApprovalController;
 use App\Http\Controllers\V1\Admin\SampleApprovalInformationController;
 use App\Http\Controllers\V1\Admin\SeasonController;
 
@@ -382,6 +384,17 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
         Route::post('/delete', [InspectionInformationController::class, "delete"]);
     });
 
+    /**
+     *Inspection Information Details Information
+    */
+    Route::prefix('shipping-approval-information')->group(function(){
+
+        Route::get('/list', [ProductionSampleShippingApprovalController::class, 'index']);
+        Route::get('/show',  [ProductionSampleShippingApprovalController::class, "show"]);
+        Route::post('/store', [ProductionSampleShippingApprovalController::class, "store"]);
+        Route::post('/update', [ProductionSampleShippingApprovalController::class, "update"]);
+        Route::post('/delete', [ProductionSampleShippingApprovalController::class, "delete"]);
+    });
 
     /**
      *Critical Path
@@ -552,6 +565,18 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
         Route::post('/store',       [ManufacturerContactPeopleController::class, "store"]);
         Route::post('/update',      [ManufacturerContactPeopleController::class, "update"]);
         Route::post('/delete',      [ManufacturerContactPeopleController::class, "delete"]);
+    });
+
+     /**
+     * Manufacturar Contact People Section
+     **/
+    Route::prefix('payment')->group(function(){
+
+        Route::get('/list',         [PaymentInfoController::class, 'index']);
+        Route::get('/show',         [PaymentInfoController::class, "show"]);
+        Route::post('/store',       [PaymentInfoController::class, "store"]);
+        Route::post('/update',      [PaymentInfoController::class, "update"]);
+        Route::post('/delete',      [PaymentInfoController::class, "delete"]);
     });
 
 
