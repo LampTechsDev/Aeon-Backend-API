@@ -48,6 +48,10 @@ class CriticalPathController extends Controller
             $criticalPath->sample_approval_id=$request->sample_approval_id;
             $criticalPath->pp_meeting_id=$request->pp_meeting_id;
             $criticalPath->production_information_id=$request->production_information_id;
+            //$criticalPath->production_information_id=$request->production_information_id;
+            $criticalPath->sample_shipping_approvals_id=$request->sample_shipping_approvals_id;
+            $criticalPath->ex_factories_id=$request->ex_factories_id;
+            $criticalPath->payments_id=$request->payments_id;
             $criticalPath->	lead_times=$request->lead_times;
             $criticalPath->lead_type=$request->lead_type;
             $criticalPath->	official_po_plan=$request->official_po_plan;
