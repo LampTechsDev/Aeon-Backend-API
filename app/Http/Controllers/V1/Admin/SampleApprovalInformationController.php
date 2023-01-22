@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\V1\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ProductionSampleShippingResource;
 use App\Http\Resources\SampleApprovalInformationResource;
 use App\Models\FitSampleImage;
 use App\Models\PhotoSample;
@@ -20,7 +21,7 @@ class SampleApprovalInformationController extends Controller
     {
        try{
     
-            $this->data = SampleApprovalInformationResource::collection(SampleApprovalInformation::all());
+            $this->data = ProductionSampleShippingResource::collection(SampleApprovalInformation::all());
             $this->apiSuccess("Sample Approval Information Loaded Successfully");
             return $this->apiOutput();
 
@@ -76,7 +77,7 @@ class SampleApprovalInformationController extends Controller
 
             DB::commit();
             $this->apiSuccess();
-            $this->data = (new SampleApprovalInformationResource($sampleApproval));
+            $this->data = (new ProductionSampleShippingResource($sampleApproval));
             return $this->apiOutput("SampleApprovalInformation Added Successfully");
         }catch(Exception $e){
             return $this->apiOutput($this->getError( $e), 500);
@@ -188,7 +189,7 @@ class SampleApprovalInformationController extends Controller
             $sampleApproval->pp_sample_courier_aob_number = $request->pp_sample_courier_aob_number;
             $sampleApproval->save();
             $this->apiSuccess();
-            $this->data = (new SampleApprovalInformationResource($sampleApproval))->hide(["photo_sample_image","fit_sample_image","size_set_sample_image", "pp_sample_image"]);
+            $this->data = (new ProductionSampleShippingResource($sampleApproval))->hide(["photo_sample_image","fit_sample_image","size_set_sample_image", "pp_sample_image"]);
             return $this->apiOutput("SampleApprovalInformation Updated Successfully");
         }catch(Exception $e){
             return $this->apiOutput($this->getError( $e), 500);
@@ -200,7 +201,7 @@ class SampleApprovalInformationController extends Controller
         try{
             
             $sampleApproval =  SampleApprovalInformation::find($request->id);
-            $this->data = (new SampleApprovalInformationResource($sampleApproval));
+            $this->data = (new ProductionSampleShippingResource($sampleApproval));
             $this->apiSuccess("Sample Approval Showed Successfully");
             return $this->apiOutput();
 

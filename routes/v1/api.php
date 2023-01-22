@@ -22,6 +22,7 @@ use App\Http\Controllers\V1\Admin\CriticalPathFabricTypeController;
 use App\Http\Controllers\V1\Admin\CustomerContactPeopleController;
 use App\Http\Controllers\V1\Admin\CustomerController;
 use App\Http\Controllers\V1\Admin\CustomerDepartmentController;
+use App\Http\Controllers\V1\Admin\ExFactoryController;
 use App\Http\Controllers\V1\Admin\FileProcessingController;
 use App\Http\Controllers\V1\Admin\ManualPoItemDetailsController;
 use App\Http\Controllers\V1\Admin\FabricWeightController;
@@ -577,6 +578,18 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
         Route::post('/store',       [PaymentInfoController::class, "store"]);
         Route::post('/update',      [PaymentInfoController::class, "update"]);
         Route::post('/delete',      [PaymentInfoController::class, "delete"]);
+    });
+
+     /**
+     * Manufacturar Contact People Section
+     **/
+    Route::prefix('ex-factory')->group(function(){
+
+        Route::get('/list',         [ExFactoryController::class, 'index']);
+        Route::get('/show',         [ExFactoryController::class, "show"]);
+        Route::post('/store',       [ExFactoryController::class, "store"]);
+        Route::post('/update',      [ExFactoryController::class, "update"]);
+        Route::post('/delete',      [ExFactoryController::class, "delete"]);
     });
 
 

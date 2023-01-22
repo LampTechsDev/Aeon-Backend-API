@@ -32,8 +32,8 @@ class PaymentInfoController extends Controller
             DB::beginTransaction();
 
             $payment = new Payment();
-            //$payment->po_number = $request->po_number;
-           // $payment->po_id=$request->po_id;
+            $payment->po_number = $request->po_number;
+            $payment->po_id=$request->po_id;
             $payment->late_delivery_discount=$request->late_delivery_discount;
             $payment->invoice_number=$request->invoice_number;
             $payment->invoice_create_date=$request->invoice_create_date;
