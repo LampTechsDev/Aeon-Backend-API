@@ -36,7 +36,7 @@ class ProductionSampleShippingResource extends JsonResource
             "po_id"                                       => $this->po_id ?? "",
             "po_number"                                   => $this->po_number ?? "",
             "development_photo_sample_sent_plan"          => $this->development_photo_sample_sent_plan ?? "",
-            "development_photo_sample_sent_actual "       => $this->development_photo_sample_sent_actual ?? "",
+            "development_photo_sample_sent_actual"        => $this->development_photo_sample_sent_actual ?? "",
             "development_photo_sample_dispatch_details"   => $this->development_photo_sample_dispatch_details ?? "",
             "fit_approval_plan"                           => $this->fit_approval_plan ?? "",
             "fit_approval_actual"                         => $this->fit_approval_actual ?? "",
