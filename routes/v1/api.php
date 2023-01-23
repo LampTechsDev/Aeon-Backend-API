@@ -28,6 +28,7 @@ use App\Http\Controllers\V1\Admin\ManualPoItemDetailsController;
 use App\Http\Controllers\V1\Admin\FabricWeightController;
 use App\Http\Controllers\V1\Admin\GlobalCertificateController;
 use App\Http\Controllers\V1\Admin\InspectionInformationController;
+use App\Http\Controllers\V1\Admin\InspectionManagementOrderDetailsController;
 use App\Http\Controllers\V1\Admin\LabDipsEmbellishmentInformationController;
 use App\Http\Controllers\V1\Admin\VendorContactPeopleController;
 use App\Http\Controllers\V1\Admin\ManualPoDeliveryDetailsController;
@@ -590,6 +591,18 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
         Route::post('/store',       [ExFactoryController::class, "store"]);
         Route::post('/update',      [ExFactoryController::class, "update"]);
         Route::post('/delete',      [ExFactoryController::class, "delete"]);
+    });
+
+    /**
+     * Manufacturar Contact People Section
+     **/
+    Route::prefix('inspection-order-details')->group(function(){
+
+        Route::get('/list',         [InspectionManagementOrderDetailsController::class, 'index']);
+        Route::get('/show',         [InspectionManagementOrderDetailsController::class, "show"]);
+        Route::post('/store',       [InspectionManagementOrderDetailsController::class, "store"]);
+        Route::post('/update',      [InspectionManagementOrderDetailsController::class, "update"]);
+        Route::post('/delete',      [InspectionManagementOrderDetailsController::class, "delete"]);
     });
 
 
