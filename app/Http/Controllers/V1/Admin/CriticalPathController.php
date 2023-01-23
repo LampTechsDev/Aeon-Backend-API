@@ -57,6 +57,9 @@ class CriticalPathController extends Controller
             $criticalPath->	official_po_plan=$request->official_po_plan;
             $criticalPath->official_po_actual=$request->official_po_actual;
             $criticalPath->status=$request->status;
+            $criticalPath->aeon_comments=$request->aeon_comments;
+            $criticalPath->vendor_comments=$request->vendor_comments;
+            $criticalPath->other_comments=$request->other_comments;
             $criticalPath->save();
             $this->apiSuccess();
             $this->data = (new CriticalPathResource($criticalPath));
@@ -92,6 +95,9 @@ class CriticalPathController extends Controller
             $criticalPath->	official_po_plan=$request->official_po_plan;
             $criticalPath->official_po_actual=$request->official_po_actual;
             $criticalPath->status=$request->status;
+            $criticalPath->aeon_comments=$request->aeon_comments;
+            $criticalPath->vendor_comments=$request->vendor_comments;
+            $criticalPath->other_comments=$request->other_comments;
             $criticalPath->save();
             $this->apiSuccess();
             $this->data = (new CriticalPathResource($criticalPath));

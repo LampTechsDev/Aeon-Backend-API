@@ -31,6 +31,9 @@ class CreateCriticalPathsTable extends Migration
             $table->date("official_po_plan");
             $table->date("official_po_actual");
             $table->string("status");
+            $table->string("aeon_comments")->nullable();
+            $table->string("vendor_comments")->nullable();
+            $table->string("other_comments")->nullable();
             $table->timestamps();
         });
     }
