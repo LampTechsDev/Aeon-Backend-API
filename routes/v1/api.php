@@ -323,6 +323,10 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
         Route::post('/store', [LabDipsEmbellishmentInformationController::class, "store"]);
         Route::post('/update', [LabDipsEmbellishmentInformationController::class, "update"]);
         Route::post('/delete', [LabDipsEmbellishmentInformationController::class, "delete"]);
+        Route::post('/updateLabDipFile', [LabDipsEmbellishmentInformationController::class, 'updateLabDipFileInfo']);
+        Route::post('/updateEmbellishmentFile', [LabDipsEmbellishmentInformationController::class, 'updateEmbellishmentFileInfo']);
+        Route::post('/additionalLabDipFile', [LabDipsEmbellishmentInformationController::class, 'addFileLabDip']);
+        Route::post('/additionalEmbellishFile', [LabDipsEmbellishmentInformationController::class, 'addFileEmbellish']);
     });
 
 
@@ -611,12 +615,26 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
 });
 
    /**
-     * Admin Login Section
+     * Vendor Login Section
      */
     Route::prefix("vendor")->group(function(){
-        Route::get('/login', [AdminController::class, "login"]);
-        Route::post('/login', [VendorAuthController::class, "login"]);
-        // Route::post('/forget-password', [AdminController::class, "forgetPassword"]);
-        // Route::post('/password-reset', [AdminController::class, "passwordReset"]);
+            
+            Route::post('/login', [VendorAuthController::class, "login"]);
+        
     });
+Route::middleware(["auth:vendor"])->prefix('vendors')->group(function(){
+     
+    /**
+     * Vendor
+     */
+    Route::prefix('vendor')->group(function(){
+
+        Route::get('/list', [VendorAuthController::class, 'index']);
+        Route::post('/store', [VendorAuthController::class, 'store']);
+        Route::post('/update/{id}', [VendorAuthController::class, 'update']);
+        Route::get('/show', [VendorAuthController::class, 'show']);
+        Route::post('/delete/{id}', [VendorAuthController::class, 'delete']);
+
+    });
+});
 
