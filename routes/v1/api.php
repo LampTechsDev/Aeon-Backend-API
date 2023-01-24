@@ -45,6 +45,7 @@ use App\Http\Controllers\V1\Admin\ProductionInformationController;
 use App\Http\Controllers\V1\Admin\ProductionSampleShippingApprovalController;
 use App\Http\Controllers\V1\Admin\SampleApprovalInformationController;
 use App\Http\Controllers\V1\Admin\SeasonController;
+use App\Http\Controllers\V1\Vendor\VendorController as VendorAuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -608,3 +609,14 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
 
 
 });
+
+   /**
+     * Admin Login Section
+     */
+    Route::prefix("vendor")->group(function(){
+        Route::get('/login', [AdminController::class, "login"]);
+        Route::post('/login', [VendorAuthController::class, "login"]);
+        // Route::post('/forget-password', [AdminController::class, "forgetPassword"]);
+        // Route::post('/password-reset', [AdminController::class, "passwordReset"]);
+    });
+

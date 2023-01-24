@@ -43,13 +43,14 @@ class VendorController extends Controller
             $vendor->logo           = $this->uploadFileNid($request, 'logo', $this->vendor_logo, 720);
             $vendor->address        = $request->address;
             $vendor->email          = $request->email;
+            $vendor->password = !empty($request->password) ? bcrypt($request->password) : $vendor->password;
             $vendor->contact_number = $request->contact_number;
             $vendor->remarks        = $request->remarks;
             $vendor->status         = $request->status;
-            $vendor->created_at     = $request->created_at;
-            $vendor->updated_at     = $request->updated_at;
-            $vendor->deleted_by     = $request->deleted_by;
-            $vendor->deleted_date   = $request->deleted_date;
+            // $vendor->created_at     = $request->created_at;
+            // $vendor->updated_at     = $request->updated_at;
+            // $vendor->deleted_by     = $request->deleted_by;
+            // $vendor->deleted_date   = $request->deleted_date;
 
             $vendor->save();
             $this->apiSuccess();
@@ -81,13 +82,14 @@ class VendorController extends Controller
             $vendor->logo = $this->uploadFileNid($request, 'logo', $this->vendor_logo, 720);
             $vendor->address = $request->address;
             $vendor->email = $request->email;
+            $vendor->password = !empty($request->password) ? bcrypt($request->password) : $vendor->password;
             $vendor->contact_number = $request->contact_number;
             $vendor->remarks = $request->remarks;
             $vendor->status = $request->status;
-            $vendor->created_at = $request->created_at;
-            $vendor->updated_at = $request->updated_at;
-            $vendor->deleted_by = $request->deleted_by;
-            $vendor->deleted_date = $request->deleted_date;
+            // $vendor->created_at = $request->created_at;
+            // $vendor->updated_at = $request->updated_at;
+            // $vendor->deleted_by = $request->deleted_by;
+            // $vendor->deleted_date = $request->deleted_date;
 
             $vendor->save();
             $this->apiSuccess();
