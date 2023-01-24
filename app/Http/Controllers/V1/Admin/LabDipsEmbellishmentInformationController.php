@@ -304,5 +304,45 @@ class LabDipsEmbellishmentInformationController extends Controller
             $data->save();
         }
     }
+
+    public function deleteFileLabDip(Request $request){
+        try{
+           
+            $validator = Validator::make( $request->all(),[
+                //"id"            => ["required", "exists:ticket_uploads,id"],
+            ]);
+
+            if ($validator->fails()) {
+                return $this->apiOutput($this->getValidationError($validator), 200);
+            }
+    
+            $labDipupload=LabDipImage::where('id',$request->id);
+            $labDipupload->delete();
+            $this->apiSuccess("Lab Dip Image Deleted successfully");
+            return $this->apiOutput();
+        }catch(Exception $e){
+            return $this->apiOutput($this->getError( $e), 500);
+        }
+    }
+
+    public function deleteFileEmbellish(Request $request){
+        try{
+           
+            $validator = Validator::make( $request->all(),[
+                //"id"            => ["required", "exists:ticket_uploads,id"],
+            ]);
+
+            if ($validator->fails()) {
+                return $this->apiOutput($this->getValidationError($validator), 200);
+            }
+    
+            $labDipupload=EmbellishmentImage::where('id',$request->id);
+            $labDipupload->delete();
+            $this->apiSuccess("Embellish Image Deleted successfully");
+            return $this->apiOutput();
+        }catch(Exception $e){
+            return $this->apiOutput($this->getError( $e), 500);
+        }
+    }
 }
 

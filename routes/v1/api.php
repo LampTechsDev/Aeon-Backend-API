@@ -327,6 +327,8 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
         Route::post('/updateEmbellishmentFile', [LabDipsEmbellishmentInformationController::class, 'updateEmbellishmentFileInfo']);
         Route::post('/additionalLabDipFile', [LabDipsEmbellishmentInformationController::class, 'addFileLabDip']);
         Route::post('/additionalEmbellishFile', [LabDipsEmbellishmentInformationController::class, 'addFileEmbellish']);
+        Route::post('/deleteLabDipFile', [LabDipsEmbellishmentInformationController::class, 'deleteFileLabDip']);
+        Route::post('/deleteEmbellishFile', [LabDipsEmbellishmentInformationController::class, 'deleteFileEmbellish']);
     });
 
 
