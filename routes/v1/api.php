@@ -342,6 +342,10 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
         Route::post('/store', [BulkFabricInformationController::class, "store"]);
         Route::post('/update', [BulkFabricInformationController::class, "update"]);
         Route::post('/delete', [BulkFabricInformationController::class, "delete"]);
+        Route::post('/updateBulkFile', [BulkFabricInformationController::class, 'updateBulkFileInfo']);
+        Route::post('/additionalBulkFile', [BulkFabricInformationController::class, 'addBulkFabricFile']);
+        Route::post('/deleteBulkFile', [BulkFabricInformationController::class, 'deleteFileBulk']);
+      
     });
 
 
