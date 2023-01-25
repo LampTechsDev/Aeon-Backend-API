@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\ManualPoItemDetails;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ManualPoResource extends JsonResource
@@ -55,13 +56,14 @@ class ManualPoResource extends JsonResource
             "updated_at"                => $this->updated_at ?? null,
             "upload_files"              => PictureGarmentsResource::collection($this->fileInfo),
             "upload_files_artwork"      => PoArtworkResource::collection($this-> fileInfoArt),
-            "manualPoDeliveryDetails"               => ManualPoDeliveryDetailsResource::collection($this->manualpoDeliveryDetails),
+            "manualPoDeliveryDetails"    => ManualPoDeliveryDetailsResource::collection($this->manualpoDeliveryDetails),
             "buyer_info"                  =>isset($this->buyer) ? (new CustomerResource($this->buyer))->hide(["created_by", "updated_by"]) : null,
             "vendor_info"                 =>isset($this->vendor) ? (new VendorResource($this->vendor))->hide(["created_by", "updated_by"]) : null,
             "supplier_info"                =>isset($this->supplier) ? (new SupplierResource($this->supplier))->hide(["created_by", "updated_by"]) : null,
             "manufacturer_info"            =>isset($this->manufacturer) ? (new VendorManufacturerResource($this->manufacturer))->hide(["created_by", "updated_by"]) : null,
-            "customer_department_info"            =>isset($this->customerDepartment) ? (new CustomerDepartmentResource($this->customerDepartment))->hide(["created_by", "updated_by"]) : null,
-            "season_info"            =>isset($this->season) ? (new SeasonResource($this->season))->hide(["created_by", "updated_by"]) : null,
+            "customer_department_info"      =>isset($this->customerDepartment) ? (new CustomerDepartmentResource($this->customerDepartment))->hide(["created_by", "updated_by"]) : null,
+            "season_info"                   =>isset($this->season) ? (new SeasonResource($this->season))->hide(["created_by", "updated_by"]) : null,
+            "manual_po_item_details"        => count($this->manualpoItemDetails) >= 1 ? ManualPoItemDetailsResource::collection($this->manualpoItemDetails) : [],
 
            
 
