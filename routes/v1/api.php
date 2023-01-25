@@ -359,6 +359,14 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
         Route::post('/store', [SampleApprovalInformationController::class, "store"]);
         Route::post('/update', [SampleApprovalInformationController::class, "update"]);
         Route::post('/delete', [SampleApprovalInformationController::class, "delete"]);
+        Route::post('/updatePhotoSampleFileInfo', [SampleApprovalInformationController::class, 'updatePhotoSampleFileInfo']);
+        Route::post('/updateFitSampleFileInfo', [SampleApprovalInformationController::class, 'updateFitSampleFileInfo']);
+        Route::post('/updateSizeSetSampleFileInfo', [SampleApprovalInformationController::class, 'updateSizeSetSampleFileInfo']);
+        Route::post('/updatePpSampleImageFileInfo', [SampleApprovalInformationController::class, 'updatePpSampleImageFileInfo']);
+        Route::post('/addSampleImageFile', [SampleApprovalInformationController::class, 'addPhotoSampleFile']);
+        Route::post('/addFitSampleImageFile', [SampleApprovalInformationController::class, 'addFitSampleFile']);
+        Route::post('/addSizeSetSampleImageFile', [SampleApprovalInformationController::class, 'addSizeSetSampleImageFile']);
+        Route::post('/addPpSampleImageFile', [SampleApprovalInformationController::class, 'addAdditionalPpSampleImageFile']);
     });
 
     /**
