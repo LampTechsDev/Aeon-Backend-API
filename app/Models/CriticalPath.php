@@ -51,4 +51,8 @@ class CriticalPath extends Model
     public function paymentInfo(){
         return $this->belongsTo(Payment::class,"payments_id");
     }
+
+    public function fileInfo(){
+        return $this->hasMany(CriticalPathMasterFile::class, 'critical_path_id');
+    }
 }

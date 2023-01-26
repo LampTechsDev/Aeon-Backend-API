@@ -214,7 +214,7 @@ class BulkFabricInformationController extends Controller
 
         //BulkFabric Save File Info
         public function saveAdditionalBulkFabricFileInfo($request){
-            $file_path = $this->uploadFile($request, 'file', $this->labdips_uploads, 720);
+            $file_path = $this->uploadFileNid($request, 'file', $this->labdips_uploads, 720);
 
             if( !is_array($file_path) ){
                 $file_path = (array) $file_path;

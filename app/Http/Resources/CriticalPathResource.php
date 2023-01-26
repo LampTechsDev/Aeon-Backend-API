@@ -51,6 +51,7 @@ class CriticalPathResource extends JsonResource
             "aeon_comments"                            => $this->aeon_comments ?? "",
             "vendor_comments"                          => $this->vendor_comments ?? "",
             "other_comments"                           => $this->other_comments ?? "",
+            "critical_path_files"                      =>  MasterUploadResource::collection($this->fileInfo),
             "created_at"                               => $this->created_at ?? "",
             "updated_at"                               => $this->updated_at ?? "",
             "created_by"                               => isset($this->created_by) ? (new AdminResource($this->createdBy))->hide(["groupId","department", "created_by","updated_by"]) : null,

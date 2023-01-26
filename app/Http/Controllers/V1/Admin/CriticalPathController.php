@@ -5,9 +5,11 @@ namespace App\Http\Controllers\V1\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\CriticalPathResource;
 use App\Models\CriticalPath;
+use App\Models\CriticalPathMasterFile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Exception;
+use Illuminate\Support\Facades\DB;
 
 class CriticalPathController extends Controller
 {
@@ -38,7 +40,8 @@ class CriticalPathController extends Controller
             if ($validator->fails()) {    
                 $this->apiOutput($this->getValidationError($validator), 400);
             }
-   
+            
+            DB::beginTransaction();
             $criticalPath = new CriticalPath();
             $criticalPath->po_id=$request->po_id;
             $criticalPath->inspection_information_id=$request->inspection_information_id;
@@ -61,6 +64,9 @@ class CriticalPathController extends Controller
             $criticalPath->vendor_comments=$request->vendor_comments;
             $criticalPath->other_comments=$request->other_comments;
             $criticalPath->save();
+
+            $this->saveFileInfo($request, $criticalPath);
+            DB::commit();
             $this->apiSuccess();
             $this->data = (new CriticalPathResource($criticalPath));
             return $this->apiOutput("Critical Path Department Added Successfully");
@@ -68,6 +74,67 @@ class CriticalPathController extends Controller
             return $this->apiOutput($this->getError( $e), 500);
         }
     }
+
+     //Save Additional File Info
+     public function saveFileInfo($request,$criticalPath){
+        $file_path = $this->uploadFile($request, 'file', $this->pogarments_uploads, 720);
+
+        if( !is_array($file_path) ){
+            $file_path = (array) $file_path;
+        }
+        foreach($file_path as $path){
+            $data = new CriticalPathMasterFile();
+            $data->critical_path_id = $criticalPath->id;
+            $data->critical_path_departments_id = $request->critical_path_departments_id ?? "Enter Id";
+            $data->file_name    = $request->file_name ?? "Critical_Path_File Upload";
+            $data->file_url     = $path;
+            $data->type = $request->type;
+            $data->save();
+        }
+    }
+
+     
+
+      //Additional BulkFabric Save File Info
+    //   public function addBulkFabricFile(Request $request){
+    //     try{
+    //         $validator = Validator::make( $request->all(),[
+    //             //"bulk_fabric_information_id"            => ["required","exists:lab_dips_embellishment_information,id"],
+
+    //         ]);
+
+    //         if ($validator->fails()) {
+    //             return $this->apiOutput($this->getValidationError($validator), 200);
+    //         }
+
+    //         $this->saveAdditionalFileInfo($request);
+    //         $this->apiSuccess(" File Added Successfully");
+    //         return $this->apiOutput();
+        
+        
+    //     }catch(Exception $e){
+    //         return $this->apiOutput($this->getError( $e), 500);
+    //     }
+    // }
+
+        //Save Additional File Info
+        // public function saveAdditionalFileInfo($request){
+        //     $file_path = $this->uploadFile($request, 'file', $this->pogarments_uploads, 720);
+
+        //     if( !is_array($file_path) ){
+        //         $file_path = (array) $file_path;
+        //     }
+        //     foreach($file_path as $path){
+        //         $data = new CriticalPathMasterFile();
+        //         $data->critical_path_id = $request->critical_path_id;
+        //         $data->critical_path_departments_id = $request->critical_path_departments_id ?? "Enter Id";
+        //         $data->file_name    = $request->file_name ?? "Critical_Path_File Upload";
+        //         $data->file_url     = $path;
+        //         $data->type = $request->type;
+        //         $data->save();
+        //     }
+        // }
+
 
     public function update(Request $request){
         try{
@@ -107,6 +174,7 @@ class CriticalPathController extends Controller
         }
     }
 
+   
     public function show(Request $request)
     {
         try{
