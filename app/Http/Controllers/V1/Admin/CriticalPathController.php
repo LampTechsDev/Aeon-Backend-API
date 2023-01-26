@@ -95,45 +95,45 @@ class CriticalPathController extends Controller
 
      
 
-      //Additional BulkFabric Save File Info
-    //   public function addBulkFabricFile(Request $request){
-    //     try{
-    //         $validator = Validator::make( $request->all(),[
-    //             //"bulk_fabric_information_id"            => ["required","exists:lab_dips_embellishment_information,id"],
+      //Additional Critical Path Save File Info
+      public function addCriticalPathFile(Request $request){
+        try{
+            $validator = Validator::make( $request->all(),[
+                //"bulk_fabric_information_id"            => ["required","exists:lab_dips_embellishment_information,id"],
 
-    //         ]);
+            ]);
 
-    //         if ($validator->fails()) {
-    //             return $this->apiOutput($this->getValidationError($validator), 200);
-    //         }
+            if ($validator->fails()) {
+                return $this->apiOutput($this->getValidationError($validator), 200);
+            }
 
-    //         $this->saveAdditionalFileInfo($request);
-    //         $this->apiSuccess(" File Added Successfully");
-    //         return $this->apiOutput();
+            $this->saveAdditionalCriticalPathFileInfo($request);
+            $this->apiSuccess("Critical Path File Added Successfully");
+            return $this->apiOutput();
         
         
-    //     }catch(Exception $e){
-    //         return $this->apiOutput($this->getError( $e), 500);
-    //     }
-    // }
+        }catch(Exception $e){
+            return $this->apiOutput($this->getError( $e), 500);
+        }
+    }
 
-        //Save Additional File Info
-        // public function saveAdditionalFileInfo($request){
-        //     $file_path = $this->uploadFile($request, 'file', $this->pogarments_uploads, 720);
+        //Save Additional Critical Path File Info
+        public function saveAdditionalCriticalPathFileInfo($request){
+            $file_path = $this->uploadFile($request, 'file', $this->pogarments_uploads, 720);
 
-        //     if( !is_array($file_path) ){
-        //         $file_path = (array) $file_path;
-        //     }
-        //     foreach($file_path as $path){
-        //         $data = new CriticalPathMasterFile();
-        //         $data->critical_path_id = $request->critical_path_id;
-        //         $data->critical_path_departments_id = $request->critical_path_departments_id ?? "Enter Id";
-        //         $data->file_name    = $request->file_name ?? "Critical_Path_File Upload";
-        //         $data->file_url     = $path;
-        //         $data->type = $request->type;
-        //         $data->save();
-        //     }
-        // }
+            if( !is_array($file_path) ){
+                $file_path = (array) $file_path;
+            }
+            foreach($file_path as $path){
+                $data = new CriticalPathMasterFile();
+                $data->critical_path_id = $request->critical_path_id;
+                $data->critical_path_departments_id = $request->critical_path_departments_id ?? "Enter Id";
+                $data->file_name    = $request->file_name ?? "Critical_Path_File Upload";
+                $data->file_url     = $path;
+                $data->type = $request->type;
+                $data->save();
+            }
+        }
 
 
     public function update(Request $request){
@@ -196,6 +196,56 @@ class CriticalPathController extends Controller
         CriticalPath::where("id", $request->id)->delete();
         $this->apiSuccess();
         return $this->apiOutput("Critical Path Deleted Successfully", 200);
+    }
+
+
+    public function updateCriticalPathFileInfo(Request $request){
+        try{
+            $validator = Validator::make( $request->all(),[
+                //"id"            => ["required", "exists:ticket_uploads,id"],
+
+            ]);
+
+            if ($validator->fails()) {
+                return $this->apiOutput($this->getValidationError($validator), 200);
+            }
+
+            $data = CriticalPathMasterFile::find($request->id);
+            
+            if($request->hasFile('picture')){
+                $data->file_url = $this->uploadFileNid($request, 'picture', $this->labdips_uploads, null,null,$data->file_url);
+            }
+
+            $data->save();
+          
+            $this->apiSuccess("Critical File Updated Successfully");
+            return $this->apiOutput();
+           
+           
+        }catch(Exception $e){
+            return $this->apiOutput($this->getError( $e), 500);
+        }
+    }
+
+
+    public function deleteFileCriticalPath(Request $request){
+        try{
+           
+            $validator = Validator::make( $request->all(),[
+                //"id"            => ["required", "exists:ticket_uploads,id"],
+            ]);
+
+            if ($validator->fails()) {
+                return $this->apiOutput($this->getValidationError($validator), 200);
+            }
+    
+            $labDipupload=CriticalPathMasterFile::where('id',$request->id);
+            $labDipupload->delete();
+            $this->apiSuccess("Critical Path Image Deleted successfully");
+            return $this->apiOutput();
+        }catch(Exception $e){
+            return $this->apiOutput($this->getError( $e), 500);
+        }
     }
 
 

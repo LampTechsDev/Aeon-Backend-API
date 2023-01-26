@@ -427,6 +427,9 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
         Route::post('/store', [CriticalPathController::class, "store"]);
         Route::post('/update', [CriticalPathController::class, "update"]);
         Route::post('/delete', [CriticalPathController::class, "delete"]);
+        Route::post('/updateCriticalPathFile', [CriticalPathController::class, "updateCriticalPathFileInfo"]);
+        Route::post('/deleteCriticalPathFile', [CriticalPathController::class, "deleteFileCriticalPath"]);
+        Route::post('/additionalCriticalPathFile', [CriticalPathController::class, "addCriticalPathFile"]);
     });
 
 
