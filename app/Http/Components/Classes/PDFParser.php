@@ -98,7 +98,7 @@ class PDFParser{
         $rqst_body = [
             "url"           => $this->file_url,
             "outputFormat"  => "JSON",
-            "templateId"    => "1",
+            // "templateId"    => "1",
             "async"         => false,
             "encrypt"       => false,
             "inline"        => "true",
