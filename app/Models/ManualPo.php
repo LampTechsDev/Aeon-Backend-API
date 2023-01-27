@@ -18,9 +18,15 @@ class ManualPo extends Model
     public function manualpoDeliveryDetails(){
         return $this->hasMany(ManualPoDeliveryDetails::class, 'po_id');
     }
+    // public function manualpoItemDetails(){
+    //     return $this->hasMany(ManualPoItemDetails::class, 'po_id');
+    // }
+
     public function manualpoItemDetails(){
-        return $this->hasMany(ManualPoItemDetails::class, 'po_id');
+        return $this->hasMany(ManualPoItemDetails::class, 'po_id', "id");
     }
+
+//    
 
     public function vendor(){
         return $this->belongsTo(Vendor::class, 'vendor_id');

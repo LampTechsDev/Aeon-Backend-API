@@ -23,13 +23,12 @@ class CreateVendorsTable extends Migration
 
             $table->string('remarks')->nullable();
             $table->enum('status',["Active","Inactive","Pending","Cencle","Delete"]);
+            $table->string('password');
             $table->string('created_by')->nullable();
             // $table->date('create_date')->nullable();
             $table->string('updated_by')->nullable();
             // $table->date('modified_date')->nullable();
             $table->timestamps();
-            $table->string('deleted_by')->nullable();
-            $table->date('deleted_date')->nullable();
 
             // $table->string('remarks')->nullable();
             // $table->enum('status',["Active","Inactive","Pending","Cencle","Delete"]);

@@ -22,11 +22,18 @@ class CreateCriticalPathsTable extends Migration
             $table->foreignId("sample_approval_id")->references("id")->on("sample_approval_information")->cascadeOnDelete();
             $table->foreignId("pp_meeting_id")->references("id")->on("pp_meetings")->cascadeOnDelete();
             $table->foreignId("production_information_id")->references("id")->on("production_information")->cascadeOnDelete();
+            $table->foreignId("inspection_information_id")->references("id")->on("inspection_information")->cascadeOnDelete();
+            $table->foreignId("sample_shipping_approvals_id")->references("id")->on("sample_shipping_approvals")->cascadeOnDelete();
+            $table->foreignId("ex_factories_id")->references("id")->on("ex_factories")->cascadeOnDelete();
+            $table->foreignId("payments_id")->references("id")->on("payments")->cascadeOnDelete();
             $table->string("lead_times");
             $table->enum('lead_type',["Regular","Short"]);
             $table->date("official_po_plan");
             $table->date("official_po_actual");
             $table->string("status");
+            $table->string("aeon_comments")->nullable();
+            $table->string("vendor_comments")->nullable();
+            $table->string("other_comments")->nullable();
             $table->timestamps();
         });
     }

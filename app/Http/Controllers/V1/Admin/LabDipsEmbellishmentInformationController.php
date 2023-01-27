@@ -168,5 +168,181 @@ class LabDipsEmbellishmentInformationController extends Controller
         $this->apiSuccess();
         return $this->apiOutput("LabdipsEmbellishmentInformation  Deleted Successfully", 200);
     }
+
+    public function updateLabDipFileInfo(Request $request){
+        try{
+            $validator = Validator::make( $request->all(),[
+                //"id"            => ["required", "exists:ticket_uploads,id"],
+
+            ]);
+
+            if ($validator->fails()) {
+                return $this->apiOutput($this->getValidationError($validator), 200);
+            }
+
+            $data = LabDipImage::find($request->id);
+            
+            if($request->hasFile('picture')){
+                $data->file_url = $this->uploadFileNid($request, 'picture', $this->labdips_uploads, null,null,$data->file_url);
+            }
+
+            $data->save();
+          
+            $this->apiSuccess("LabDip File Updated Successfully");
+            return $this->apiOutput();
+           
+           
+        }catch(Exception $e){
+            return $this->apiOutput($this->getError( $e), 500);
+        }
+    }
+
+    public function updateEmbellishmentFileInfo(Request $request){
+        try{
+            $validator = Validator::make( $request->all(),[
+                //"id"            => ["required", "exists:ticket_uploads,id"],
+
+            ]);
+
+            if ($validator->fails()) {
+                return $this->apiOutput($this->getValidationError($validator), 200);
+            }
+
+            $data = EmbellishmentImage::find($request->id);
+            
+            if($request->hasFile('picture')){
+                $data->file_url = $this->uploadFileNid($request, 'picture', $this->labdips_uploads, null,null,$data->file_url);
+            }
+
+            $data->save();
+          
+            $this->apiSuccess("EmbellishmentFile File Updated Successfully");
+            return $this->apiOutput();
+           
+           
+        }catch(Exception $e){
+            return $this->apiOutput($this->getError( $e), 500);
+        }
+    }
+
+     //Additional LabDip Save File Info
+    public function addFileLabDip(Request $request){
+        try{
+            $validator = Validator::make( $request->all(),[
+                "labdips_embellishment_id"            => ["required","exists:lab_dips_embellishment_information,id"],
+
+            ]);
+
+            if ($validator->fails()) {
+                return $this->apiOutput($this->getValidationError($validator), 200);
+            }
+
+            $this->saveAdditonalLabDipFileInfo($request);
+            $this->apiSuccess("LabDip File Added Successfully");
+            return $this->apiOutput();
+           
+           
+        }catch(Exception $e){
+            return $this->apiOutput($this->getError( $e), 500);
+        }
+    }
+
+    //Additional LabDip Save File Info
+    public function saveAdditonalLabDipFileInfo($request){
+        $file_path = $this->uploadFile($request, 'labDipsfile', $this->labdips_uploads, 720);
+
+        if( !is_array($file_path) ){
+            $file_path = (array) $file_path;
+        }
+        foreach($file_path as $path){
+            $data = new LabDipImage();
+            $data->labdips_embellishment_id = $request->labdips_embellishment_id;
+            $data->file_name    = $request->lab_dip_file_name ?? "LabDipImage File Upload";
+            $data->file_url     = $path;
+            $data->type = $request->lab_dip_file_type;
+            $data->save();
+        }
+    }
+
+
+    
+     //Additional Embellish Save File Info
+     public function addFileEmbellish(Request $request){
+        try{
+            $validator = Validator::make( $request->all(),[
+                "labdips_embellishment_id"            => ["required","exists:lab_dips_embellishment_information,id"],
+
+            ]);
+
+            if ($validator->fails()) {
+                return $this->apiOutput($this->getValidationError($validator), 200);
+            }
+
+            $this->saveAdditionalEmbellishmentFileInfo($request);
+            $this->apiSuccess("Embellishment File Added Successfully");
+            return $this->apiOutput();
+           
+           
+        }catch(Exception $e){
+            return $this->apiOutput($this->getError( $e), 500);
+        }
+    }
+
+    //Embellishment Save File Info
+    public function saveAdditionalEmbellishmentFileInfo($request){
+        $file_path = $this->uploadFile($request, 'embellishmentfile', $this->labdips_uploads, 720);
+
+        if( !is_array($file_path) ){
+            $file_path = (array) $file_path;
+        }
+        foreach($file_path as $path){
+            $data = new EmbellishmentImage();
+            $data->labdips_embellishment_id = $request->labdips_embellishment_id;
+            $data->file_name    = $request->embellishment_file_name ?? "EmbellishmentImage File Upload";
+            $data->file_url     = $path;
+            $data->type = $request->embellishment_type;
+            $data->save();
+        }
+    }
+
+    public function deleteFileLabDip(Request $request){
+        try{
+           
+            $validator = Validator::make( $request->all(),[
+                //"id"            => ["required", "exists:ticket_uploads,id"],
+            ]);
+
+            if ($validator->fails()) {
+                return $this->apiOutput($this->getValidationError($validator), 200);
+            }
+    
+            $labDipupload=LabDipImage::where('id',$request->id);
+            $labDipupload->delete();
+            $this->apiSuccess("Lab Dip Image Deleted successfully");
+            return $this->apiOutput();
+        }catch(Exception $e){
+            return $this->apiOutput($this->getError( $e), 500);
+        }
+    }
+
+    public function deleteFileEmbellish(Request $request){
+        try{
+           
+            $validator = Validator::make( $request->all(),[
+                //"id"            => ["required", "exists:ticket_uploads,id"],
+            ]);
+
+            if ($validator->fails()) {
+                return $this->apiOutput($this->getValidationError($validator), 200);
+            }
+    
+            $labDipupload=EmbellishmentImage::where('id',$request->id);
+            $labDipupload->delete();
+            $this->apiSuccess("Embellish Image Deleted successfully");
+            return $this->apiOutput();
+        }catch(Exception $e){
+            return $this->apiOutput($this->getError( $e), 500);
+        }
+    }
 }
 
