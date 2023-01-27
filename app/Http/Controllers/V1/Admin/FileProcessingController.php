@@ -47,6 +47,7 @@ class FileProcessingController extends Controller
     public function storePDFData($data_list){
         $buyer = $supplier = "";
         $item_list = [];
+        dd($data_list);
         foreach($data_list as $list){
             if($list->name == "companyName"){
                 $buyer  = $list->value;
