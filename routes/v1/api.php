@@ -45,6 +45,7 @@ use App\Http\Controllers\V1\Admin\ProductionInformationController;
 use App\Http\Controllers\V1\Admin\ProductionSampleShippingApprovalController;
 use App\Http\Controllers\V1\Admin\SampleApprovalInformationController;
 use App\Http\Controllers\V1\Admin\SeasonController;
+use App\Http\Controllers\V1\Vendor\VendorController as VendorAuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -322,6 +323,12 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
         Route::post('/store', [LabDipsEmbellishmentInformationController::class, "store"]);
         Route::post('/update', [LabDipsEmbellishmentInformationController::class, "update"]);
         Route::post('/delete', [LabDipsEmbellishmentInformationController::class, "delete"]);
+        Route::post('/updateLabDipFile', [LabDipsEmbellishmentInformationController::class, 'updateLabDipFileInfo']);
+        Route::post('/updateEmbellishmentFile', [LabDipsEmbellishmentInformationController::class, 'updateEmbellishmentFileInfo']);
+        Route::post('/additionalLabDipFile', [LabDipsEmbellishmentInformationController::class, 'addFileLabDip']);
+        Route::post('/additionalEmbellishFile', [LabDipsEmbellishmentInformationController::class, 'addFileEmbellish']);
+        Route::post('/deleteLabDipFile', [LabDipsEmbellishmentInformationController::class, 'deleteFileLabDip']);
+        Route::post('/deleteEmbellishFile', [LabDipsEmbellishmentInformationController::class, 'deleteFileEmbellish']);
     });
 
 
@@ -335,6 +342,10 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
         Route::post('/store', [BulkFabricInformationController::class, "store"]);
         Route::post('/update', [BulkFabricInformationController::class, "update"]);
         Route::post('/delete', [BulkFabricInformationController::class, "delete"]);
+        Route::post('/updateBulkFile', [BulkFabricInformationController::class, 'updateBulkFileInfo']);
+        Route::post('/additionalBulkFile', [BulkFabricInformationController::class, 'addBulkFabricFile']);
+        Route::post('/deleteBulkFile', [BulkFabricInformationController::class, 'deleteFileBulk']);
+      
     });
 
 
@@ -348,6 +359,14 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
         Route::post('/store', [SampleApprovalInformationController::class, "store"]);
         Route::post('/update', [SampleApprovalInformationController::class, "update"]);
         Route::post('/delete', [SampleApprovalInformationController::class, "delete"]);
+        Route::post('/updatePhotoSampleFileInfo', [SampleApprovalInformationController::class, 'updatePhotoSampleFileInfo']);
+        Route::post('/updateFitSampleFileInfo', [SampleApprovalInformationController::class, 'updateFitSampleFileInfo']);
+        Route::post('/updateSizeSetSampleFileInfo', [SampleApprovalInformationController::class, 'updateSizeSetSampleFileInfo']);
+        Route::post('/updatePpSampleImageFileInfo', [SampleApprovalInformationController::class, 'updatePpSampleImageFileInfo']);
+        Route::post('/addSampleImageFile', [SampleApprovalInformationController::class, 'addPhotoSampleFile']);
+        Route::post('/addFitSampleImageFile', [SampleApprovalInformationController::class, 'addFitSampleFile']);
+        Route::post('/addSizeSetSampleImageFile', [SampleApprovalInformationController::class, 'addSizeSetSampleImageFile']);
+        Route::post('/addPpSampleImageFile', [SampleApprovalInformationController::class, 'addAdditionalPpSampleImageFile']);
     });
 
     /**
@@ -408,6 +427,9 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
         Route::post('/store', [CriticalPathController::class, "store"]);
         Route::post('/update', [CriticalPathController::class, "update"]);
         Route::post('/delete', [CriticalPathController::class, "delete"]);
+        Route::post('/updateCriticalPathFile', [CriticalPathController::class, "updateCriticalPathFileInfo"]);
+        Route::post('/deleteCriticalPathFile', [CriticalPathController::class, "deleteFileCriticalPath"]);
+        Route::post('/additionalCriticalPathFile', [CriticalPathController::class, "addCriticalPathFile"]);
     });
 
 
@@ -608,3 +630,28 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
 
 
 });
+
+   /**
+     * Vendor Login Section
+     */
+    Route::prefix("vendor")->group(function(){
+            
+            Route::post('/login', [VendorAuthController::class, "login"]);
+        
+    });
+Route::middleware(["auth:vendor"])->prefix('vendors')->group(function(){
+     
+    /**
+     * Vendor
+     */
+    Route::prefix('vendor')->group(function(){
+
+        Route::get('/list', [VendorAuthController::class, 'index']);
+        Route::post('/store', [VendorAuthController::class, 'store']);
+        Route::post('/update/{id}', [VendorAuthController::class, 'update']);
+        Route::get('/show', [VendorAuthController::class, 'show']);
+        Route::post('/delete/{id}', [VendorAuthController::class, 'delete']);
+
+    });
+});
+

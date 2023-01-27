@@ -46,7 +46,7 @@ class ManualPoItemDetailsResource extends JsonResource
             "selling_price"             => $this->selling_price ?? "",
             "created_at"                => $this->created_at ?? "",
             "updated_at"                => $this->updated_at ?? "",
-            "po_information"            =>  isset($this->manualPo) ? (new ManualPoResource($this->manualPo))->hide(["created_by", "updated_by"]) : null,
+            
         ]);
     }
 }
