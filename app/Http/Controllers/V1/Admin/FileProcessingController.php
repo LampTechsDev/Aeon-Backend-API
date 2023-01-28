@@ -84,7 +84,10 @@ class FileProcessingController extends Controller
     protected function store(){
         dd( $this->buyer, $this->supplier, $this->issue_date , $this->due_date, $this->total, $this->table_date_arr);
         foreach($this->table_date_arr as $list){
+            dd(count($list));
+            // if(  isset($list->column14) ){
 
+            // }
         }
     }
     
