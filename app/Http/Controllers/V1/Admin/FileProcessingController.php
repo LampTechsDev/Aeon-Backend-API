@@ -13,7 +13,13 @@ use Smalot\PdfParser\Parser;
 
 class FileProcessingController extends Controller
 {
-    
+    protected $buyer = "";
+    protected $supplier = "";
+    protected $item_list = [];
+    protected $issue_date;
+    protected $due_date = "";
+    protected $total = 0;
+    protected $table_date_arr = [];
     /**
      * Process the PDF File
      */
@@ -34,33 +40,51 @@ class FileProcessingController extends Controller
                 return $this->apiOutput($pdf_response->message, 402);
             }
 
-            $this->storePDFData($pdf_response->data);
+            $this->preparePDFData($pdf_response->data)->store();
             
         }catch(Exception $e){
             return $this->apiOutput($this->getError($e), 500);
         }
     }
 
-    /**
-     * Store PDF Data
+     /**
+     * Prepare PDF Data
      */
-    public function storePDFData($data_list){
-        $buyer = $supplier = "";
-        $item_list = [];
-        dd($data_list);
+    public function preparePDFData($data_list){        
         foreach($data_list as $list){
             if($list->name == "companyName"){
-                $buyer  = $list->value;
+                $this->buyer  = $list->value;
             }
             if($list->name == "companyName2"){
-                $supplier   = $list->value;
+                $this->supplier   = $list->value;
+            }
+
+            if( $list->name == "dateIssued") {
+                $this->issue_date = $list->value;
+            }
+
+            if( $list->name == "dateDue"){
+                $this->due_date = $list->value;
+            }
+
+            if( $list->name == "total"  ){
+                $this->total = $list->value;
             }
 
             if($list->objectType == "table"){
-                foreach($list->rows as $_row){
-                    
-                }
+                $this->table_date_arr = $list->rows;
             }
+        }
+        return $this;
+    }
+
+    /**
+     * Save Data info DB
+     */
+    protected function store(){
+        dd( $this->buyer, $this->supplier, $this->item_list, $this->issue_date , $this->due_date, $this->total, $this->table_date_arr);
+        foreach($this->table_date_arr as $list){
+
         }
     }
     
