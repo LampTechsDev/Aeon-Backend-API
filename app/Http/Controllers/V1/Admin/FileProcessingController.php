@@ -82,12 +82,11 @@ class FileProcessingController extends Controller
      * Save Data info DB
      */
     protected function store(){
-       
+       dd($this->table_date_arr);
         foreach($this->table_date_arr as $list){
-            dd( $list->count(), $this->buyer, $this->supplier, $this->issue_date , $this->due_date, $this->total, $this->table_date_arr);
-            // if(  isset($list->column14) ){
+            if(  isset($list->column14) ){
 
-            // }
+            }
         }
     }
     
