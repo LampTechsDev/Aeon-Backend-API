@@ -169,5 +169,14 @@ class FileProcessingController extends Controller
         ]);
         return $supplier->id;
     }
+
+    /**
+     * Processed Data List
+     */
+    public function processDataList(){
+        $upload_po = UploadPo::all();
+        $this->apiSuccess();
+        $this->data["upload_po"] = new UploadPOResource($upload_po);
+    }
     
 }
