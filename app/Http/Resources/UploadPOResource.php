@@ -34,6 +34,8 @@ class UploadPOResource extends JsonResource
         return $this->filter([
             "id"            => $this->id ?? "",
             "is_read"       => $this->is_read ?? false,
+            "issue_date"    => $this->issue_date ?? "",
+            "due_date"      => $this->due_date ?? "",
             "supplier"      => $this->supplier ?? "",
             "customer"      => $this->customer ?? "",
             "created_at"    => $this->created_at ?? "",

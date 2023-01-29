@@ -23,7 +23,7 @@ class FileProcessingController extends Controller
     protected $customer = "";
     protected $supplier = "";
     protected $item_list = [];
-    protected $issue_date;
+    protected $issue_date = "";
     protected $due_date = "";
     protected $total = 0;
     protected $table_date_arr = [];
