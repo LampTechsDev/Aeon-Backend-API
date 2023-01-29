@@ -25,8 +25,6 @@ class ManufacturerProfileController extends Controller
         return $this->apiOutput(200);
     }
 
-
-
     public function index()
     {
         try{
