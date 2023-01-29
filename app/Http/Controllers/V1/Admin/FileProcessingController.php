@@ -122,6 +122,7 @@ class FileProcessingController extends Controller
                     }
                 }
             }
+            dd($iten_list);
             UploadPoItemDetails::insert($iten_list);
             DB::commit();
             return $upload_po;
