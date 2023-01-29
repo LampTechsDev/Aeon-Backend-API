@@ -200,21 +200,26 @@ trait Upload{
             $filename = $fileName.'_'.time().'.'.$image->getClientOriginalExtension();
             $path = $dir.$filename;
 
-            if( empty($height) && empty($width)){
-                Image::make($image)->save($path);
-            }
-            elseif( empty($height) && !empty($width) ){
-                Image::make($image)->resize($width,null,function($constant){
-                    $constant->aspectRatio();
-                })->save($path);
-            }
-            elseif( !empty($height) && empty($width) ){
-                Image::make($image)->resize(null,$height,function($constant){
-                    $constant->aspectRatio();
-                })->save($path);
-            }
-            else{
-                Image::make($image)->resize($width,$height)->save($path);
+            if($this->isImage($path)){
+                if( empty($height) && empty($width)){
+                    Image::make($image)->save($path);
+                }
+                elseif( empty($height) && !empty($width) ){
+                    Image::make($image)->resize($width,null,function($constant){
+                        $constant->aspectRatio();
+                    })->save($path);
+                }
+                elseif( !empty($height) && empty($width) ){
+                    Image::make($image)->resize(null,$height,function($constant){
+                        $constant->aspectRatio();
+                    })->save($path);
+                }
+                else{
+                    Image::make($image)->resize($width,$height)->save($path);
+                }
+            }else{
+                $_dir = trim(str_replace("storage/", "", $dir), "/");
+                $path = "storage/".Storage::disk("public")->putFile($_dir, $file);
             }
             $path_arr   = $path;
         }

@@ -526,6 +526,7 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
     * PDF File Process
      */
     Route::prefix('pdf')->group(function(){
+        Route::get('process/list', [FileProcessingController::class, "processDataList"]);
         Route::post('process', [FileProcessingController::class, "process"]);
     });
 

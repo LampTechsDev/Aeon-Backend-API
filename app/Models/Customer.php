@@ -9,6 +9,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Customer extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'name',
+    ];
+
     public function createdBy(){
         return $this->belongsTo(Admin::class, "created_by")->withTrashed();
     }
