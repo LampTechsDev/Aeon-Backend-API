@@ -177,6 +177,7 @@ class FileProcessingController extends Controller
         $upload_po = UploadPo::all();
         $this->apiSuccess();
         $this->data["upload_po"] = new UploadPOResource($upload_po);
+        return $this->apiOutput();
     }
     
 }
