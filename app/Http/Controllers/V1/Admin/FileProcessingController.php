@@ -4,16 +4,19 @@ namespace App\Http\Controllers\V1\Admin;
 
 use App\Facade\PDFParser;
 use App\Http\Controllers\Controller;
+use App\Models\UploadPo;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use PhpParser\Node\Stmt\Continue_;
 use Smalot\PdfParser\Parser;
 
 class FileProcessingController extends Controller
 {
-    protected $buyer = "";
+    protected $customer = "";
     protected $supplier = "";
     protected $item_list = [];
     protected $issue_date;
@@ -50,10 +53,11 @@ class FileProcessingController extends Controller
      /**
      * Prepare PDF Data
      */
-    public function preparePDFData($data_list){        
+    public function preparePDFData($data_list){    
+        dd($data_list);    
         foreach($data_list as $list){
             if($list->name == "companyName"){
-                $this->buyer  = $list->value;
+                $this->customer  = $list->value;
             }
             if($list->name == "companyName2"){
                 $this->supplier   = $list->value;
@@ -82,12 +86,52 @@ class FileProcessingController extends Controller
      * Save Data info DB
      */
     protected function store(){
-       dd($this->table_date_arr);
-        foreach($this->table_date_arr as $list){
-            if(  isset($list->column14) ){
-
+        $iten_list = [];
+        try{
+            DB::beginTransaction();
+            $upload_po = $this->createUploadPo();
+            foreach($this->table_date_arr as $list){
+                if(  isset($list->column14) && !isset($list->column15) ){
+                    if( !empty($list->column14) ){
+                        array_push($iten_list, [
+                            "upload_po_id"  => $upload_po->id,
+                            "order_ln"      => $list->column1, 
+                            "ref_no"        => $list->column2, 
+                            "level_item"    =>$list->column3, 
+                            "diff_name"     => $list->column4, 
+                            "diff_total"    =>$list->column5, 
+                            "iten_no"       => $list->column6, 
+                            "item_description" => $list->column7, 
+                            "vendor_ref_no" => $list->column8,
+                            "order_qty"     => $list->column9, 
+                            "inner_qty"     => $list->column10, 
+                            "outer_qty"     => $list->column11, 
+                            "supplier_cost" => $list->column12, 
+                            "local_guarented_cost"  => $list->column13, 
+                            "selling_price" => $list->column14,
+                            "created_at"    => now(),
+                            "updated_at"    => now(),
+                        ]);
+                    }else{
+                        continue;
+                    }
+                }
             }
+            DB::commit();
+        }catch(Exception $e){
+            DB::rollBack();
         }
+        
+    }
+
+    /**
+     * Create or Store Upload PO
+     */
+    public function createUploadPo(){
+        $upload_po = new UploadPo();
+        $upload_po->vendor_id = "";
+
+        return $upload_po;
     }
     
 }
