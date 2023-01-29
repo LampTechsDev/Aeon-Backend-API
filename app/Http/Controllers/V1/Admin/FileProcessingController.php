@@ -97,23 +97,23 @@ class FileProcessingController extends Controller
             $upload_po = $this->createUploadPo();
             foreach($this->table_date_arr as $list){
                 if(  isset($list->column14) && !isset($list->column15) ){
-                    if( !empty($list->column14) ){
+                    if( !empty($list->column14->value) ){
                         array_push($iten_list, [
                             "upload_po_id"  => $upload_po->id,
-                            "order_ln"      => $list->column1, 
-                            "ref_no"        => $list->column2, 
-                            "level_item"    =>$list->column3, 
-                            "diff_name"     => $list->column4, 
-                            "diff_total"    =>$list->column5, 
-                            "iten_no"       => $list->column6, 
-                            "item_description" => $list->column7, 
-                            "vendor_ref_no" => $list->column8,
-                            "order_qty"     => $list->column9, 
-                            "inner_qty"     => $list->column10, 
-                            "outer_qty"     => $list->column11, 
-                            "supplier_cost" => $list->column12, 
-                            "local_guarented_cost"  => $list->column13, 
-                            "selling_price" => $list->column14,
+                            "order_ln"      => $list->column1->value, 
+                            "ref_no"        => $list->column2->value, 
+                            "level_item"    =>$list->column3->value, 
+                            "diff_name"     => $list->column4->value, 
+                            "diff_total"    =>$list->column5->value, 
+                            "iten_no"       => $list->column6->value, 
+                            "item_description" => $list->column7->value, 
+                            "vendor_ref_no" => $list->column8->value,
+                            "order_qty"     => $list->column9->value, 
+                            "inner_qty"     => $list->column10->value, 
+                            "outer_qty"     => $list->column11->value, 
+                            "supplier_cost" => $list->column12->value, 
+                            "local_guarented_cost"  => $list->column13->value, 
+                            "selling_price" => $list->column14->value,
                             "created_at"    => now(),
                             "updated_at"    => now(),
                         ]);
@@ -122,7 +122,6 @@ class FileProcessingController extends Controller
                     }
                 }
             }
-            dd($iten_list);
             UploadPoItemDetails::insert($iten_list);
             DB::commit();
             return $upload_po;
