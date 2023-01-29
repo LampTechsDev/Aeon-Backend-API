@@ -8,4 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 class UploadPo extends Model
 {
     use HasFactory;
+
+    public function supplier(){
+        return $this->belongsTo(Supplier::class, "supplier_id");
+    }
+    public function customer(){
+        return $this->belongsTo(Customer::class, "customer_id");
+    }
+
+    public function itemDetails(){
+        return $this->hasMany(UploadPoItemDetails::class, "upload_po_id");
+    }
+
 }

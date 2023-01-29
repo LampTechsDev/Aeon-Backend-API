@@ -15,7 +15,6 @@ class CreateUploadPosTable extends Migration
     {
         Schema::create('upload_pos', function (Blueprint $table) {
             $table->id();
-            $table->foreignId("vendor_id")->nullable()->references("id")->on("vendors");
             $table->foreignId("supplier_id")->nullable()->references("id")->on("suppliers");
             $table->foreignId("customer_id")->nullable()->references("id")->on("customers");
             $table->timestamps();

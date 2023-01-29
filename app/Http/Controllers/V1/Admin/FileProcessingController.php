@@ -4,7 +4,11 @@ namespace App\Http\Controllers\V1\Admin;
 
 use App\Facade\PDFParser;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\UploadPOResource;
+use App\Models\Customer;
+use App\Models\Supplier;
 use App\Models\UploadPo;
+use App\Models\UploadPoItemDetails;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -43,8 +47,10 @@ class FileProcessingController extends Controller
                 return $this->apiOutput($pdf_response->message, 402);
             }
 
-            $this->preparePDFData($pdf_response->data)->store();
-            
+            $upload_po = $this->preparePDFData($pdf_response->data)->store();
+            $this->apiSuccess();
+            $this->data["upload_po"] = new UploadPOResource($upload_po);
+            return $this->apiOutput();            
         }catch(Exception $e){
             return $this->apiOutput($this->getError($e), 500);
         }
@@ -53,8 +59,7 @@ class FileProcessingController extends Controller
      /**
      * Prepare PDF Data
      */
-    public function preparePDFData($data_list){    
-        dd($data_list);    
+    public function preparePDFData($data_list){      
         foreach($data_list as $list){
             if($list->name == "companyName"){
                 $this->customer  = $list->value;
@@ -117,11 +122,14 @@ class FileProcessingController extends Controller
                     }
                 }
             }
+            UploadPoItemDetails::insert($iten_list);
             DB::commit();
+            return $upload_po;
+
         }catch(Exception $e){
             DB::rollBack();
+            throw new Exception($this->getError($e), 500);
         }
-        
     }
 
     /**
@@ -129,9 +137,37 @@ class FileProcessingController extends Controller
      */
     public function createUploadPo(){
         $upload_po = new UploadPo();
-        $upload_po->vendor_id = "";
-
+        $upload_po->customer_id = $this->getCustomerId();
+        $upload_po->supplier_id = $this->getSupplierId();
+        $upload_po->save();
         return $upload_po;
+    }
+
+    /**
+     * find Customer ID
+     */
+    protected function getCustomerId(){
+        $customer = Customer::firstOrCreate([
+            'name'      =>  $this->customer
+        ],[
+            'name'      => $this->customer,
+            "status"    => "Active"
+        ]);
+        return $customer->id;
+    }
+
+    /**
+     * find Supplier ID
+     */
+    protected function getSupplierId(){
+        $supplier = Supplier::firstOrCreate([
+            'name'      =>  $this->supplier
+        ],[
+            'name'      => $this->supplier,
+            "address"   => "Unknown",
+            "telephone" => "00000000000"
+        ]);
+        return $supplier->id;
     }
     
 }
