@@ -175,9 +175,8 @@ class FileProcessingController extends Controller
      */
     public function processDataList(){
         $upload_po = UploadPo::all();
-        dd( $upload_po);
         $this->apiSuccess();
-        $this->data["upload_po"] = new UploadPOResource($upload_po);
+        $this->data["upload_po"] = UploadPOResource::collection($upload_po);
         return $this->apiOutput();
     }
     
