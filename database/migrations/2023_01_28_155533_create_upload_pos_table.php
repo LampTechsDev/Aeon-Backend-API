@@ -17,7 +17,7 @@ class CreateUploadPosTable extends Migration
             $table->id();
             $table->foreignId("supplier_id")->nullable()->references("id")->on("suppliers");
             $table->foreignId("customer_id")->nullable()->references("id")->on("customers");
-            $table->boolean("unread")->default(false);
+            $table->boolean("is_read")->default(false);
             $table->softDeletes();
             $table->timestamps();
         });

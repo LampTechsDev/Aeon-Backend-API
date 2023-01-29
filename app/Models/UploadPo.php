@@ -10,6 +10,10 @@ class UploadPo extends Model
 {
     use HasFactory, SoftDeletes;
 
+    protected $casts = [
+        "is_read"   => "boolean",
+    ];
+
     public function supplier(){
         return $this->belongsTo(Supplier::class, "supplier_id");
     }
