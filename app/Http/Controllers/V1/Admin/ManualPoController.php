@@ -173,7 +173,6 @@ class ManualPoController extends Controller
             $criticalPath = new CriticalPath();
             $criticalPath->po_id = $manualpo->id;
             $lab_dips_embellishment_id = $this->saveLabDipsEmbellishmentInfo($request, $manualpo);
-            $labdibs = new LabDipsEmbellishmentInformation();
             
             $this->savebulkFabricInformationInfo($request, $manualpo);
             $this->saveSampleApprovalInformation($request, $manualpo);
@@ -185,7 +184,7 @@ class ManualPoController extends Controller
             $this->savePaymentInfo($request,$manualpo);
             
             $criticalPath->inspection_information_id=$request->inspection_information_id;
-            $criticalPath->labdips_embellishment_id=  $labdibs->id;
+            $criticalPath->labdips_embellishment_id = $lab_dips_embellishment_id;
             $criticalPath->bulk_fabric_information_id =$request->bulk_fabric_information_id;
             $criticalPath->fabric_mill_id = $request->fabric_mill_id;
             $criticalPath->sample_approval_id=$request->sample_approval_id;
