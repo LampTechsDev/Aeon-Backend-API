@@ -43,7 +43,7 @@ class CriticalPathController extends Controller
             
             DB::beginTransaction();
             $criticalPath = new CriticalPath();
-            $criticalPath->po_id=$request->po_id;
+            $criticalPath->po_id = $request->po_id;
             $criticalPath->inspection_information_id=$request->inspection_information_id;
             $criticalPath->labdips_embellishment_id=$request->labdips_embellishment_id;
             $criticalPath->bulk_fabric_information_id =$request->bulk_fabric_information_id;
@@ -117,23 +117,23 @@ class CriticalPathController extends Controller
         }
     }
 
-        //Save Additional Critical Path File Info
-        public function saveAdditionalCriticalPathFileInfo($request){
-            $file_path = $this->uploadFile($request, 'file', $this->pogarments_uploads, 720);
+    //Save Additional Critical Path File Info
+    public function saveAdditionalCriticalPathFileInfo($request){
+        $file_path = $this->uploadFile($request, 'file', $this->pogarments_uploads, 720);
 
-            if( !is_array($file_path) ){
-                $file_path = (array) $file_path;
-            }
-            foreach($file_path as $path){
-                $data = new CriticalPathMasterFile();
-                $data->critical_path_id = $request->critical_path_id;
-                $data->critical_path_departments_id = $request->critical_path_departments_id ?? "Enter Id";
-                $data->file_name    = $request->file_name ?? "Critical_Path_File Upload";
-                $data->file_url     = $path;
-                $data->type = $request->type;
-                $data->save();
-            }
+        if( !is_array($file_path) ){
+            $file_path = (array) $file_path;
         }
+        foreach($file_path as $path){
+            $data = new CriticalPathMasterFile();
+            $data->critical_path_id = $request->critical_path_id;
+            $data->critical_path_departments_id = $request->critical_path_departments_id ?? "Enter Id";
+            $data->file_name    = $request->file_name ?? "Critical_Path_File Upload";
+            $data->file_url     = $path;
+            $data->type = $request->type;
+            $data->save();
+        }
+    }
 
 
     public function update(Request $request){

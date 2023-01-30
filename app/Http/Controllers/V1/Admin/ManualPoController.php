@@ -171,8 +171,8 @@ class ManualPoController extends Controller
             
             DB::beginTransaction();
             $criticalPath = new CriticalPath();
-            $criticalPath->po_id=$manualpo->id;
-            $this->saveLabDipsEmbellishmentInfo($request, $manualpo);
+            $criticalPath->po_id = $manualpo->id;
+            $lab_dips_embellishment_id = $this->saveLabDipsEmbellishmentInfo($request, $manualpo);
             $labdibs = new LabDipsEmbellishmentInformation();
             
             $this->savebulkFabricInformationInfo($request, $manualpo);
@@ -215,7 +215,11 @@ class ManualPoController extends Controller
         }
     }
 
-          //LabDipsEmbellishment Department
+          
+          /**
+           * LabDipsEmbellishment Department
+           * @return int
+           */
 
             public function saveLabDipsEmbellishmentInfo($request, $manualpo){
 
