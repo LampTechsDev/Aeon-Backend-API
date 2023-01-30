@@ -48,7 +48,7 @@ class ManualPoController extends Controller
     */
 
     public function store(Request $request){
-        // return 10;
+       
 
         try{
             $validator = Validator::make( 
