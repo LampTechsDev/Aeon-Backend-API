@@ -4,27 +4,14 @@ namespace App\Http\Controllers\V1\Admin;
 
 use Exception;
 use Illuminate\Http\Request;
-use App\Events\AccountRegistration;
 use App\Models\VendorContactPeople;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\VendorContactPeopleResource;
+use Illuminate\Support\Facades\DB;
 
 class VendorContactPeopleController extends Controller
 {
-     /**
-    * Show Login
-    */
-   public function showLogin(Request $request){
-    $this->data = [
-        "email"     => "required",
-        "password"  => "required",
-    ];
-    $this->apiSuccess("This credentials are required for Login ");
-    return $this->apiOutput(200);
-   }
-
-
 
     public function index()
     {
@@ -57,10 +44,11 @@ class VendorContactPeopleController extends Controller
     {
 
         try{
+            DB::beginTransaction();
             $validator = Validator::make(
                 $request->all(),
                 [
-                    "vendor_id"          => ["required"],
+                    "vendor_id"            => ["required"],
                     "employee_id"          => ["required"],
                     "email"                => ["required","email"],
                     "status"               => 'required',
@@ -92,15 +80,17 @@ class VendorContactPeopleController extends Controller
                 $vendor_contact_people->save();
 
             try{
-                event(new AccountRegistration($vendor_contact_people));
+                event(new VendorContactPeopleResource($vendor_contact_people));
             }catch(Exception $e){
 
             }
+            DB::commit();
             $this->apiSuccess("Vendor Contact People Added Successfully");
             $this->data = (new VendorContactPeopleResource($vendor_contact_people));
             return $this->apiOutput();
 
         }catch(Exception $e){
+            DB::rollBack();
             return $this->apiOutput($this->getError( $e), 500);
         }
     }
@@ -108,17 +98,18 @@ class VendorContactPeopleController extends Controller
     public function update(Request $request,$id)
     {
         try{
-        $validator = Validator::make($request->all(),[
-        "id"                   => ["required"],
-        "vendor_id"            => ["required"],
-        "employee_id"          => ["required"],
-        "email"                => ["required","email"],
-        "status"               => 'required',
-        ] );
+            DB::beginTransaction();
+            $validator = Validator::make($request->all(),[
+            "id"                   => ["required"],
+            "vendor_id"            => ["required"],
+            "employee_id"          => ["required"],
+            "email"                => ["required","email"],
+            "status"               => 'required',
+            ] );
 
-        if ($validator->fails()) {
-            $this->apiOutput($this->getValidationError($validator), 400);
-        }
+            if ($validator->fails()) {
+                $this->apiOutput($this->getValidationError($validator), 400);
+            }
 
             $vendor_contact_people = VendorContactPeople::find($request->id);
 
@@ -139,10 +130,13 @@ class VendorContactPeopleController extends Controller
             $vendor_contact_people->deleted_date = $request->deleted_date;
 
             $vendor_contact_people->save();
+            DB::commit();
+            
             $this->apiSuccess("Vendor Contact People Updated Successfully");
             $this->data = (new VendorContactPeopleResource($vendor_contact_people));
             return $this->apiOutput();
         }catch(Exception $e){
+            DB::rollBack();
             return $this->apiOutput($this->getError( $e), 500);
         }
     }

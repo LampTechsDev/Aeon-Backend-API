@@ -21,14 +21,14 @@ class CreateLabDipsEmbellishmentInformationTable extends Migration
             $table->date("colour_std_print_artwork_sent_to_supplier_actual");
             $table->date("lab_dip_approval_plan");
             $table->date("lab_dip_approval_actual");
-            $table->text("lab_dip_dispatch_details");
-            $table->date("lab_dip_dispatch_sending_date");
-            $table->string("lab_dip_dispatch_aob_number");
+            $table->text("lab_dip_dispatch_details")->nullable();
+            $table->date("lab_dip_dispatch_sending_date")->nullable();
+            $table->string("lab_dip_dispatch_aob_number")->nullable();
             $table->date("embellishment_so_approval_plan");
             $table->date("embellishment_so_approval_actual");
-            $table->text("embellishment_so_dispatch_details");
-            $table->date("embellishment_so_dispatch_sending_date");
-            $table->string("embellishment_so_dispatch_aob_number");
+            $table->text("embellishment_so_dispatch_details")->nullable();
+            $table->date("embellishment_so_dispatch_sending_date")->nullable();
+            $table->string("embellishment_so_dispatch_aob_number")->nullable();
             $table->timestamps();
         });
     }

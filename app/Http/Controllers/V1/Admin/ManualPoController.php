@@ -14,6 +14,7 @@ use App\Models\LabDipsEmbellishmentInformation;
 use App\Models\ManualPo;
 use App\Models\ManualPoDeliveryDetails;
 use App\Models\ManualPoItemDetails;
+use App\Models\Mill;
 use App\Models\Payment;
 use App\Models\PoArtwork;
 use App\Models\PoPictureGarments;
@@ -47,6 +48,7 @@ class ManualPoController extends Controller
     */
 
     public function store(Request $request){
+        // return 10;
 
         try{
             $validator = Validator::make( 
@@ -158,43 +160,36 @@ class ManualPoController extends Controller
     }
 
     public function saveCriticalPath($request,$manualpo){
-        try{
-
-            $validator = Validator::make( $request->all(),[
-                // 'name'          => ["required", "min:4"],
-                // 'description'   => ["nullable", "min:4"],
-            ]);
-                
-            if ($validator->fails()) {    
-                $this->apiOutput($this->getValidationError($validator), 400);
-            }
+           //return 10;
+        
             
-            DB::beginTransaction();
+            //DB::beginTransaction();
             $criticalPath = new CriticalPath();
-            $criticalPath->po_id=$manualpo->id;
-            $this->saveLabDipsEmbellishmentInfo($request, $manualpo);
-            $labdibs = new LabDipsEmbellishmentInformation();
             
-            $this->savebulkFabricInformationInfo($request, $manualpo);
-            $this->saveSampleApprovalInformation($request, $manualpo);
-            $this->savePpMeetingInformation($request, $manualpo);
-            $this->saveProductionInformation($request, $manualpo);
-            $this-> saveInspectionInformation($request,$manualpo);
-            $this->saveSampleShippingApproval($request,$manualpo);
-            $this->saveExFactoryVesselInfo($request,$manualpo);
-            $this->savePaymentInfo($request,$manualpo);
+           // return $criticalPath->po_id;
+            $lab_dips_embellishment_id = $this->saveLabDipsEmbellishmentInfo($request, $manualpo);
+            $bulk_fabric_information = $this->savebulkFabricInformationInfo($request, $manualpo);
+            $sample_approval_information = $this->saveSampleApprovalInformation($request, $manualpo);
+            $pp_meeting_information = $this->savePpMeetingInformation($request, $manualpo);
+            $production_information = $this->saveProductionInformation($request, $manualpo);
+            $inspection_information = $this->saveInspectionInformation($request,$manualpo);
+            $sample_shipping_approval = $this->saveSampleShippingApproval($request,$manualpo);
+            $ex_factory_vessel_info = $this->saveExFactoryVesselInfo($request,$manualpo);
+            $payment_info = $this->savePaymentInfo($request,$manualpo);
+            //$mill_info = $this->saveMillInfo($request,$manualpo);
             
-            $criticalPath->inspection_information_id=$request->inspection_information_id;
-            $criticalPath->labdips_embellishment_id=  $labdibs->id;
-            $criticalPath->bulk_fabric_information_id =$request->bulk_fabric_information_id;
-            $criticalPath->fabric_mill_id = $request->fabric_mill_id;
-            $criticalPath->sample_approval_id=$request->sample_approval_id;
-            $criticalPath->pp_meeting_id=$request->pp_meeting_id;
-            $criticalPath->production_information_id=$request->production_information_id;
-            $criticalPath->production_information_id=$request->production_information_id;
-            $criticalPath->sample_shipping_approvals_id=$request->sample_shipping_approvals_id;
-            $criticalPath->ex_factories_id=$request->ex_factories_id;
-            $criticalPath->payments_id=$request->payments_id;
+            $criticalPath->po_id = $manualpo->id;
+            $criticalPath->inspection_information_id=$inspection_information;
+            $criticalPath->labdips_embellishment_id = $lab_dips_embellishment_id;
+            $criticalPath->bulk_fabric_information_id =$bulk_fabric_information;
+            //$criticalPath->fabric_mill_id = $mill_info;
+            $criticalPath->sample_approval_id=$sample_approval_information;
+            $criticalPath->pp_meeting_id=$pp_meeting_information;
+            $criticalPath->production_information_id=$production_information;
+            $criticalPath->production_information_id=$inspection_information;
+            $criticalPath->sample_shipping_approvals_id=$sample_shipping_approval;
+            $criticalPath->ex_factories_id=$ex_factory_vessel_info;
+            $criticalPath->payments_id=$payment_info;
             $criticalPath->	lead_times=$request->lead_times;
             $criticalPath->lead_type=$request->lead_type;
             $criticalPath->	official_po_plan=$request->official_po_plan;
@@ -206,57 +201,38 @@ class ManualPoController extends Controller
             $criticalPath->save();
 
             $this->saveCriticalPathFileInfo($request, $criticalPath);
-            DB::commit();
+            //DB::commit();
             $this->apiSuccess();
             $this->data = (new CriticalPathResource($criticalPath));
-            return $this->apiOutput("Critical Path Department Added Successfully");
-        }catch(Exception $e){
-            return $this->apiOutput($this->getError( $e), 500);
-        }
+        
     }
 
-          //LabDipsEmbellishment Department
+          
+          /**
+           * LabDipsEmbellishment Department
+           * @return int
+           */
 
             public function saveLabDipsEmbellishmentInfo($request, $manualpo){
-
-            
                     //DB::beginTransaction();
-                    try{
-                        $validator = Validator::make( $request->all(),[
-                            // 'name'          => ["required", "min:4"],
-                            // 'description'   => ["nullable", "min:4"],
-                        ]);
-                            
-                        if ($validator->fails()) {    
-                            $this->apiOutput($this->getValidationError($validator), 400);
-                        }
-
-                    }catch(Exception $e){
-                        return $this->apiOutput($this->getError( $e), 500);
-                    }
+                    
                     $labDips = new LabDipsEmbellishmentInformation();
-                    $labDips->po_number = $request->po_number ;
-                    $labDips->po_id = $request->po_id;
-                    $labDips->colour_std_print_artwork_sent_to_supplier_plan = $request->first_delivery_date;
-                    $labDips->colour_std_print_artwork_sent_to_supplier_actual = $request->colour_std_print_artwork_sent_to_supplier_actual;
-                    $labDips->lab_dip_approval_plan = $request->lab_dip_approval_plan;
-                    $labDips->lab_dip_approval_actual = $request->lab_dip_approval_actual;
+                    $labDips->po_number = $manualpo->po_no;
+                    $labDips->po_id = $manualpo->id;
+                    $labDips->colour_std_print_artwork_sent_to_supplier_plan = $manualpo->first_delivery_date;
+                    $labDips->colour_std_print_artwork_sent_to_supplier_actual = $manualpo->first_delivery_date;
+                    $labDips->lab_dip_approval_plan = $manualpo->first_delivery_date;
+                    $labDips->lab_dip_approval_actual = $manualpo->first_delivery_date;
                     //$labDips->lab_dip_dispatch_details = $request->lab_dip_dispatch_details;
-                    $labDips->lab_dip_dispatch_sending_date = $request->lab_dip_dispatch_sending_date;
+                    $labDips->lab_dip_dispatch_sending_date = $manualpo->first_delivery_date;
                     //$labDips->lab_dip_dispatch_aob_number = $request->lab_dip_dispatch_aob_number;
-                    $labDips->embellishment_so_approval_plan = $request->embellishment_so_approval_plan;
-                    $labDips->embellishment_so_approval_actual = $request->embellishment_so_approval_actual;
+                    $labDips->embellishment_so_approval_plan = $manualpo->first_delivery_date;
+                    $labDips->embellishment_so_approval_actual = $manualpo->first_delivery_date;
                     //$labDips->embellishment_so_dispatch_details = $request->embellishment_so_dispatch_details;
-                    $labDips->embellishment_so_dispatch_sending_date = $request->embellishment_so_dispatch_sending_date;
+                    $labDips->embellishment_so_dispatch_sending_date = $manualpo->first_delivery_date;
                     //$labDips->embellishment_so_dispatch_aob_number = $request->embellishment_so_dispatch_aob_number;
                     $labDips->save();
-                    
                     return $labDips->id;
-
-                  
-                    //DB::commit();
-                
-                
         }
 
         //Bulk Fabric Information
@@ -265,23 +241,20 @@ class ManualPoController extends Controller
                // DB::beginTransaction();
             
                 $bulkFabricInformation = new BulkFabricInformation();
-                $bulkFabricInformation->po_number = $request->po_number ;
-                $bulkFabricInformation->po_id = $request->po_id;
-                $bulkFabricInformation->fabric_ordered_plan = $request->fabric_ordered_plan;
-                $bulkFabricInformation->fabric_ordered_actual = $request->fabric_ordered_actual;
-                $bulkFabricInformation->bulk_fabric_knit_down_approval_plan = $request->bulk_fabric_knit_down_approval_plan;
-                $bulkFabricInformation->bulk_fabric_knit_down_approval_actual = $request->bulk_fabric_knit_down_approval_actual;
+                $bulkFabricInformation->po_number =$manualpo->po_no;
+                $bulkFabricInformation->po_id = $manualpo->id;
+                $bulkFabricInformation->fabric_ordered_plan = $manualpo->first_delivery_date;
+                $bulkFabricInformation->fabric_ordered_actual = $manualpo->first_delivery_date;
+                $bulkFabricInformation->bulk_fabric_knit_down_approval_plan = $manualpo->first_delivery_date;
+                $bulkFabricInformation->bulk_fabric_knit_down_approval_actual = $manualpo->first_delivery_date;
                 //$bulkFabricInformation->bulk_fabric_knit_down_dispatch_details = $request->bulk_fabric_knit_down_dispatch_details;
                 //$bulkFabricInformation->bulk_fabric_knit_down_dispatch_sending_date = $request->bulk_fabric_knit_down_dispatch_sending_date;
                 //$bulkFabricInformation->bulk_fabric_knit_down_dispatch_aob_number = $request->bulk_fabric_knit_down_dispatch_aob_number;
-                $bulkFabricInformation->bulk_yarn_fabric_inhouse_plan = $request->bulk_yarn_fabric_inhouse_plan;
-                $bulkFabricInformation->bulk_yarn_fabric_inhouse_actual = $request->bulk_yarn_fabric_inhouse_actual;
+                $bulkFabricInformation->bulk_yarn_fabric_inhouse_plan = $manualpo->first_delivery_date;
+                $bulkFabricInformation->bulk_yarn_fabric_inhouse_actual = $manualpo->first_delivery_date;
 
                 $bulkFabricInformation->save();
-                $bulkFabricInformation->id;
-                //$this->saveFileInfo($request, $bulkFabricInformation );
-                
-                //DB::commit();
+                return $bulkFabricInformation->id;
         }
 
         //Sample Approval Information
@@ -290,145 +263,150 @@ class ManualPoController extends Controller
             //DB::beginTransaction();
 
             $sampleApproval = new SampleApprovalInformation();
-            $sampleApproval->po_id=$request->po_id;
-            $sampleApproval->po_number=$request->po_number;
-            $sampleApproval->development_photo_sample_sent_plan = $request->development_photo_sample_sent_plan;
-            $sampleApproval->development_photo_sample_sent_actual = $request->development_photo_sample_sent_actual;
-            $sampleApproval->development_photo_sample_dispatch_details = $request->development_photo_sample_dispatch_details;
-            $sampleApproval->fit_approval_plan = $request->fit_approval_plan;
-            $sampleApproval->fit_approval_actual = $request->fit_approval_actual;
+            $sampleApproval->po_id=$manualpo->id;
+            $sampleApproval->po_number=$manualpo->po_no;
+            $sampleApproval->development_photo_sample_sent_plan = $manualpo->first_delivery_date;
+            $sampleApproval->development_photo_sample_sent_actual = $manualpo->first_delivery_date;
+            //$sampleApproval->development_photo_sample_dispatch_details = $request->first_delivery_date;
+            $sampleApproval->fit_approval_plan = $manualpo->first_delivery_date;
+            $sampleApproval->fit_approval_actual = $manualpo->first_delivery_date;
             //$sampleApproval->fit_sample_dispatch_details = $request->fit_sample_dispatch_details;
             //$sampleApproval->fit_sample_dispatch_sending_date = $request->fit_sample_dispatch_sending_date;
             //$sampleApproval->fit_sample_dispatch_aob_number = $request->fit_sample_dispatch_aob_number;
-            $sampleApproval->size_set_approval_plan = $request->size_set_approval_plan;
-            $sampleApproval->size_set_approval_actual = $request->size_set_approval_actual;
+            $sampleApproval->size_set_approval_plan = $manualpo->first_delivery_date;
+            $sampleApproval->size_set_approval_actual = $manualpo->first_delivery_date;
             //$sampleApproval->size_set_sample_dispatch_details = $request->size_set_sample_dispatch_details;
             //$sampleApproval->size_set_sample_dispatch_sending_date = $request->size_set_sample_dispatch_sending_date;
             //$sampleApproval->size_set_sample_dispatch_aob_number = $request->size_set_sample_dispatch_aob_number;
-            $sampleApproval->pp_approval_plan = $request->pp_approval_plan;
-            $sampleApproval->pp_approval_actual = $request->pp_approval_actual;
+            $sampleApproval->pp_approval_plan = $manualpo->first_delivery_date;
+            $sampleApproval->pp_approval_actual = $manualpo->first_delivery_date;
            // $sampleApproval->pp_sample_dispatch_details = $request->pp_sample_dispatch_details;
             //$sampleApproval->pp_sample_sending_date = $request->pp_sample_sending_date;
             //$sampleApproval->pp_sample_courier_aob_number = $request->pp_sample_courier_aob_number;
             $sampleApproval->save();
         
-            //DB::commit();
+            return $sampleApproval->id;
         }
 
         //PP Meeting Details
 
         public function savePpMeetingInformation($request, $manualpo){
             //DB::beginTransaction();
-
             $ppMeeting = new PpMeeting();
-            $ppMeeting->po_id=$request->po_id;
-            $ppMeeting->po_number=$request->po_number;
-            $ppMeeting->care_label_approval_plan = $request->care_label_approval_plan;
-            $ppMeeting->care_label_approval_actual = $request->care_label_approval_actual;
-            $ppMeeting->material_inhouse_date_plan = $request->material_inhouse_date_plan;
-            $ppMeeting->material_inhouse_date_actual = $request->material_inhouse_date_actual;
-            $ppMeeting->pp_meeting_date_plan = $request->pp_meeting_date_plan;
-            $ppMeeting->pp_meeting_date_actual = $request->pp_meeting_date_actual;
-            $ppMeeting->pp_meeting_schedule = $request->pp_meeting_schedule;
+            $ppMeeting->po_id=$manualpo->id;
+            $ppMeeting->po_number=$manualpo->po_no;
+            $ppMeeting->care_label_approval_plan = $manualpo->first_delivery_date;
+            $ppMeeting->care_label_approval_actual = $manualpo->first_delivery_date;
+            $ppMeeting->material_inhouse_date_plan = $manualpo->first_delivery_date;
+            $ppMeeting->material_inhouse_date_actual = $manualpo->first_delivery_date;
+            $ppMeeting->pp_meeting_date_plan = $manualpo->first_delivery_date;
+            $ppMeeting->pp_meeting_date_actual = $manualpo->first_delivery_date;
+            $ppMeeting->pp_meeting_schedule = $manualpo->first_delivery_date;
             $ppMeeting->save();
 
-            //DB::commit();
+            return $ppMeeting->id;
         }
 
         //Production Information
 
         public function saveProductionInformation($request,$manualpo){
-
             //DB::beginTransaction();
-
             $production = new ProductionInformation();
-            $production->po_id=$request->po_id;
-            $production->po_number=$request->po_number;
-            $production->cutting_date_plan = $request->cutting_date_plan;
-            $production->cutting_date_actual = $request->cutting_date_actual;
-            $production->embellishment_plan = $request->embellishment_plan;
-            $production->embellishment_actual = $request->embellishment_actual;
-            $production->sewing_start_date_plan = $request->sewing_start_date_plan;
-            $production->sewing_start_date_actual = $request->sewing_start_date_actual;
-            $production->sewing_complete_date_plan = $request->sewing_complete_date_plan;
-            $production->sewing_complete_date_actual = $request->sewing_complete_date_actual;
-            $production->washing_complete_date_plan = $request->washing_complete_date_plan;
-            $production->washing_complete_date_actual = $request->washing_complete_date_actual;
-            $production->finishing_complete_date_plan = $request->finishing_complete_date_plan;
-            $production->finishing_complete_date_actual = $request->finishing_complete_date_actual;
+            $production->po_id=$manualpo->id;
+            $production->po_number=$manualpo->po_no;
+            $production->cutting_date_plan = $manualpo->first_delivery_date;
+            $production->cutting_date_actual = $manualpo->first_delivery_date;
+            $production->embellishment_plan = $manualpo->first_delivery_date;
+            $production->embellishment_actual = $manualpo->first_delivery_date;
+            $production->sewing_start_date_plan = $manualpo->first_delivery_date;
+            $production->sewing_start_date_actual = $manualpo->first_delivery_date;
+            $production->sewing_complete_date_plan = $manualpo->first_delivery_date;
+            $production->sewing_complete_date_actual = $manualpo->first_delivery_date;
+            $production->washing_complete_date_plan = $manualpo->first_delivery_date;
+            $production->washing_complete_date_actual = $manualpo->first_delivery_date;
+            $production->finishing_complete_date_plan = $manualpo->first_delivery_date;
+            $production->finishing_complete_date_actual = $manualpo->first_delivery_date;
             $production->save();
 
-            //DB::commit();
+            return $production->id;
         }
 
 
         //Inspection Information
         public function saveInspectionInformation($request,$manualpo){
-
             //DB::beginTransaction();
-
             $inspection = new InspectionInformation();
-            $inspection->po_number = $request->po_number;
-            $inspection->po_id = $request->po_id;
-            $inspection->sewing_inline_inspection_date_plan = $request->sewing_inline_inspection_date_plan;
-            $inspection->sewing_inline_inspection_date_actual = $request->sewing_inline_inspection_date_actual;
-            $inspection->inline_inspection_schedule = $request->inline_inspection_schedule;
-            $inspection->finishing_inline_inspection_date_plan = $request->finishing_inline_inspection_date_plan;
-            $inspection->finishing_inline_inspection_date_actual = $request->finishing_inline_inspection_date_actual;
-            $inspection->pre_final_date_actual = $request->pre_final_date_actual;
-            $inspection->pre_final_aql_schedule = $request->pre_final_aql_schedule;
-            $inspection->final_aql_date_plan = $request->final_aql_date_plan;
-            $inspection->final_aql_date_actual = $request->final_aql_date_actual;
-            $inspection->final_aql_schedule=$request->final_aql_schedule;
+            $inspection->po_number = $manualpo->po_no;
+            $inspection->po_id = $manualpo->id;
+            $inspection->sewing_inline_inspection_date_plan = $manualpo->first_delivery_date;
+            $inspection->sewing_inline_inspection_date_actual = $manualpo->first_delivery_date;
+            $inspection->inline_inspection_schedule = $manualpo->first_delivery_date;
+            $inspection->finishing_inline_inspection_date_plan = $manualpo->first_delivery_date;
+            $inspection->finishing_inline_inspection_date_actual = $manualpo->first_delivery_date;
+            $inspection->pre_final_date_actual = $manualpo->first_delivery_date;
+            $inspection->pre_final_aql_schedule = $manualpo->first_delivery_date;
+            $inspection->final_aql_date_plan = $manualpo->first_delivery_date;
+            $inspection->final_aql_date_actual = $manualpo->first_delivery_date;
+            $inspection->final_aql_schedule=$manualpo->first_delivery_date;
             $inspection->save();
 
-            //DB::commit();
+            return $inspection->id;
         }
 
 
         //Sample ShippingApproval
         public function saveSampleShippingApproval($request,$manualpo){
-
             $shippingapproval = new SampleShippingApproval();
-            $shippingapproval->po_number = $request->po_number;
-            $shippingapproval->po_id = $request->po_id;
-            $shippingapproval->production_sample_approval_plan = $request->production_sample_approval_plan;
-            $shippingapproval->production_sample_approval_actual = $request->production_sample_approval_actual;
-            $shippingapproval->production_sample_dispatch_details = $request->production_sample_dispatch_details;
-            $shippingapproval->production_sample_dispatch_sending_date = $request->production_sample_dispatch_sending_date;
-            $shippingapproval->production_sample_dispatch_aob_number = $request->production_sample_dispatch_aob_number;
-            $shippingapproval->shipment_booking_with_acs_plan = $request->shipment_booking_with_acs_plan;
-            $shippingapproval->shipment_booking_with_acs_actual = $request->shipment_booking_with_acs_actual;
-            $shippingapproval->sa_approval_plan = $request->sa_approval_plan;
-            $shippingapproval->sa_approval_actual = $request->sa_approval_actual;
+            $shippingapproval->po_number = $manualpo->po_no;
+            $shippingapproval->po_id = $manualpo->id;
+            $shippingapproval->production_sample_approval_plan = $manualpo->first_delivery_date;
+            $shippingapproval->production_sample_approval_actual = $request->first_delivery_date;
+            //$shippingapproval->production_sample_dispatch_details = $request->;
+            //$shippingapproval->production_sample_dispatch_sending_date = $manualpo->first_delivery_date;
+            //$shippingapproval->production_sample_dispatch_aob_number = $request->production_sample_dispatch_aob_number;
+            $shippingapproval->shipment_booking_with_acs_plan = $manualpo->first_delivery_date;
+            $shippingapproval->shipment_booking_with_acs_actual = $manualpo->first_delivery_date;
+            $shippingapproval->sa_approval_plan = $manualpo->first_delivery_date;
+            $shippingapproval->sa_approval_actual = $manualpo->first_delivery_date;
             $shippingapproval->save();
+            return $shippingapproval->id;
         }
 
         public function saveExFactoryVesselInfo($request,$manualpo){
-
             $exfactory = new ExFactory();
-            $exfactory->po_number = $request->po_number;
-            $exfactory->po_id=$request->po_id;
-            $exfactory->ex_factory_date_po=$request->ex_factory_date_po;
-            $exfactory->revised_ex_factory_date=$request->revised_ex_factory_date;
-            $exfactory->actual_ex_factory_date=$request->actual_ex_factory_date;
-            $exfactory->shipped_units=$request->shipped_units;
-            $exfactory->original_eta_sa_date=$request->original_eta_sa_date;
-            $exfactory->revised_eta_sa_date=$request->revised_eta_sa_date;
-            $exfactory->forwarded_ref_vessel_name=$request->forwarded_ref_vessel_name;
+            $exfactory->po_number = $manualpo->po_no;
+            $exfactory->po_id=$manualpo->id;
+            $exfactory->ex_factory_date_po=$manualpo->first_delivery_date;
+            $exfactory->revised_ex_factory_date=$request->first_delivery_date;
+            $exfactory->actual_ex_factory_date=$request->first_delivery_date;
+            $exfactory->shipped_units=$request->first_delivery_date;
+            $exfactory->original_eta_sa_date=$request->first_delivery_date;
+            $exfactory->revised_eta_sa_date=$request->first_delivery_date;
+            $exfactory->forwarded_ref_vessel_name=$request->first_delivery_date;
             $exfactory->save();
+            return $exfactory->id;
         }
 
         public function savePaymentInfo($request,$manualpo){
-
             $payment = new Payment();
-            $payment->po_number = $request->po_number;
-            $payment->po_id=$request->po_id;
-            $payment->late_delivery_discount=$request->late_delivery_discount;
-            $payment->invoice_number=$request->invoice_number;
-            $payment->invoice_create_date=$request->invoice_create_date;
-            $payment->payment_receive_date=$request->payment_receive_date;
+            $payment->po_number = $manualpo->po_no;
+            $payment->po_id=$manualpo->id;
+            $payment->late_delivery_discount=$manualpo->first_delivery_date;
+            $payment->invoice_number=$manualpo->first_delivery_date;
+            $payment->invoice_create_date=$manualpo->first_delivery_date;
+            $payment->payment_receive_date=$manualpo->first_delivery_date;
             $payment->save();
+            return $payment->id;
+        }
+
+        public function saveMillInfo($request,$manualpo){
+
+            $mill = new Mill();
+            $mill->name = $request->name ;
+            $mill->remarks = $request->remarks;
+            $mill->status = $request->status;
+            $mill->save();
+            return $mill->id;
         }
 
      //Save CriticalPath File Info

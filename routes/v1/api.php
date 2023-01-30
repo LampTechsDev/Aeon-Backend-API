@@ -59,6 +59,8 @@ use App\Http\Controllers\V1\Vendor\VendorController as VendorAuthController;
 */
 
 
+
+
     /**
      * Admin Login Section
      */
@@ -345,7 +347,7 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
         Route::post('/updateBulkFile', [BulkFabricInformationController::class, 'updateBulkFileInfo']);
         Route::post('/additionalBulkFile', [BulkFabricInformationController::class, 'addBulkFabricFile']);
         Route::post('/deleteBulkFile', [BulkFabricInformationController::class, 'deleteFileBulk']);
-      
+
     });
 
 
@@ -458,6 +460,7 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
         Route::post('/update/{id}', [VendorContactPeopleController::class, "update"]);
         Route::post('/delete/{id}', [VendorContactPeopleController::class, "destroy"]);
     });
+
 
      /**
      * Vendor Profile Section
@@ -636,12 +639,12 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
      * Vendor Login Section
      */
     Route::prefix("vendor")->group(function(){
-            
+
             Route::post('/login', [VendorAuthController::class, "login"]);
-        
+
     });
 Route::middleware(["auth:vendor"])->prefix('vendors')->group(function(){
-     
+
     /**
      * Vendor
      */
