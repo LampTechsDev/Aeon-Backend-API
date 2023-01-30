@@ -84,7 +84,6 @@ class VendorManufacturerController extends Controller
                 event(new VendorManufacturerResource($manufacturer));
             }catch(Exception $e){
 
-
             }
             DB::commit();
             $this->apiSuccess("Vendor Manufacturer Added Successfully");
@@ -134,7 +133,6 @@ class VendorManufacturerController extends Controller
             $manufacturer->save();
 
             $this->apiSuccess("Vendor Manufacturer Updated Successfully");
-
             $this->data = (new VendorManufacturerResource($manufacturer));
             return $this->apiOutput();
             DB::commit();
