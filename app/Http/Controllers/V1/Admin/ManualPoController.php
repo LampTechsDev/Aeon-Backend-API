@@ -173,27 +173,26 @@ class ManualPoController extends Controller
             $criticalPath = new CriticalPath();
             $criticalPath->po_id = $manualpo->id;
             $lab_dips_embellishment_id = $this->saveLabDipsEmbellishmentInfo($request, $manualpo);
+            $bulk_fabric_information = $this->savebulkFabricInformationInfo($request, $manualpo);
+            $sample_approval_information = $this->saveSampleApprovalInformation($request, $manualpo);
+            $pp_meeting_information = $this->savePpMeetingInformation($request, $manualpo);
+            $production_information = $this->saveProductionInformation($request, $manualpo);
+            $inspection_information = $this-> saveInspectionInformation($request,$manualpo);
+            $sample_shipping_approval = $this->saveSampleShippingApproval($request,$manualpo);
+            $ex_factory_vessel_info = $this->saveExFactoryVesselInfo($request,$manualpo);
+            $payment_info = $this->savePaymentInfo($request,$manualpo);
             
-            $this->savebulkFabricInformationInfo($request, $manualpo);
-            $this->saveSampleApprovalInformation($request, $manualpo);
-            $this->savePpMeetingInformation($request, $manualpo);
-            $this->saveProductionInformation($request, $manualpo);
-            $this-> saveInspectionInformation($request,$manualpo);
-            $this->saveSampleShippingApproval($request,$manualpo);
-            $this->saveExFactoryVesselInfo($request,$manualpo);
-            $this->savePaymentInfo($request,$manualpo);
-            
-            $criticalPath->inspection_information_id=$request->inspection_information_id;
+            $criticalPath->inspection_information_id=$inspection_information;
             $criticalPath->labdips_embellishment_id = $lab_dips_embellishment_id;
-            $criticalPath->bulk_fabric_information_id =$request->bulk_fabric_information_id;
+            $criticalPath->bulk_fabric_information_id =$bulk_fabric_information;
             $criticalPath->fabric_mill_id = $request->fabric_mill_id;
-            $criticalPath->sample_approval_id=$request->sample_approval_id;
-            $criticalPath->pp_meeting_id=$request->pp_meeting_id;
-            $criticalPath->production_information_id=$request->production_information_id;
-            $criticalPath->production_information_id=$request->production_information_id;
-            $criticalPath->sample_shipping_approvals_id=$request->sample_shipping_approvals_id;
-            $criticalPath->ex_factories_id=$request->ex_factories_id;
-            $criticalPath->payments_id=$request->payments_id;
+            $criticalPath->sample_approval_id=$sample_approval_information;
+            $criticalPath->pp_meeting_id=$pp_meeting_information;
+            $criticalPath->production_information_id=$production_information;
+            $criticalPath->production_information_id=$inspection_information;
+            $criticalPath->sample_shipping_approvals_id=$sample_shipping_approval;
+            $criticalPath->ex_factories_id=$ex_factory_vessel_info;
+            $criticalPath->payments_id=$payment_info;
             $criticalPath->	lead_times=$request->lead_times;
             $criticalPath->lead_type=$request->lead_type;
             $criticalPath->	official_po_plan=$request->official_po_plan;
@@ -221,19 +220,15 @@ class ManualPoController extends Controller
            */
 
             public function saveLabDipsEmbellishmentInfo($request, $manualpo){
-
-            
                     //DB::beginTransaction();
                     try{
                         $validator = Validator::make( $request->all(),[
                             // 'name'          => ["required", "min:4"],
                             // 'description'   => ["nullable", "min:4"],
                         ]);
-                            
                         if ($validator->fails()) {    
                             $this->apiOutput($this->getValidationError($validator), 400);
                         }
-
                     }catch(Exception $e){
                         return $this->apiOutput($this->getError( $e), 500);
                     }
@@ -253,13 +248,7 @@ class ManualPoController extends Controller
                     $labDips->embellishment_so_dispatch_sending_date = $request->embellishment_so_dispatch_sending_date;
                     //$labDips->embellishment_so_dispatch_aob_number = $request->embellishment_so_dispatch_aob_number;
                     $labDips->save();
-                    
                     return $labDips->id;
-
-                  
-                    //DB::commit();
-                
-                
         }
 
         //Bulk Fabric Information
@@ -281,10 +270,7 @@ class ManualPoController extends Controller
                 $bulkFabricInformation->bulk_yarn_fabric_inhouse_actual = $request->bulk_yarn_fabric_inhouse_actual;
 
                 $bulkFabricInformation->save();
-                $bulkFabricInformation->id;
-                //$this->saveFileInfo($request, $bulkFabricInformation );
-                
-                //DB::commit();
+                return $bulkFabricInformation->id;
         }
 
         //Sample Approval Information
@@ -315,14 +301,13 @@ class ManualPoController extends Controller
             //$sampleApproval->pp_sample_courier_aob_number = $request->pp_sample_courier_aob_number;
             $sampleApproval->save();
         
-            //DB::commit();
+            return $sampleApproval->id;
         }
 
         //PP Meeting Details
 
         public function savePpMeetingInformation($request, $manualpo){
             //DB::beginTransaction();
-
             $ppMeeting = new PpMeeting();
             $ppMeeting->po_id=$request->po_id;
             $ppMeeting->po_number=$request->po_number;
@@ -335,15 +320,13 @@ class ManualPoController extends Controller
             $ppMeeting->pp_meeting_schedule = $request->pp_meeting_schedule;
             $ppMeeting->save();
 
-            //DB::commit();
+            return $ppMeeting->id;
         }
 
         //Production Information
 
         public function saveProductionInformation($request,$manualpo){
-
             //DB::beginTransaction();
-
             $production = new ProductionInformation();
             $production->po_id=$request->po_id;
             $production->po_number=$request->po_number;
@@ -361,15 +344,13 @@ class ManualPoController extends Controller
             $production->finishing_complete_date_actual = $request->finishing_complete_date_actual;
             $production->save();
 
-            //DB::commit();
+            return $production->id;
         }
 
 
         //Inspection Information
         public function saveInspectionInformation($request,$manualpo){
-
             //DB::beginTransaction();
-
             $inspection = new InspectionInformation();
             $inspection->po_number = $request->po_number;
             $inspection->po_id = $request->po_id;
@@ -385,13 +366,12 @@ class ManualPoController extends Controller
             $inspection->final_aql_schedule=$request->final_aql_schedule;
             $inspection->save();
 
-            //DB::commit();
+            return $inspection->id;
         }
 
 
         //Sample ShippingApproval
         public function saveSampleShippingApproval($request,$manualpo){
-
             $shippingapproval = new SampleShippingApproval();
             $shippingapproval->po_number = $request->po_number;
             $shippingapproval->po_id = $request->po_id;
@@ -405,10 +385,10 @@ class ManualPoController extends Controller
             $shippingapproval->sa_approval_plan = $request->sa_approval_plan;
             $shippingapproval->sa_approval_actual = $request->sa_approval_actual;
             $shippingapproval->save();
+            return $shippingapproval->id;
         }
 
         public function saveExFactoryVesselInfo($request,$manualpo){
-
             $exfactory = new ExFactory();
             $exfactory->po_number = $request->po_number;
             $exfactory->po_id=$request->po_id;
@@ -420,10 +400,10 @@ class ManualPoController extends Controller
             $exfactory->revised_eta_sa_date=$request->revised_eta_sa_date;
             $exfactory->forwarded_ref_vessel_name=$request->forwarded_ref_vessel_name;
             $exfactory->save();
+            return $exfactory->id;
         }
 
         public function savePaymentInfo($request,$manualpo){
-
             $payment = new Payment();
             $payment->po_number = $request->po_number;
             $payment->po_id=$request->po_id;
@@ -432,6 +412,7 @@ class ManualPoController extends Controller
             $payment->invoice_create_date=$request->invoice_create_date;
             $payment->payment_receive_date=$request->payment_receive_date;
             $payment->save();
+            return $payment->id;
         }
 
      //Save CriticalPath File Info
