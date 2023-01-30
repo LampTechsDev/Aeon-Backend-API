@@ -15,7 +15,7 @@ class CreateCriticalPathMasterFilesTable extends Migration
     {
         Schema::create('critical_path_master_files', function (Blueprint $table) {
             $table->id();
-            $table->foreignId("critical_path_id")->references("id")->on("critical_paths")->cascadeOnDelete();
+            $table->foreignId("critical_path_id")->nullable()->references("id")->on("critical_paths")->cascadeOnDelete();
             $table->foreignId("critical_path_departments_id")->nullable()->references("id")->on("critical_path_departments")->cascadeOnDelete();
             $table->string("file_name");
             $table->string("file_url");

@@ -160,13 +160,10 @@ class ManualPoController extends Controller
     }
 
     public function saveCriticalPath($request,$manualpo){
-           //return 10;
-        
-            
-            //DB::beginTransaction();
+
+           
             $criticalPath = new CriticalPath();
             
-           // return $criticalPath->po_id;
             $lab_dips_embellishment_id = $this->saveLabDipsEmbellishmentInfo($request, $manualpo);
             $bulk_fabric_information = $this->savebulkFabricInformationInfo($request, $manualpo);
             $sample_approval_information = $this->saveSampleApprovalInformation($request, $manualpo);
@@ -200,7 +197,7 @@ class ManualPoController extends Controller
             $criticalPath->other_comments=$request->other_comments;
             $criticalPath->save();
 
-            $this->saveCriticalPathFileInfo($request, $criticalPath);
+            //$this->saveCriticalPathFileInfo($request, $criticalPath);
             //DB::commit();
             $this->apiSuccess();
             $this->data = (new CriticalPathResource($criticalPath));
