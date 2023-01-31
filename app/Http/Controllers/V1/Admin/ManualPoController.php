@@ -187,11 +187,11 @@ class ManualPoController extends Controller
             $criticalPath->sample_shipping_approvals_id=$sample_shipping_approval;
             $criticalPath->ex_factories_id=$ex_factory_vessel_info;
             $criticalPath->payments_id=$payment_info;
-            $criticalPath->	lead_times=$request->lead_times;
-            $criticalPath->lead_type=$request->lead_type;
-            $criticalPath->	official_po_plan=$request->official_po_plan;
-            $criticalPath->official_po_actual=$request->official_po_actual;
-            $criticalPath->status=$request->status;
+            //$criticalPath->	lead_times=$request->lead_times;
+            //$criticalPath->lead_type=$request->lead_type;
+            //$criticalPath->	official_po_plan=$request->official_po_plan;
+            //$criticalPath->official_po_actual=$request->official_po_actual;
+            //$criticalPath->status=$request->status;
             $criticalPath->aeon_comments=$request->aeon_comments;
             $criticalPath->vendor_comments=$request->vendor_comments;
             $criticalPath->other_comments=$request->other_comments;
