@@ -93,7 +93,7 @@ class FreightManagementController extends Controller
             DB::commit();
            $this->apiSuccess();
            $this->data = (new FreightManagementResource($freight));
-            return $this->apiOutput("Inspection Management Order Details Added Successfully");
+            return $this->apiOutput("Freight Management Details Updated Successfully");
         }catch(Exception $e){
             return $this->apiOutput($this->getError( $e), 500);
         }
