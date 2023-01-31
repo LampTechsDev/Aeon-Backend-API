@@ -59,7 +59,8 @@ class FileProcessingController extends Controller
      /**
      * Prepare PDF Data
      */
-    public function preparePDFData($data_list){      
+    public function preparePDFData($data_list){  
+        // dd($data_list);    
         foreach($data_list as $list){
             if($list->name == "companyName"){
                 $this->customer  = $list->value;
