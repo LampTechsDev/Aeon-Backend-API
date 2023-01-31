@@ -18,7 +18,7 @@ class CreateCriticalPathsTable extends Migration
             $table->foreignId("po_id")->references("id")->on("manual_pos")->cascadeOnDelete();
             $table->foreignId("labdips_embellishment_id")->references("id")->on("lab_dips_embellishment_information")->cascadeOnDelete();
             $table->foreignId("bulk_fabric_information_id")->references("id")->on("bulk_fabric_information")->cascadeOnDelete();
-            $table->foreignId("fabric_mill_id")->references("id")->on("mills")->cascadeOnDelete();
+            $table->foreignId("fabric_mill_id")->nullable()->references("id")->on("mills")->cascadeOnDelete();
             $table->foreignId("sample_approval_id")->references("id")->on("sample_approval_information")->cascadeOnDelete();
             $table->foreignId("pp_meeting_id")->references("id")->on("pp_meetings")->cascadeOnDelete();
             $table->foreignId("production_information_id")->references("id")->on("production_information")->cascadeOnDelete();
