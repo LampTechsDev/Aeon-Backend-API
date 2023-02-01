@@ -237,7 +237,7 @@ class ManualPoController extends Controller
         public function savebulkFabricInformationInfo($request, $manualpo){
 
                // DB::beginTransaction();
-            
+                
                 $bulkFabricInformation = new BulkFabricInformation();
                 $bulkFabricInformation->po_number =$manualpo->po_no;
                 $bulkFabricInformation->po_id = $manualpo->id;
