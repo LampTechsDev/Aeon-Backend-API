@@ -39,7 +39,7 @@ class InspectionController extends Controller
             
    
             $inspection = new Inspection();
-            $inspection->item_details_id=$request->item_details_id;
+            $inspection->po_id=$request->po_id;
             $inspection->inspection_name = $request->inspection_name;
             $inspection->inspection_date = $request->inspection_date;
             $inspection->inspection_time = $request->inspection_time;
@@ -73,7 +73,7 @@ class InspectionController extends Controller
             
    
             $inspection = Inspection::find($request->id);
-            $inspection->item_details_id=$request->item_details_id;
+            $inspection->po_id=$request->po_id;
             $inspection->inspection_name = $request->inspection_name;
             $inspection->inspection_date = $request->inspection_date;
             $inspection->inspection_time = $request->inspection_time;
