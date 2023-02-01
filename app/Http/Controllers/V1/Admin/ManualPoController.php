@@ -12,6 +12,7 @@ use App\Models\CriticalPathMasterFile;
 use App\Models\ExFactory;
 use App\Models\FreightManagement;
 use App\Models\InspectionInformation;
+use App\Models\InspectionManagementOrderDetails;
 use App\Models\LabDipsEmbellishmentInformation;
 use App\Models\ManualPo;
 use App\Models\ManualPoDeliveryDetails;
@@ -200,6 +201,7 @@ class ManualPoController extends Controller
             $criticalPath->save();
 
             $this->saveFreightManagementInfo($request, $criticalPath);
+            $this->saveInspectionOrderDetailsInfo($request, $criticalPath);
         
     }
 
@@ -407,6 +409,13 @@ class ManualPoController extends Controller
 
         public function saveFreightManagementInfo($request, $criticalPath){
             $freight = new FreightManagement();
+            $freight->critical_path_id = $criticalPath->id;
+            $freight->save();
+
+        }
+
+        public function saveInspectionOrderDetailsInfo($request,$criticalPath){
+            $freight = new InspectionManagementOrderDetails();
             $freight->critical_path_id = $criticalPath->id;
             $freight->save();
 
