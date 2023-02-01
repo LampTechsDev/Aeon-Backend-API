@@ -4,11 +4,13 @@ namespace App\Http\Controllers\V1\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\CriticalPathResource;
+use App\Http\Resources\FreightManagementResource;
 use App\Http\Resources\ManualPoResource;
 use App\Models\BulkFabricInformation;
 use App\Models\CriticalPath;
 use App\Models\CriticalPathMasterFile;
 use App\Models\ExFactory;
+use App\Models\FreightManagement;
 use App\Models\InspectionInformation;
 use App\Models\LabDipsEmbellishmentInformation;
 use App\Models\ManualPo;
@@ -197,10 +199,7 @@ class ManualPoController extends Controller
             $criticalPath->other_comments=$request->other_comments;
             $criticalPath->save();
 
-            //$this->saveCriticalPathFileInfo($request, $criticalPath);
-            //DB::commit();
-            $this->apiSuccess();
-            $this->data = (new CriticalPathResource($criticalPath));
+            $this->saveFreightManagementInfo($request, $criticalPath);
         
     }
 
@@ -406,6 +405,13 @@ class ManualPoController extends Controller
             return $mill->id;
         }
 
+        public function saveFreightManagementInfo($request, $criticalPath){
+            $freight = new FreightManagement();
+            $freight->critical_path_id = $criticalPath->id;
+            $freight->save();
+
+        }
+
      //Save CriticalPath File Info
      public function saveCriticalPathFileInfo($request,$criticalPath){
         $file_path = $this->uploadFile($request, 'file', $this->pogarments_uploads, 720);
@@ -441,6 +447,7 @@ class ManualPoController extends Controller
             return $this->apiOutput($this->getError($e), 500);
         }
     }
+
 
 
       /*

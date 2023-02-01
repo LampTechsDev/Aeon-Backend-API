@@ -26,6 +26,7 @@ use App\Http\Controllers\V1\Admin\ExFactoryController;
 use App\Http\Controllers\V1\Admin\FileProcessingController;
 use App\Http\Controllers\V1\Admin\ManualPoItemDetailsController;
 use App\Http\Controllers\V1\Admin\FabricWeightController;
+use App\Http\Controllers\V1\Admin\FreightManagementController;
 use App\Http\Controllers\V1\Admin\GlobalCertificateController;
 use App\Http\Controllers\V1\Admin\InspectionInformationController;
 use App\Http\Controllers\V1\Admin\InspectionManagementOrderDetailsController;
@@ -432,6 +433,18 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
         Route::post('/updateCriticalPathFile', [CriticalPathController::class, "updateCriticalPathFileInfo"]);
         Route::post('/deleteCriticalPathFile', [CriticalPathController::class, "deleteFileCriticalPath"]);
         Route::post('/additionalCriticalPathFile', [CriticalPathController::class, "addCriticalPathFile"]);
+    });
+
+     /**
+     *Freight Mangement
+    */
+    Route::prefix('freight-management')->group(function(){
+
+        Route::get('/list', [FreightManagementController::class, 'index']);
+        Route::get('/show',  [FreightManagementController::class, "show"]);
+        // Route::post('/store', [ProductionSampleShippingApprovalController::class, "store"]);
+        Route::post('/update', [FreightManagementController::class, "update"]);
+        // Route::post('/delete', [ProductionSampleShippingApprovalController::class, "delete"]);
     });
 
 
