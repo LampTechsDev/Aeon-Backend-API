@@ -20,6 +20,7 @@ class VendorManufacturerSeeder extends Seeder
             "phone"                   => 0123456677,
             "email"                   => "vendorcontactpeople@gmail.com",
             "remarks"                 => "this is vendor comment part",
+            "address"                 => "Dhaka",
             "status"                  => "Active"
         ]);
     }

@@ -17,14 +17,14 @@ class CustomerContactPeopleSeeder extends Seeder
         CustomerContactPeople::create([
             "customer_id"             => 1,
             "employee_id"             => 1,
-            "first_name"              => "Baximco",
+            "first_name"              => "Square",
             "last_name"               => "RMG",
             "designation"             => "Designation Section",
             "department"              => "Department Section",
             "category"                => "Category Section",
             "phone"                   => 0123456677,
-            "email"                   => "vendorcontactpeople@gmail.com",
-            "remarks"                 => "this is vendor comment part",
+            "email"                   => "customercontactpeople@gmail.com",
+            "remarks"                 => "this is customer comment part",
             "status"                  => "Active"
         ]);
     }

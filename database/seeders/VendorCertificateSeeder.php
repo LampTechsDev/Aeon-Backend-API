@@ -19,9 +19,6 @@ class VendorCertificateSeeder extends Seeder
             "global_certificate_id"   => 1,
             "certificate_name"        => "ISO",
             "score"                   => 8,
-            "category"                => "Category Section",
-            "phone"                   => 0123456677,
-            "email"                   => "vendorcirtificate@gmail.com",
             "remarks"                 => "this is vendor certificate comment part",
             "status"                  => "Active"
         ]);
