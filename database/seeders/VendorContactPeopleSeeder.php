@@ -15,7 +15,7 @@ class VendorContactPeopleSeeder extends Seeder
     public function run()
     {
         VendorContactPeople::create([
-            "name"                    => "Vendor Contact People",
+            "vendor_id"               => 1,
             "employee_id"             => 1,
             "first_name"              => "Baximco",
             "last_name"               => "RMG",
