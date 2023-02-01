@@ -15,7 +15,7 @@ class VendorProfileSeeder extends Seeder
     public function run()
     {
         VendorProfile::create([
-            
+
             "vendor_id"           => "1",
             "factory_profile_name"=> "DSL GROUP",
             "contact_number"      => 01233333333,
@@ -26,7 +26,6 @@ class VendorProfileSeeder extends Seeder
             "buying_partners"     =>"Buying Partners",
             "social_platform_link"=>"www.socialmedia.com",
             "video_link"          =>"https://www.youtube.com/watch?v=I7sVDcJ8YF4&ab_channel=OsmanGroup",
-            "social_platform_link"=>"www.socialmedia.com",
             "remarks"             => "this is vendor comment part",
             "status"              => "Active"
         ]);
