@@ -25,7 +25,7 @@ class DatabaseSeeder extends Seeder
         $this->call(VendorCertificateSeeder::class);
         $this->call(CustomerSeeder::class);
         $this->call(CustomerDepartmentSeeder::class);
-        $this->call(CustomerContactSeeder::class);
+        $this->call(CustomerContactPeopleSeeder::class);
         $this->call(ManufacturerProfileSeeder::class);
         $this->call(ManufacturerContactPeopleSeeder::class);
         $this->call(ManufacturerCertificateSeeder::class);
