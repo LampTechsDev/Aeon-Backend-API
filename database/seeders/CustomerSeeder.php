@@ -15,8 +15,8 @@ class CustomerSeeder extends Seeder
     public function run()
     {
         Customer::create([
-            "name"               => "Customer",
-            "address"   => "Dhaka",
+            "name"                    => "Customer",
+            "address"                 => "Dhaka",
             "email"                   => "customer@gmail.com",
             "remarks"                 => "this is customer comment part",
             "status"                  => "Active"

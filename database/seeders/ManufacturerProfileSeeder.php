@@ -26,7 +26,6 @@ class ManufacturerProfileSeeder extends Seeder
             "buying_partners"     =>"Buying Partners",
             "social_platform_link"=>"www.socialmedia.com",
             "video_link"          =>"https://www.youtube.com/watch?v=I7sVDcJ8YF4&ab_channel=OsmanGroup",
-            "social_platform_link"=>"www.socialmedia.com",
             "remarks"             => "this is manufacturer comment part",
             "status"              => "Active"
         ]);

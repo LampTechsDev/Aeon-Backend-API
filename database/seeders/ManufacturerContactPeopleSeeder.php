@@ -15,6 +15,7 @@ class ManufacturerContactPeopleSeeder extends Seeder
     public function run()
     {
         ManufacturerContactPeople::create([
+            
             "vendor_id"               => 1,
             "vendor_manufacturer_id"  => 1,
             "employee_id"             => 1,
