@@ -341,6 +341,7 @@ class ManualPoController extends Controller
             $inspection->inline_inspection_schedule = $manualpo->first_delivery_date;
             $inspection->finishing_inline_inspection_date_plan = $manualpo->first_delivery_date;
             $inspection->finishing_inline_inspection_date_actual = $manualpo->first_delivery_date;
+            $inspection->pre_final_date_plan = $manualpo->first_delivery_date;
             $inspection->pre_final_date_actual = $manualpo->first_delivery_date;
             $inspection->pre_final_aql_schedule = $manualpo->first_delivery_date;
             $inspection->final_aql_date_plan = $manualpo->first_delivery_date;
