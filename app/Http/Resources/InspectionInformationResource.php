@@ -42,6 +42,7 @@ class InspectionInformationResource extends JsonResource
             "inline_inspection_schedule"              => $this->inline_inspection_schedule ?? "",
             "finishing_inline_inspection_date_plan"   => $this->finishing_inline_inspection_date_plan ?? "",
             "finishing_inline_inspection_date_actual" => $this->finishing_inline_inspection_date_actual ?? "",
+            "pre_final_date_plan"                   => $this->pre_final_date_plan ?? "",
             "pre_final_date_actual"                   => $this->pre_final_date_actual ?? "",
             "pre_final_aql_schedule"                  => $this->pre_final_aql_schedule ?? "",
             "final_aql_date_plan"                     => $this->final_aql_date_plan ?? "",

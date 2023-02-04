@@ -341,6 +341,7 @@ class ManualPoController extends Controller
             $inspection->inline_inspection_schedule = $manualpo->first_delivery_date;
             $inspection->finishing_inline_inspection_date_plan = $manualpo->first_delivery_date;
             $inspection->finishing_inline_inspection_date_actual = $manualpo->first_delivery_date;
+            $inspection->pre_final_date_plan = $manualpo->first_delivery_date;
             $inspection->pre_final_date_actual = $manualpo->first_delivery_date;
             $inspection->pre_final_aql_schedule = $manualpo->first_delivery_date;
             $inspection->final_aql_date_plan = $manualpo->first_delivery_date;
@@ -567,6 +568,62 @@ class ManualPoController extends Controller
 
         }catch(Exception $e){
             return $this->apiOutput($this->getError($e), 500);
+        }
+    }
+
+    public function updatePoArtWorkFileInfo(Request $request){
+        try{
+            $validator = Validator::make( $request->all(),[
+                //"id"            => ["required", "exists:ticket_uploads,id"],
+
+            ]);
+
+            if ($validator->fails()) {
+                return $this->apiOutput($this->getValidationError($validator), 200);
+            }
+
+            $data = PoArtwork::find($request->id);
+            
+            if($request->hasFile('picture')){
+                $data->file_url = $this->uploadFileNid($request, 'picture', $this->poartworks_uploads, null,null,$data->file_url);
+            }
+
+            $data->save();
+          
+            $this->apiSuccess("Po ArtWork File Updated Successfully");
+            return $this->apiOutput();
+           
+           
+        }catch(Exception $e){
+            return $this->apiOutput($this->getError( $e), 500);
+        }
+    }
+
+    public function updatePoPictureGarments(Request $request){
+        try{
+            $validator = Validator::make( $request->all(),[
+                //"id"            => ["required", "exists:ticket_uploads,id"],
+
+            ]);
+
+            if ($validator->fails()) {
+                return $this->apiOutput($this->getValidationError($validator), 200);
+            }
+
+            $data = PoPictureGarments::find($request->id);
+            
+            if($request->hasFile('picture')){
+                $data->file_url = $this->uploadFileNid($request, 'picture', $this->pogarments_uploads, null,null,$data->file_url);
+            }
+
+            $data->save();
+          
+            $this->apiSuccess("Po Picture Garments File Updated Successfully");
+            return $this->apiOutput();
+           
+           
+        }catch(Exception $e){
+            return $this->apiOutput($this->getError( $e), 500);
         }
     }
 

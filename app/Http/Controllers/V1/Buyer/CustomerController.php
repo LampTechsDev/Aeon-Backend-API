@@ -1,31 +1,73 @@
 <?php
 
-namespace App\Http\Controllers\V1\Admin;
+namespace App\Http\Controllers\V1\Buyer;
 
-use App\Models\Customer;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\CustomerResource;
-use Exception;
+use App\Models\Customer;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Hash;
+use Exception;
+use Illuminate\Support\Facades\Session;
 
 class CustomerController extends Controller
 {
-
       /**
-    * Show Login
-    */
-   public function showLogin(Request $request){
-    $this->data = [
-        "email"     => "required",
-        "password"  => "required",
-    ];
-    $this->apiSuccess("This credentials are required for Login ");
-    return $this->apiOutput(200);
-}
+     * Show Login
+     */
+    public function showLogin(Request $request){
+        $this->data = [
+            "email"     => "required",
+            "password"  => "required",
+        ];
+        $this->apiSuccess("This credentials are required for Login ");
+        return $this->apiOutput();
+    }
 
+    /**
+     * Login
+     */
+    public function login(Request $request){
+        $customer=Customer::all();
+        try{
+            $validator = Validator::make($request->all(), [
+                "email"     => ["required", "email", "exists:customers,email"],
+                "password"  => ["required", "string", "min:4", "max:40"]
+            ]); 
+            if($validator->fails()){
+                return $this->apiOutput($this->getValidationError($validator), 400);
+            }
+            $customer = Customer::where("email", $request->email)->first();
+            if( !Hash::check($request->password, $customer->password) ){
+                return $this->apiOutput("Sorry! Password Dosen't Match", 401);
+            }
+            // if( !$patient->status ){
+            //     return $this->apiOutput("Sorry! your account is temporaly blocked", 401);
+            // }
+            // Issueing Access Token
+             //$this->access_token = $admin->createToken($request->ip() ?? "admin_access_token")->plainTextToken;
+           
+            // $this->access_token = $patient->createToken($request->ip() ?? "patient_access_token")->plainTextToken;
+            // Session::put('access_token',$this->access_token);
+            $this->access_token = $customer->createToken($request->ip() ?? "customer_access_token")->plainTextToken;
+            Session::put('access_token',$this->access_token);
+            $this->apiSuccess("Login Successfully");
+            $this->data = (new CustomerResource($customer));
+            return $this->apiOutput();
 
-public function index()
+        }catch(Exception $e){
+            return $this->apiOutput($this->getError($e), 500);
+        }
+    }
+
+    public function logout(Request $request){
+        $user = $request->user();
+        $user->tokens()->delete();
+        $this->apiSuccess("Logout Successfull");
+        return $this->apiOutput();
+    }
+    public function index()
 {
     try{
         $this->data = CustomerResource::collection(Customer::all());
@@ -145,4 +187,5 @@ public function destroy(Request $request,$id)
     $this->apiSuccess();
     return $this->apiOutput("Customer Deleted Successfully", 200);
 }
+
 }

@@ -46,6 +46,7 @@ use App\Http\Controllers\V1\Admin\ProductionInformationController;
 use App\Http\Controllers\V1\Admin\ProductionSampleShippingApprovalController;
 use App\Http\Controllers\V1\Admin\SampleApprovalInformationController;
 use App\Http\Controllers\V1\Admin\SeasonController;
+use App\Http\Controllers\V1\Buyer\CustomerController as CustomerAuthController;
 use App\Http\Controllers\V1\Vendor\VendorController as VendorAuthController;
 
 /*
@@ -163,6 +164,8 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
         Route::get('/show', [ManualPoController::class, 'show']);
         Route::post('/delete', [ManualPoController::class, 'delete']);
         Route::get('/search', [ManualPoController::class, 'manualPoWithBuyerVenor']);
+        Route::post('/updatePoArtWorkFile', [ManualPoController::class, 'updatePoArtWorkFileInfo']);
+        Route::post('/updatePoGarmentsFile', [ManualPoController::class, 'updatePoPictureGarments']);
 
 
     });
@@ -670,5 +673,40 @@ Route::middleware(["auth:vendor"])->prefix('vendors')->group(function(){
         Route::post('/delete/{id}', [VendorAuthController::class, 'delete']);
 
     });
+
+
+    
 });
+
+
+/**
+     * Customer Login Section
+     */
+    Route::prefix("customer")->group(function(){
+       
+        Route::post('/login', [CustomerAuthController::class, "login"]);
+       
+    });
+
+
+    Route::middleware(["auth:customer"])->prefix('customers')->group(function(){
+
+        /**
+         * Customer
+         */
+        Route::prefix('customer')->group(function(){
+    
+            Route::get('/list', [CustomerAuthController::class, 'index']);
+            Route::post('/store', [CustomerAuthController::class, 'store']);
+            Route::post('/update/{id}', [CustomerAuthController::class, 'update']);
+            Route::get('/show', [CustomerAuthController::class, 'show']);
+            Route::post('/delete/{id}', [CustomerAuthController::class, 'delete']);
+            Route::post('/logout', [CustomerAuthController::class, "logout"]);
+    
+        });
+    
+    
+        
+    });
+    
 
