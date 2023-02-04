@@ -164,6 +164,8 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
         Route::get('/show', [ManualPoController::class, 'show']);
         Route::post('/delete', [ManualPoController::class, 'delete']);
         Route::get('/search', [ManualPoController::class, 'manualPoWithBuyerVenor']);
+        Route::post('/updatePoArtWorkFile', [ManualPoController::class, 'updatePoArtWorkFileInfo']);
+        Route::post('/updatePoGarmentsFile', [ManualPoController::class, 'updatePoPictureGarments']);
 
 
     });
