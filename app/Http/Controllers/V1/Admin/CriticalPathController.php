@@ -111,6 +111,7 @@ class CriticalPathController extends Controller
             $criticalPath->aeon_comments=$request->aeon_comments;
             $criticalPath->vendor_comments=$request->vendor_comments;
             $criticalPath->other_comments=$request->other_comments;
+            $criticalPath->fabric_mill_id = $request->fabric_mill_id;
             $criticalPath->save();
             $this->saveLabDipsEmbellishmentInfo($request);
             $this-> savebulkFabricInformationInfo($request);
