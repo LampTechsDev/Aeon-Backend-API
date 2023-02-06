@@ -338,15 +338,28 @@ class ManualPoController extends Controller
 
             $inspection->po_number = $manualpo->po_no;
             $inspection->po_id = $manualpo->id;
-            $inspection->sewing_inline_inspection_date_plan = $manualpo->vendor_po_date;
+
+            $final_aql = strtotime($manualpo->vendor_po_date);
+            $inspection->final_aql_date_plan = Carbon::parse($final_aql)->subDays(7)->format("Y-m-d");
+
+            $final_aql_plan1= $inspection->final_aql_date_plan;
+            $final_aql_plan2 = strtotime($final_aql_plan1);
+            $inspection->pre_final_date_plan = Carbon::parse($final_aql_plan2)->subDays(3)->format("Y-m-d");
+
+            $inspection->finishing_inline_inspection_date_plan = Carbon::parse($final_aql_plan2)->subDays(3)->format("Y-m-d");
+
+            $sewing_inline_date=$inspection->finishing_inline_inspection_date_plan;
+            $inspection->sewing_inline_inspection_date_plan = Carbon::parse($sewing_inline_date)->subDays(4)->format("Y-m-d");        
+
+            
             $inspection->sewing_inline_inspection_date_actual = $manualpo->vendor_po_date;
             $inspection->inline_inspection_schedule = $manualpo->vendor_po_date;
-            $inspection->finishing_inline_inspection_date_plan = $manualpo->vendor_po_date;
+            
             $inspection->finishing_inline_inspection_date_actual = $manualpo->vendor_po_date;
-            $inspection->pre_final_date_plan = $manualpo->vendor_po_date;
+           
             $inspection->pre_final_date_actual = $manualpo->vendor_po_date;
             $inspection->pre_final_aql_schedule = $manualpo->vendor_po_date;
-            $inspection->final_aql_date_plan = $manualpo->vendor_po_date;
+           
             $inspection->final_aql_date_actual = $manualpo->vendor_po_date;
             $inspection->final_aql_schedule=$manualpo->vendor_po_date;
             $inspection->save();
