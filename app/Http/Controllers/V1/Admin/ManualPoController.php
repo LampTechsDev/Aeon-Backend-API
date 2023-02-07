@@ -294,11 +294,15 @@ class ManualPoController extends Controller
             $ppMeeting = new PpMeeting();
             $ppMeeting->po_id=$manualpo->id;
             $ppMeeting->po_number=$manualpo->po_no;
+
+            $pp_meeting1=strtotime($manualpo->vendor_po_date);
+            $ppMeeting->pp_meeting_date_plan = Carbon::parse($pp_meeting1)->subDays(36)->format("Y-m-d");
+            
             $ppMeeting->care_label_approval_plan = $manualpo->vendor_po_date;
             $ppMeeting->care_label_approval_actual = $manualpo->vendor_po_date;
             $ppMeeting->material_inhouse_date_plan = $manualpo->vendor_po_date;
             $ppMeeting->material_inhouse_date_actual = $manualpo->vendor_po_date;
-            $ppMeeting->pp_meeting_date_plan = $manualpo->vendor_po_date;
+            
             $ppMeeting->pp_meeting_date_actual = $manualpo->vendor_po_date;
             $ppMeeting->pp_meeting_schedule = $manualpo->vendor_po_date;
             $ppMeeting->save();
@@ -322,13 +326,15 @@ class ManualPoController extends Controller
              //Washing Complete Date Paln Calculation
              $production->washing_complete_date_plan = Carbon::parse($finishing_complete_date1)->subDays(5)->format("Y-m-d");
              $washing_complete_date_plan1=$production->washing_complete_date_plan;
+             $washing_complete_date_plan2=$production->washing_complete_date_plan;
 
              //Sewing Start Date Plan Calculation
              $production->sewing_start_date_plan = Carbon::parse($washing_complete_date_plan1)->subDays(15)->format("Y-m-d");
              $sewing_start_date_plan1=$production->sewing_start_date_plan;
+             
 
              //Sewing Complete Date Plan Calculation
-             $production->sewing_complete_date_plan = Carbon::parse($washing_complete_date_plan1)->subDays(2)->format("Y-m-d");
+             $production->sewing_complete_date_plan = Carbon::parse($washing_complete_date_plan2)->subDays(2)->format("Y-m-d");
 
              //Emblishment Plan Calculation
              $production->embellishment_plan = Carbon::parse($sewing_start_date_plan1)->subDays(5)->format("Y-m-d");
