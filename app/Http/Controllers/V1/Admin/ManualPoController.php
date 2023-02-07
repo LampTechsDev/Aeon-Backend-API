@@ -310,20 +310,45 @@ class ManualPoController extends Controller
 
         public function saveProductionInformation($request,$manualpo){
             //DB::beginTransaction();
+            //dd($final_aql_plan2);
             $production = new ProductionInformation();
             $production->po_id=$manualpo->id;
             $production->po_number=$manualpo->po_no;
-            $production->cutting_date_plan = $manualpo->first_delivery_date;
-            $production->cutting_date_actual = $manualpo->vendor_po_date;
-            $production->embellishment_plan = $manualpo->vendor_po_date;
-            $production->embellishment_actual = $manualpo->vendor_po_date;
-            $production->sewing_start_date_plan = $manualpo->vendor_po_date;
-            $production->sewing_start_date_actual = $manualpo->vendor_po_date;
-            $production->sewing_complete_date_plan = $manualpo->vendor_po_date;
-            $production->sewing_complete_date_actual = $manualpo->vendor_po_date;
-            $production->washing_complete_date_plan = $manualpo->vendor_po_date;
-            $production->washing_complete_date_actual = $manualpo->vendor_po_date;
-            $production->finishing_complete_date_plan = $manualpo->vendor_po_date;
+            //Finishing Complete Date Plan Calculation
+             $finishing_complete_date=strtotime($manualpo->vendor_po_date);
+             $production->finishing_complete_date_plan = Carbon::parse($finishing_complete_date)->subDays(9)->format("Y-m-d");
+             $finishing_complete_date1=$production->finishing_complete_date_plan;
+
+             //Washing Complete Date Paln Calculation
+             $production->washing_complete_date_plan = Carbon::parse($finishing_complete_date1)->subDays(5)->format("Y-m-d");
+             $washing_complete_date_plan1=$production->washing_complete_date_plan;
+
+             //Sewing Start Date Plan Calculation
+             $production->sewing_start_date_plan = Carbon::parse($washing_complete_date_plan1)->subDays(15)->format("Y-m-d");
+             $sewing_start_date_plan1=$production->sewing_start_date_plan;
+
+             //Sewing Complete Date Plan Calculation
+             $production->sewing_complete_date_plan = Carbon::parse($washing_complete_date_plan1)->subDays(2)->format("Y-m-d");
+
+             //Emblishment Plan Calculation
+             $production->embellishment_plan = Carbon::parse($sewing_start_date_plan1)->subDays(5)->format("Y-m-d");
+             $embellishment_plan1=$production->embellishment_plan;
+
+             //Cutting Date Plan calculation
+             $production->cutting_date_plan = Carbon::parse($embellishment_plan1)->subDays(2)->format("Y-m-d");
+             
+             
+             $production->cutting_date_actual = $manualpo->vendor_po_date;
+            
+             $production->embellishment_actual = $manualpo->vendor_po_date;
+            
+             $production->sewing_start_date_actual = $manualpo->vendor_po_date;
+             
+             $production->sewing_complete_date_actual = $manualpo->vendor_po_date;
+            
+             $production->washing_complete_date_actual = $manualpo->vendor_po_date;
+            //$production->finishing_complete_date_plan = Carbon::parse($final_aql_plan2)->subDays(2)->format("Y-m-d");
+           
             $production->finishing_complete_date_actual = $manualpo->vendor_po_date;
             $production->save();
 
@@ -363,6 +388,10 @@ class ManualPoController extends Controller
             $inspection->final_aql_date_actual = $manualpo->vendor_po_date;
             $inspection->final_aql_schedule=$manualpo->vendor_po_date;
             $inspection->save();
+
+            //$this->saveProductionInformation($manualpo,$final_aql_plan2);
+
+
 
             return $inspection->id;
         }
