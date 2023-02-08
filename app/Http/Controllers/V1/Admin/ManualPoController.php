@@ -251,7 +251,10 @@ class ManualPoController extends Controller
                 //$bulkFabricInformation->bulk_fabric_knit_down_dispatch_details = $request->bulk_fabric_knit_down_dispatch_details;
                 //$bulkFabricInformation->bulk_fabric_knit_down_dispatch_sending_date = $request->bulk_fabric_knit_down_dispatch_sending_date;
                 //$bulkFabricInformation->bulk_fabric_knit_down_dispatch_aob_number = $request->bulk_fabric_knit_down_dispatch_aob_number;
-                $bulkFabricInformation->bulk_yarn_fabric_inhouse_plan = $manualpo->vendor_po_date;
+                //Fabric Inhouse Plan Calculation
+                $fabric_inhouse_plan=strtotime($manualpo->vendor_po_date);
+                $cutting_date_plan1 = Carbon::parse($fabric_inhouse_plan)->subDays(36)->format("Y-m-d");
+                $bulkFabricInformation->bulk_yarn_fabric_inhouse_plan = Carbon::parse($cutting_date_plan1)->subDays(7)->format("Y-m-d");
                 $bulkFabricInformation->bulk_yarn_fabric_inhouse_actual = $manualpo->vendor_po_date;
 
                 $bulkFabricInformation->save();
