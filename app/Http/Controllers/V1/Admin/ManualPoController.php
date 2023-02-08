@@ -290,24 +290,32 @@ class ManualPoController extends Controller
         //PP Meeting Details
 
         public function savePpMeetingInformation($request, $manualpo){
-            //DB::beginTransaction();
-            $ppMeeting = new PpMeeting();
-            $ppMeeting->po_id=$manualpo->id;
-            $ppMeeting->po_number=$manualpo->po_no;
+                //DB::beginTransaction();
+                $ppMeeting = new PpMeeting();
+                $ppMeeting->po_id=$manualpo->id;
+                $ppMeeting->po_number=$manualpo->po_no;
 
-            $pp_meeting1=strtotime($manualpo->vendor_po_date);
-            $ppMeeting->pp_meeting_date_plan = Carbon::parse($pp_meeting1)->subDays(36)->format("Y-m-d");
-            
-            $ppMeeting->care_label_approval_plan = $manualpo->vendor_po_date;
-            $ppMeeting->care_label_approval_actual = $manualpo->vendor_po_date;
-            $ppMeeting->material_inhouse_date_plan = $manualpo->vendor_po_date;
-            $ppMeeting->material_inhouse_date_actual = $manualpo->vendor_po_date;
-            
-            $ppMeeting->pp_meeting_date_actual = $manualpo->vendor_po_date;
-            $ppMeeting->pp_meeting_schedule = $manualpo->vendor_po_date;
-            $ppMeeting->save();
+                //PP Meeting Plan Calculation
+                $pp_meeting1=strtotime($manualpo->vendor_po_date);
+                $cutting_date_plan = Carbon::parse($pp_meeting1)->subDays(36)->format("Y-m-d");
+                $ppMeeting->pp_meeting_date_plan = Carbon::parse($cutting_date_plan)->subDays(3)->format("Y-m-d");
+                $pp_meeting_date_plan1=$ppMeeting->pp_meeting_date_plan;
 
-            return $ppMeeting->id;
+                //Material Inhouse Date plan Calculation
+                $ppMeeting->material_inhouse_date_plan = Carbon::parse($pp_meeting_date_plan1)->subDays(2)->format("Y-m-d");
+                
+                //Care Label Approval Plan Calculation
+                $ppMeeting->care_label_approval_plan = Carbon::parse($pp_meeting_date_plan1)->subDays(10)->format("Y-m-d");
+                
+                $ppMeeting->care_label_approval_actual = $manualpo->vendor_po_date;
+                
+                $ppMeeting->material_inhouse_date_actual = $manualpo->vendor_po_date;
+                
+                $ppMeeting->pp_meeting_date_actual = $manualpo->vendor_po_date;
+                $ppMeeting->pp_meeting_schedule = $manualpo->vendor_po_date;
+                $ppMeeting->save();
+
+                return $ppMeeting->id;
         }
 
         //Production Information
