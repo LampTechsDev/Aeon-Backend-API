@@ -33,6 +33,8 @@ class CreateManualPosTable extends Migration
             $table->text("description");
             $table->string("fabric_quality");
             $table->string("fabric_content");
+            $table->enum('fabric_type',["solid","aop","import"]);
+            $table->enum('po_type',["manual","po_conversion"]);
             $table->foreignId('created_by')->nullable()->references("id")->on("admins");
             $table->foreignId('updated_by')->nullable()->references("id")->on("admins");
             $table->foreignId('deleted_by')->nullable()->references("id")->on("admins");

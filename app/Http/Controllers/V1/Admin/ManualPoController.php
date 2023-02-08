@@ -95,6 +95,8 @@ class ManualPoController extends Controller
             $manualpo->fabric_weight=$request->fabric_weight;
             $manualpo->po_no=$request->po_no;
             $manualpo->season_id=$request->season_id;
+            $manualpo->fabric_type=$request->fabric_type;
+            $manualpo->po_type=$request->po_type;
             $manualpo->save();
             $this->saveFileInfo($request, $manualpo);
             $this->saveExtraFileInfo($request, $manualpo);
@@ -300,12 +302,13 @@ class ManualPoController extends Controller
                 $cutting_date_plan = Carbon::parse($pp_meeting1)->subDays(36)->format("Y-m-d");
                 $ppMeeting->pp_meeting_date_plan = Carbon::parse($cutting_date_plan)->subDays(3)->format("Y-m-d");
                 $pp_meeting_date_plan1=$ppMeeting->pp_meeting_date_plan;
+                $pp_meeting_date_plan2=$ppMeeting->pp_meeting_date_plan;
 
                 //Material Inhouse Date plan Calculation
                 $ppMeeting->material_inhouse_date_plan = Carbon::parse($pp_meeting_date_plan1)->subDays(2)->format("Y-m-d");
                 
                 //Care Label Approval Plan Calculation
-                $ppMeeting->care_label_approval_plan = Carbon::parse($pp_meeting_date_plan1)->subDays(10)->format("Y-m-d");
+                $ppMeeting->care_label_approval_plan = Carbon::parse($pp_meeting_date_plan2)->subDays(10)->format("Y-m-d");
                 
                 $ppMeeting->care_label_approval_actual = $manualpo->vendor_po_date;
                 
