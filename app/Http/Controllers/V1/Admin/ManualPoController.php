@@ -251,6 +251,9 @@ class ManualPoController extends Controller
                 $bulk_yarn_fabric_inhouse_plan1=$bulkFabricInformation->bulk_yarn_fabric_inhouse_plan;
                 $bulk_yarn_fabric_inhouse_plan2=$bulkFabricInformation->bulk_yarn_fabric_inhouse_plan;
                 $bulk_yarn_fabric_inhouse_plan3=$bulkFabricInformation->bulk_yarn_fabric_inhouse_plan;
+                $bulk_yarn_fabric_inhouse_plan4=$bulkFabricInformation->bulk_yarn_fabric_inhouse_plan;
+                $bulk_yarn_fabric_inhouse_plan5=$bulkFabricInformation->bulk_yarn_fabric_inhouse_plan;
+                $bulk_yarn_fabric_inhouse_plan6=$bulkFabricInformation->bulk_yarn_fabric_inhouse_plan;
                 //Bulk Fabric/Knit Down Approval Plan Calculation
                 if($manualpo->fabric_type=="solid"){
                     $bulkFabricInformation->bulk_fabric_knit_down_approval_plan = Carbon::parse($bulk_yarn_fabric_inhouse_plan1)->subDays(15)->format("Y-m-d");
@@ -261,8 +264,19 @@ class ManualPoController extends Controller
                 elseif($manualpo->fabric_type=="import"){
                     $bulkFabricInformation->bulk_fabric_knit_down_approval_plan = Carbon::parse($bulk_yarn_fabric_inhouse_plan3)->subDays(45)->format("Y-m-d");
                 }
+
+                //Fabric Order Plan Calculation
+                if($manualpo->fabric_type=="solid"){
+                    $bulkFabricInformation->fabric_ordered_plan = Carbon::parse($bulk_yarn_fabric_inhouse_plan4)->subDays(30)->format("Y-m-d");
+                }
+                elseif($manualpo->fabric_type=="aop"){
+                    $bulkFabricInformation->fabric_ordered_plan = Carbon::parse($bulk_yarn_fabric_inhouse_plan5)->subDays(40)->format("Y-m-d");
+                }
+                elseif($manualpo->fabric_type=="import"){
+                    $bulkFabricInformation->fabric_ordered_plan = Carbon::parse($bulk_yarn_fabric_inhouse_plan6)->subDays(65)->format("Y-m-d");
+                }
                 
-                $bulkFabricInformation->fabric_ordered_plan = $manualpo->vendor_po_date;
+                //$bulkFabricInformation->fabric_ordered_plan = $manualpo->vendor_po_date;
                 $bulkFabricInformation->fabric_ordered_actual = $manualpo->vendor_po_date;
                 
                 $bulkFabricInformation->bulk_fabric_knit_down_approval_actual = $manualpo->vendor_po_date;
