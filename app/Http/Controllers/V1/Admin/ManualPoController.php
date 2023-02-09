@@ -300,20 +300,36 @@ class ManualPoController extends Controller
             $sampleApproval = new SampleApprovalInformation();
             $sampleApproval->po_id=$manualpo->id;
             $sampleApproval->po_number=$manualpo->po_no;
-            $sampleApproval->development_photo_sample_sent_plan = $manualpo->vendor_po_date;
+            //PP Approval Plan Calculation
+            $pp_meeting=strtotime($manualpo->vendor_po_date);
+            $pp_meeting_1 = Carbon::parse($pp_meeting)->subDays(39)->format("Y-m-d");
+            $sampleApproval->pp_approval_plan = Carbon::parse($pp_meeting_1)->subDays(10)->format("Y-m-d");
+            $pp_approval_plan1=$sampleApproval->pp_approval_plan;
+            //Size Set Approval Plan Calculation
+            $sampleApproval->size_set_approval_plan = Carbon::parse($pp_approval_plan1)->subDays(14)->format("Y-m-d");
+            $size_set_approval_plan1=$sampleApproval->size_set_approval_plan;
+
+            //Fit Approval Plan Calculation
+            $sampleApproval->fit_approval_plan = Carbon::parse($size_set_approval_plan1)->subDays(14)->format("Y-m-d");
+            $fit_approval_plan1=$sampleApproval->fit_approval_plan;
+
+            //Photo Sample Sent Plan Calculation
+
+            $sampleApproval->development_photo_sample_sent_plan = Carbon::parse($fit_approval_plan1)->subDays(10)->format("Y-m-d");
             $sampleApproval->development_photo_sample_sent_actual = $manualpo->vendor_po_date;
             //$sampleApproval->development_photo_sample_dispatch_details = $request->first_delivery_date;
-            $sampleApproval->fit_approval_plan = $manualpo->vendor_po_date;
+            
             $sampleApproval->fit_approval_actual = $manualpo->vendor_po_date;
             //$sampleApproval->fit_sample_dispatch_details = $request->fit_sample_dispatch_details;
             //$sampleApproval->fit_sample_dispatch_sending_date = $request->fit_sample_dispatch_sending_date;
             //$sampleApproval->fit_sample_dispatch_aob_number = $request->fit_sample_dispatch_aob_number;
-            $sampleApproval->size_set_approval_plan = $manualpo->vendor_po_date;
+            
             $sampleApproval->size_set_approval_actual = $manualpo->vendor_po_date;
             //$sampleApproval->size_set_sample_dispatch_details = $request->size_set_sample_dispatch_details;
             //$sampleApproval->size_set_sample_dispatch_sending_date = $request->size_set_sample_dispatch_sending_date;
             //$sampleApproval->size_set_sample_dispatch_aob_number = $request->size_set_sample_dispatch_aob_number;
-            $sampleApproval->pp_approval_plan = $manualpo->vendor_po_date;
+
+           
             $sampleApproval->pp_approval_actual = $manualpo->vendor_po_date;
            // $sampleApproval->pp_sample_dispatch_details = $request->pp_sample_dispatch_details;
             //$sampleApproval->pp_sample_sending_date = $request->pp_sample_sending_date;
