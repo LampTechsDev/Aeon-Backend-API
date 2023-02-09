@@ -244,17 +244,34 @@ class ManualPoController extends Controller
                 $bulkFabricInformation = new BulkFabricInformation();
                 $bulkFabricInformation->po_number =$manualpo->po_no;
                 $bulkFabricInformation->po_id = $manualpo->id;
+                //Fabric Inhouse Plan Calculation
+                $fabric_inhouse_plan=strtotime($manualpo->vendor_po_date);
+                $cutting_date_plan1 = Carbon::parse($fabric_inhouse_plan)->subDays(36)->format("Y-m-d");
+                $bulkFabricInformation->bulk_yarn_fabric_inhouse_plan = Carbon::parse($cutting_date_plan1)->subDays(7)->format("Y-m-d");
+                $bulk_yarn_fabric_inhouse_plan1=$bulkFabricInformation->bulk_yarn_fabric_inhouse_plan;
+                $bulk_yarn_fabric_inhouse_plan2=$bulkFabricInformation->bulk_yarn_fabric_inhouse_plan;
+                $bulk_yarn_fabric_inhouse_plan3=$bulkFabricInformation->bulk_yarn_fabric_inhouse_plan;
+                //Bulk Fabric/Knit Down Approval Plan Calculation
+                if($manualpo->fabric_type=="solid"){
+                    $bulkFabricInformation->bulk_fabric_knit_down_approval_plan = Carbon::parse($bulk_yarn_fabric_inhouse_plan1)->subDays(15)->format("Y-m-d");
+                }
+                elseif($manualpo->fabric_type=="aop"){
+                    $bulkFabricInformation->bulk_fabric_knit_down_approval_plan = Carbon::parse($bulk_yarn_fabric_inhouse_plan2)->subDays(25)->format("Y-m-d");
+                }
+                elseif($manualpo->fabric_type=="import"){
+                    $bulkFabricInformation->bulk_fabric_knit_down_approval_plan = Carbon::parse($bulk_yarn_fabric_inhouse_plan3)->subDays(45)->format("Y-m-d");
+                }
+                
                 $bulkFabricInformation->fabric_ordered_plan = $manualpo->vendor_po_date;
                 $bulkFabricInformation->fabric_ordered_actual = $manualpo->vendor_po_date;
-                $bulkFabricInformation->bulk_fabric_knit_down_approval_plan = $manualpo->vendor_po_date;
+                
                 $bulkFabricInformation->bulk_fabric_knit_down_approval_actual = $manualpo->vendor_po_date;
                 //$bulkFabricInformation->bulk_fabric_knit_down_dispatch_details = $request->bulk_fabric_knit_down_dispatch_details;
                 //$bulkFabricInformation->bulk_fabric_knit_down_dispatch_sending_date = $request->bulk_fabric_knit_down_dispatch_sending_date;
                 //$bulkFabricInformation->bulk_fabric_knit_down_dispatch_aob_number = $request->bulk_fabric_knit_down_dispatch_aob_number;
                 //Fabric Inhouse Plan Calculation
-                $fabric_inhouse_plan=strtotime($manualpo->vendor_po_date);
-                $cutting_date_plan1 = Carbon::parse($fabric_inhouse_plan)->subDays(36)->format("Y-m-d");
-                $bulkFabricInformation->bulk_yarn_fabric_inhouse_plan = Carbon::parse($cutting_date_plan1)->subDays(7)->format("Y-m-d");
+                
+              
                 $bulkFabricInformation->bulk_yarn_fabric_inhouse_actual = $manualpo->vendor_po_date;
 
                 $bulkFabricInformation->save();
