@@ -193,10 +193,26 @@ class ManualPoController extends Controller
             $criticalPath->sample_shipping_approvals_id=$sample_shipping_approval;
             $criticalPath->ex_factories_id=$ex_factory_vessel_info;
             $criticalPath->payments_id=$payment_info;
-            //$criticalPath->	lead_times=$request->lead_times;
+            //Lead Time Calculation
+            $current_date=Carbon::now();
+            $current_date1=strtotime($current_date);
+            //dd($current_date1);
+            //dd($current_date);
+            //$subtractedDate = $currentDate->subDays(7);
+            //$current_time1=strtotime($current_time);
+            //dd($current_time1);
+            //$current_time1=strtotime($current_time);
+            //$criticalPath->official_po_actual=Carbon::now();
+            //$official_po_actual1= $criticalPath->official_po_actual;
+            $ex_factory_date=strtotime($manualpo->vendor_po_date);
+            //dd($ex_factory_date);
+            //$days = $current_date->diffInDays($ex_factory_date);
+            $days = (int)(($ex_factory_date - $current_date1)/86400);
+            //dd($days);
+            $criticalPath->lead_times= $days;
             //$criticalPath->lead_type=$request->lead_type;
             //$criticalPath->	official_po_plan=$request->official_po_plan;
-            //$criticalPath->official_po_actual=$request->official_po_actual;
+            
             //$criticalPath->status=$request->status;
             $criticalPath->aeon_comments=$request->aeon_comments;
             $criticalPath->vendor_comments=$request->vendor_comments;
@@ -220,14 +236,29 @@ class ManualPoController extends Controller
                     $labDips = new LabDipsEmbellishmentInformation();
                     $labDips->po_number = $manualpo->po_no;
                     $labDips->po_id = $manualpo->id;
-                    $labDips->colour_std_print_artwork_sent_to_supplier_plan = $manualpo->vendor_po_date;
+                    //Embellishment/so Approval Plan Calculation
+                    $pp_meeting_approval=strtotime($manualpo->vendor_po_date);
+                    $pp_meeting_approval1 = Carbon::parse($pp_meeting_approval)->subDays(49)->format("Y-m-d");
+                    $labDips->embellishment_so_approval_plan = Carbon::parse($pp_meeting_approval1)->subDays(14)->format("Y-m-d");
+
+                    
+
+                    $embellishment_so_approval_plan1=$labDips->embellishment_so_approval_plan;
+                    $embellishment_so_approval_plan2=$labDips->embellishment_so_approval_plan;
+
+                    //Lab Dip Approval Plan Calculation
+                    $labDips->lab_dip_approval_plan = Carbon::parse($embellishment_so_approval_plan1)->subDays(7)->format("Y-m-d");
+
+                    //Colour std/print artwork artwork Calculation
+                    $labDips->colour_std_print_artwork_sent_to_supplier_plan = Carbon::parse($embellishment_so_approval_plan2)->subDays(7)->format("Y-m-d");
+
                     $labDips->colour_std_print_artwork_sent_to_supplier_actual = $manualpo->vendor_po_date;
-                    $labDips->lab_dip_approval_plan = $manualpo->vendor_po_date;
+                   
                     $labDips->lab_dip_approval_actual = $manualpo->vendor_po_date;
                     //$labDips->lab_dip_dispatch_details = $request->lab_dip_dispatch_details;
                     $labDips->lab_dip_dispatch_sending_date = $manualpo->vendor_po_date;
                     //$labDips->lab_dip_dispatch_aob_number = $request->lab_dip_dispatch_aob_number;
-                    $labDips->embellishment_so_approval_plan = $manualpo->vendor_po_date;
+                   
                     $labDips->embellishment_so_approval_actual = $manualpo->vendor_po_date;
                     //$labDips->embellishment_so_dispatch_details = $request->embellishment_so_dispatch_details;
                     $labDips->embellishment_so_dispatch_sending_date = $manualpo->vendor_po_date;
