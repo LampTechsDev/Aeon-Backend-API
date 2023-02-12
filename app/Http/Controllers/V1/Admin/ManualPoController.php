@@ -210,8 +210,52 @@ class ManualPoController extends Controller
             $days = (int)(($ex_factory_date - $current_date1)/86400);
             //dd($days);
             $criticalPath->lead_times= $days;
+            $lead_time=$criticalPath->lead_times;
+            //dd($lead_time);
+            if($manualpo->fabric_type == "solid" && $lead_time>=75 && $lead_time<=90){
+                $criticalPath->lead_type="Regular";
+                
+            }else{
+                $criticalPath->lead_type="Short";
+            }
+
+
+            if($manualpo->fabric_type == "aop" && $lead_time>=90 && $lead_time<=120){
+                $criticalPath->lead_type="Regular";
+                
+            }else{
+                $criticalPath->lead_type="Short";
+            }
+
+            if($manualpo->fabric_type == "import" && $lead_time>=120){
+                $criticalPath->lead_type="Regular";
+                
+            }else{
+                $criticalPath->lead_type="Short";
+            }
             //$criticalPath->lead_type=$request->lead_type;
-            //$criticalPath->	official_po_plan=$request->official_po_plan;
+            //Official Pos Sent(Plan)
+            $ex_factory_date1=strtotime($manualpo->vendor_po_date);
+            $ex_factory_date2=strtotime($manualpo->vendor_po_date);
+            $ex_factory_date3=strtotime($manualpo->vendor_po_date);
+            if($manualpo->fabric_type=="solid"){
+
+                $fabric_ordered_plan1=Carbon::parse($ex_factory_date1)->subDays(73)->format("Y-m-d");
+                $criticalPath->official_po_plan= Carbon::parse($fabric_ordered_plan1)->subDays(15)->format("Y-m-d");
+
+            }
+            elseif($manualpo->fabric_type=="aop"){
+                $fabric_ordered_plan1=Carbon::parse($ex_factory_date2)->subDays(83)->format("Y-m-d");
+                $criticalPath->official_po_plan= Carbon::parse($fabric_ordered_plan1)->subDays(15)->format("Y-m-d");
+            }
+            elseif($manualpo->fabric_type=="import"){
+
+                $fabric_ordered_plan1=Carbon::parse($ex_factory_date3)->subDays(108)->format("Y-m-d");
+                $criticalPath->official_po_plan= Carbon::parse($fabric_ordered_plan1)->subDays(15)->format("Y-m-d");
+
+            }
+            
+            
             
             //$criticalPath->status=$request->status;
             $criticalPath->aeon_comments=$request->aeon_comments;

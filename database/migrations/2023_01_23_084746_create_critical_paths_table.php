@@ -27,7 +27,7 @@ class CreateCriticalPathsTable extends Migration
             $table->foreignId("ex_factories_id")->references("id")->on("ex_factories")->cascadeOnDelete();
             $table->foreignId("payments_id")->references("id")->on("payments")->cascadeOnDelete();
             $table->string("lead_times")->nullable();
-            $table->enum('lead_type',["Regular","Short"])->nullable();
+            $table->string("lead_type")->nullable();
             $table->date("official_po_plan")->nullable();
             $table->date("official_po_actual")->nullable();
             $table->string("status")->nullable();
