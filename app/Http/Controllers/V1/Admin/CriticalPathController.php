@@ -15,6 +15,7 @@ use App\Models\PpMeeting;
 use App\Models\ProductionInformation;
 use App\Models\SampleApprovalInformation;
 use App\Models\SampleShippingApproval;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Exception;
@@ -211,10 +212,12 @@ class CriticalPathController extends Controller
 
            public function saveLabDipsEmbellishmentInfo($request){
             //DB::beginTransaction();
-            
+                    
+                    //return 10;
                     $labDips =  LabDipsEmbellishmentInformation::find($request->id);
                     // $labDips->po_number = $manualpo->po_no;
                     // $labDips->po_id = $manualpo->id;
+                   
                     $labDips->colour_std_print_artwork_sent_to_supplier_plan = $request->colour_std_print_artwork_sent_to_supplier_plan;
                     $labDips->colour_std_print_artwork_sent_to_supplier_actual = $request->colour_std_print_artwork_sent_to_supplier_actual;
                     $labDips->lab_dip_approval_plan = $request->lab_dip_approval_plan;
@@ -239,7 +242,7 @@ class CriticalPathController extends Controller
                     $bulkFabricInformation = BulkFabricInformation::find($request->id);
                     // $bulkFabricInformation->po_number =$manualpo->po_no;
                     // $bulkFabricInformation->po_id = $manualpo->id;
-                    $bulkFabricInformation->fabric_ordered_plan = $request->fabric_ordered_plan;
+                    $bulkFabricInformation->fabric_ordered_plan = $request->fabric_ordered_plan ;
                     $bulkFabricInformation->fabric_ordered_actual = $request->fabric_ordered_actual;
                     $bulkFabricInformation->bulk_fabric_knit_down_approval_plan = $request->bulk_fabric_knit_down_approval_plan;
                     $bulkFabricInformation->bulk_fabric_knit_down_approval_actual = $request->bulk_fabric_knit_down_approval_actual;
@@ -261,6 +264,7 @@ class CriticalPathController extends Controller
             $sampleApproval = SampleApprovalInformation::find($request->id);
             // $sampleApproval->po_id=$manualpo->id;
             // $sampleApproval->po_number=$manualpo->po_no;
+
             $sampleApproval->development_photo_sample_sent_plan = $request->development_photo_sample_sent_plan;
             $sampleApproval->development_photo_sample_sent_actual = $request->development_photo_sample_sent_actual;
             $sampleApproval->development_photo_sample_dispatch_details = $request->development_photo_sample_dispatch_details;
@@ -372,12 +376,19 @@ class CriticalPathController extends Controller
                     $exfactory = ExFactory::find($request->id);
                     // $exfactory->po_number = $manualpo->po_no;
                     // $exfactory->po_id=$manualpo->id;
+                    // $timestamp = strtotime($request->lab_dip_approval_plan);
+                    // $exfactory->lab_dip_approval_plan = Carbon::parse($timestamp)->subDays(5);
                     $exfactory->ex_factory_date_po=$request->ex_factory_date_po;
                     $exfactory->revised_ex_factory_date=$request->revised_ex_factory_date;
                     $exfactory->actual_ex_factory_date=$request->actual_ex_factory_date;
                     $exfactory->shipped_units=$request->shipped_units;
-                    $exfactory->original_eta_sa_date=$request->original_eta_sa_date;
-                    $exfactory->revised_eta_sa_date=$request->revised_eta_sa_date;
+                    // $timestamp = strtotime($request->ex_factory_date_po);
+                    // $exfactory->original_eta_sa_date = Carbon::parse($timestamp)->addDays(52);
+
+                    // $timestamp1 = strtotime($request->revised_ex_factory_date);
+                    // $exfactory->revised_eta_sa_date = Carbon::parse($timestamp1)->addDays(52);
+                    //$exfactory->original_eta_sa_date=$request->original_eta_sa_date;
+                    //$exfactory->revised_eta_sa_date=$request->revised_eta_sa_date;
                     $exfactory->forwarded_ref_vessel_name=$request->forwarded_ref_vessel_name;
                     $exfactory->save();
                     //return $exfactory->id;
