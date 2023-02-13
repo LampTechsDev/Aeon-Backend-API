@@ -194,8 +194,18 @@ class ManualPoController extends Controller
             $criticalPath->ex_factories_id=$ex_factory_vessel_info;
             $criticalPath->payments_id=$payment_info;
             //Lead Time Calculation
+            $ex_factory_date=strtotime($manualpo->vendor_po_date);
+
+            // $currentDate = Carbon::now()->toDateString();
+            // $currentDate2 = Carbon::now()->toDateString();
+
+            //$differece_date = dateDiffInDays($ex_factory_date,$currentDate);
+
+            //dd($currentDate
+        
             $current_date=Carbon::now();
             $current_date1=strtotime($current_date);
+            //dd($current_date1);
             //dd($current_date1);
             //dd($current_date);
             //$subtractedDate = $currentDate->subDays(7);
@@ -204,7 +214,7 @@ class ManualPoController extends Controller
             //$current_time1=strtotime($current_time);
             //$criticalPath->official_po_actual=Carbon::now();
             //$official_po_actual1= $criticalPath->official_po_actual;
-            $ex_factory_date=strtotime($manualpo->vendor_po_date);
+            
             //dd($ex_factory_date);
             //$days = $current_date->diffInDays($ex_factory_date);
             $days = (int)(($ex_factory_date - $current_date1)/86400);
@@ -212,7 +222,7 @@ class ManualPoController extends Controller
             $criticalPath->lead_times= $days;
             $lead_time=$criticalPath->lead_times;
             //dd($lead_time);
-            if($manualpo->fabric_type == "solid" && $lead_time>=75 && $lead_time<=90){
+            if($manualpo->fabric_type == "solid" && $lead_time>=75 && $lead_time<90){
                 $criticalPath->lead_type="Regular";
                 
             }else{
@@ -220,7 +230,7 @@ class ManualPoController extends Controller
             }
 
 
-            if($manualpo->fabric_type == "aop" && $lead_time>=90 && $lead_time<=120){
+            if($manualpo->fabric_type == "aop" && $lead_time>=90 && $lead_time<120){
                 $criticalPath->lead_type="Regular";
                 
             }else{
