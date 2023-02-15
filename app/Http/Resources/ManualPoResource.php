@@ -54,6 +54,7 @@ class ManualPoResource extends JsonResource
             "po_no"                     => $this->po_no ?? null,
             "fabric_type"               => $this->fabric_type ?? null,
             "po_type"                   => $this->po_type ?? null,
+            "supplier_no"               => $this->supplier_no ?? null,
             "created_at"                => $this->created_at ?? null,
             "updated_at"                => $this->updated_at ?? null,
             "upload_files"              => PictureGarmentsResource::collection($this->fileInfo),
