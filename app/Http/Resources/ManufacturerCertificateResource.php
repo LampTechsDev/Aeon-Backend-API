@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\ManufacCertiAttachFileUpload;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ManufacturerCertificateResource extends JsonResource
@@ -24,15 +25,6 @@ class ManufacturerCertificateResource extends JsonResource
     }
 
     /**
-     * Collection
-     */
-    // public static function collection($resource){
-    //     return tap(new VendorCertificateCollection($resource), function ($collection) {
-    //         $collection->collects = __CLASS__;
-    //     });
-    // }
-
-    /**
      * Transform the resource into an array.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -49,11 +41,12 @@ class ManufacturerCertificateResource extends JsonResource
             "issue_date"              => $this->issue_date ?? "",
             "validity_start_date"     => $this->validity_start_date ?? "",
             "renewal_date"            => $this->renewal_date ?? "",
-            "attachment"              => $this->attachment ?? "",
             "score"                   => $this->score ?? "",
 
             "remarks"                 => $this->remarks ?? "",
             "status"                  => $this->status  ?? "",
+            "upload_files"            => ManufacCertiAttachFileUploadResource::collection($this->fileInfo) ?? "",
+
             "created_by"              => isset($this->created_by) ? (new AdminResource($this->created_by))->hide(["created_by","updated_by,deleted_by,deleted_date"]) : null,
             "updated_by"              => isset($this->updated_by) ? (new AdminResource($this->updatedBy))->hide(["created_by","updated_by,deleted_by,deleted_date"]) : null,
             "deleted_by"              => isset($this->deleted_by) ? (new AdminResource($this->deleted_by))->hide(["created_by","updated_by,deleted_by,deleted_date"]) : null,

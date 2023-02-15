@@ -45,7 +45,7 @@ class VendorController extends Controller
             $validator = Validator::make($request->all(), [
                 "email"     => ["required", "email", "exists:vendors,email"],
                 "password"  => ["required", "string", "min:4", "max:40"]
-            ]); 
+            ]);
             if($validator->fails()){
                 return $this->apiOutput($this->getValidationError($validator), 400);
             }
@@ -58,7 +58,7 @@ class VendorController extends Controller
             // }
             // Issueing Access Token
              //$this->access_token = $admin->createToken($request->ip() ?? "admin_access_token")->plainTextToken;
-           
+
             // $this->access_token = $patient->createToken($request->ip() ?? "patient_access_token")->plainTextToken;
             // Session::put('access_token',$this->access_token);
             $this->access_token = $vendor->createToken($request->ip() ?? "vendor_access_token")->plainTextToken;

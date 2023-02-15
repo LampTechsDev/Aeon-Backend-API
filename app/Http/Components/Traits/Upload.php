@@ -35,10 +35,12 @@ trait Upload{
     protected  $global_certificate_logo = "storage/uploads/globalcertificate";
     protected  $vendor_certificate_logo = "storage/uploads/vendorcertificate";
     protected  $vendor_certificate_attachment = "storage/uploads/vendorattachment";
+    protected  $vendor_certificate_attach_file_uploads = "storage/uploads/vendor_certificate_attach_file_uploads";
     protected  $vendor_manufacturer_logo = "storage/uploads/vendormanufacturer";
     protected  $manufacturer_profile_logo = "storage/uploads/manufacturerprofile";
     protected  $manufacturer_profile_attach_file_upload = "storage/uploads/manufacturerprofileattachfileupload";
     protected  $manufacturer_certificate_attachment = "storage/uploads/manufacturercertificate";
+    protected  $manufac_certi_attach_file_uploads = "storage/uploads/manufacturercertificateattachfileupload";
     protected  $labdips_uploads="storage/uploads/labdips";
     protected  $embellishment_uploads="storage/uploads/embellishmentuploads";
     protected  $sampleImage_uploads="storage/uploads/sampleImage_uploads";
