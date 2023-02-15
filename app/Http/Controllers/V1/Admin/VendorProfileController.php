@@ -66,10 +66,7 @@ class VendorProfileController extends Controller
                     "email"                         => ["required","email"],
                     "status"                        => 'required',
 
-                ],[
-
-                ]
-               );
+                ]);
 
                 if ($validator->fails()) {
                     return $this->apiOutput($this->getValidationError($validator), 400);

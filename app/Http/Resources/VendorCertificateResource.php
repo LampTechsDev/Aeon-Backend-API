@@ -51,11 +51,11 @@ class VendorCertificateResource extends JsonResource
             "validity_start_date"     => $this->validity_start_date ?? "",
             "validity_end_date"       => $this->validity_end_date ?? "",
             "renewal_date"            => $this->renewal_date ?? "",
-            "attachment"              => $this->attachment ?? "",
             "score"                   => $this->score ?? "",
 
             "remarks"                 => $this->remarks ?? "",
             "status"                  => $this->status ?? "",
+            "upload_files"            => VendorCertificateAttachFileUploadResource::collection($this->fileInfo) ?? "",
 
             "created_by"              => isset($this->created_by) ? (new AdminResource($this->created_by))->hide(["created_by","updated_by,deleted_by,deleted_date"]) : null,
             "updated_by"              => isset($this->updated_by) ? (new AdminResource($this->updatedBy))->hide(["created_by","updated_by,deleted_by,deleted_date"]) : null,

@@ -24,15 +24,6 @@ class ManufacturerProfileResource extends JsonResource
     }
 
     /**
-     * Collection
-     */
-    // public static function collection($resource){
-    //     return tap(new VendorProfileCollection($resource), function ($collection) {
-    //         $collection->collects = __CLASS__;
-    //     });
-    // }
-
-    /**
      * Transform the resource into an array.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -63,7 +54,7 @@ class ManufacturerProfileResource extends JsonResource
             // "deleted_date"            => isset($this->deleted_date) ? (new AdminResource($this->deleted_date))->hide(["created_by","updated_by,deleted_by,deleted_date"]) : null,
             "created_by"            => isset($this->created_by) ? (new AdminResource($this->created_by))->hide(["created_by","updated_by"]) : null,
             "updated_by"            => isset($this->updated_by) ? (new AdminResource($this->updatedBy))->hide(["created_by","updated_by"]) : null,
-           
+
 
         ]);
     }

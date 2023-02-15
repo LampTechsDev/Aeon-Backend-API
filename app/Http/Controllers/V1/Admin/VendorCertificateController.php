@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\VendorCertificateResource;
+use App\Models\VendorCertificateAttachFileUpload;
 
 class VendorCertificateController extends Controller
 {
@@ -68,7 +69,6 @@ class VendorCertificateController extends Controller
                 $certificate->validity_start_date   = $request->validity_start_date;
                 $certificate->validity_end_date     = $request->validity_end_date;
                 $certificate->renewal_date          = $request->renewal_date;
-                $certificate->attachment            = $this->uploadFileNid($request, 'attachment', $this->vendor_certificate_attachment, 720);
                 $certificate->score                 = $request->score;
 
                 $certificate->remarks               = $request->remarks;
@@ -80,7 +80,7 @@ class VendorCertificateController extends Controller
                 $certificate->deleted_date          = $request->deleted_date;
 
                 $certificate->save();
-                // $this->saveFileInfo($request, $certificate);
+                $this->saveFileInfo($request, $certificate);
                 DB::commit();
 
             try{
@@ -99,6 +99,23 @@ class VendorCertificateController extends Controller
             return $this->apiOutput($this->getError( $e), 500);
         }
     }
+
+        // Save File Info
+        public function saveFileInfo($request, $certificate){
+            $file_path = $this->uploadFile($request, 'file', $this->vendor_certificate_attach_file_uploads, 720);
+
+            if( !is_array($file_path) ){
+                $file_path = (array) $file_path;
+            }
+            foreach($file_path as $path){
+                $data = new VendorCertificateAttachFileUpload();
+                $data->vendor_certi_id   = $certificate->id;
+                $data->file_name         = $request->file_name ?? "Vendor Certificate File Upload";
+                $data->file_url          = $path;
+                $data->save();
+
+            }
+        }
 
     public function update(Request $request)
     {
@@ -125,16 +142,15 @@ class VendorCertificateController extends Controller
             $certificate->validity_start_date   = $request->validity_start_date;
             $certificate->validity_end_date     = $request->validity_end_date;
             $certificate->renewal_date          = $request->renewal_date;
-            $certificate->attachment            = $this->uploadFileNid($request, 'attachment', $this->vendor_certificate_attachment, 720);
             $certificate->score                 = $request->score;
 
             $certificate->remarks               = $request->remarks;
             $certificate->status                = $request->status;
 
-            $certificate->created_at            = $request->created_at;
-            $certificate->updated_at            = $request->updated_at;
-            $certificate->deleted_by            = $request->deleted_by;
-            $certificate->deleted_date          = $request->deleted_date;
+            // $certificate->created_at            = $request->created_at;
+            // $certificate->updated_at            = $request->updated_at;
+            // $certificate->deleted_by            = $request->deleted_by;
+            // $certificate->deleted_date          = $request->deleted_date;
 
             $certificate->save();
             DB::commit();
@@ -150,25 +166,6 @@ class VendorCertificateController extends Controller
     }
 
     /*
-       Save File Info
-    */
-        // public function saveFileInfo($request, $certificate){
-        //     $file_path = $this->uploadFile($request, 'file', $this->vendor_certificate_attachment, 720);
-
-        //     if( !is_array($file_path) ){
-        //         $file_path = (array) $file_path;
-        //     }
-        //     foreach($file_path as $path){
-        //         $data = new PoPictureGarments();
-        //         $data->po_id = $certificate->id;
-        //         $data->file_name    = $request->file_name ?? "PO_Picture_Garments Upload";
-        //         $data->file_url     = $path;
-        //         $data->type = $request->type;
-        //         $data->save();
-        //     }
-        // }
-
-    /*
        Delete
     */
     public function delete(Request $request)
@@ -176,6 +173,54 @@ class VendorCertificateController extends Controller
         VendorCertificate::where("id", $request->id)->delete();
         $this->apiSuccess();
         return $this->apiOutput("Vendor Certificate Deleted Successfully", 200);
+    }
+
+
+    public function updateAttachFile(Request $request){
+        try{
+            $validator = Validator::make( $request->all(),[
+                "id"            => ["required"],
+
+            ]);
+
+            if ($validator->fails()) {
+                return $this->apiOutput($this->getValidationError($validator), 200);
+            }
+
+            $data =VendorCertificateAttachFileUpload::find($request->id);
+
+            if($request->hasFile('picture')){
+                $data->file_url = $this->uploadFile($request, 'picture', $this->vendor_certificate_attach_file_uploads, null,null,$data->file_url);
+            }
+
+            $data->save();
+
+            $this->apiSuccess("Vendor Certificate Attach File Updated Successfully");
+            return $this->apiOutput();
+
+
+        }catch(Exception $e){
+            return $this->apiOutput($this->getError( $e), 500);
+        }
+    }
+
+    public function deleteAttachFile(Request $request){
+        try{
+
+            $validator = Validator::make( $request->all(),[
+                "id"            => ["required"],
+            ]);
+
+            if ($validator->fails()) {
+                return $this->apiOutput($this->getValidationError($validator), 200);
+            }
+            $vendorattachupload=VendorCertificateAttachFileUpload::where('id',$request->id);
+            $vendorattachupload->delete();
+            $this->apiSuccess("Vendor Certificate Attach File Deleted Successfully");
+            return $this->apiOutput();
+        }catch(Exception $e){
+            return $this->apiOutput($this->getError( $e), 500);
+        }
     }
 
 

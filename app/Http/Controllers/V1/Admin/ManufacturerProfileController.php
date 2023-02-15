@@ -64,11 +64,7 @@ class ManufacturerProfileController extends Controller
                     "factory_profile_name"          => ["required"],
                     "email"                         => ["required","email"],
                     "status"                        => 'required',
-
-                ],[
-
-                ]
-               );
+                ]);
 
                 if ($validator->fails()) {
                     return $this->apiOutput($this->getValidationError($validator), 400);
@@ -128,7 +124,7 @@ class ManufacturerProfileController extends Controller
     public function update(Request $request)
     {
         try{
-            DB::beginTransaction();
+
 
             $validator = Validator::make($request->all(),[
                 "vendor_id"                     => ["required"],
@@ -140,7 +136,6 @@ class ManufacturerProfileController extends Controller
            if ($validator->fails()) {
             $this->apiOutput($this->getValidationError($validator), 400);
            }
-
             $manufacturer_profile = ManufacturerProfile::find($request->id);
 
             $manufacturer_profile->vendor_id            = $request->vendor_id;
@@ -166,10 +161,7 @@ class ManufacturerProfileController extends Controller
             $this->apiSuccess("Manufacturer Profile Updated Successfully");
             $this->data = (new ManufacturerProfileResource($manufacturer_profile));
             return $this->apiOutput();
-            DB::commit();
-
         }catch(Exception $e){
-            DB::rollBack();
             return $this->apiOutput($this->getError( $e), 500);
         }
     }

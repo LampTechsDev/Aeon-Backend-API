@@ -60,10 +60,6 @@ use App\Http\Controllers\V1\Vendor\VendorController as VendorAuthController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
-
-
-
     /**
      * Admin Login Section
      */
@@ -138,7 +134,6 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
         Route::post('/deleteFile', [ComplianceAuditController::class, 'deleteFileCompliance']);
     });
 
-
      /**
      * Inspection
      */
@@ -152,11 +147,9 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
 
     });
 
-
     /**
      * Manual Po
      */
-
     Route::prefix('manual_po')->group(function(){
 
         Route::get('/list', [ManualPoController::class, 'index']);
@@ -171,11 +164,9 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
 
     });
 
-
     /**
      * Manual Po Delivery Details
      */
-
      Route::prefix('manual_po_delivery_details')->group(function(){
 
         Route::get('/list', [ManualPoDeliveryDetailsController::class, 'index']);
@@ -189,7 +180,6 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
     /**
      * Manual Po Delivery Details
      */
-
      Route::prefix('manual_po_item_details')->group(function(){
 
         Route::get('/list', [ManualPoItemDetailsController::class, 'index']);
@@ -197,14 +187,12 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
         Route::post('/update', [ManualPoItemDetailsController::class, 'update']);
         Route::get('/show', [ManualPoItemDetailsController::class, 'show']);
         Route::post('/delete', [ManualPoItemDetailsController::class, 'delete']);
-
     });
 
 
      /**
      * Fabric Content
      */
-
      Route::prefix('fabric-content')->group(function(){
 
         Route::get('/list', [FabricContentController::class, 'index']);
@@ -212,7 +200,6 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
         Route::post('/update', [FabricContentController::class, 'update']);
         Route::get('/show', [FabricContentController::class, 'show']);
         Route::post('/delete', [FabricContentController::class, 'delete']);
-
     });
 
 
@@ -230,11 +217,9 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
 
     });
 
-
      /**
      * Fabric Quality
      */
-
      Route::prefix('fabric-weight')->group(function(){
 
         Route::get('/list', [FabricWeightController::class, 'index']);
@@ -242,11 +227,10 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
         Route::post('/update', [FabricWeightController::class, 'update']);
         Route::get('/show', [FabricWeightController::class, 'show']);
         Route::post('/delete', [FabricWeightController::class, 'delete']);
-
     });
 
 
-         /**
+     /**
      *Aeon Contact Section
     */
     Route::prefix('aeon-contact')->group(function(){
@@ -259,7 +243,7 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
     });
 
 
-        /**
+    /**
      *Supplier Section
     */
     Route::prefix('supplier')->group(function(){
@@ -451,8 +435,6 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
         // Route::post('/delete', [ProductionSampleShippingApprovalController::class, "delete"]);
     });
 
-
-
     /**
      * Vendor
      */
@@ -478,7 +460,6 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
         Route::post('/delete/{id}', [VendorContactPeopleController::class, "destroy"]);
     });
 
-
      /**
      * Vendor Profile Section
      **/
@@ -492,6 +473,7 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
         Route::post('/updateFile',  [VendorProfileController::class, 'updateAttachFile']);
         Route::post('/deleteFile',  [VendorProfileController::class, 'deleteAttachFile']);
     });
+
 
     /**
      * Customer Section
@@ -540,6 +522,8 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
         Route::post('/store',       [VendorCertificateController::class, "store"]);
         Route::post('/update',      [VendorCertificateController::class, "update"]);
         Route::post('/delete',      [VendorCertificateController::class, "delete"]);
+        Route::post('/updateFile',  [VendorCertificateController::class, 'updateAttachFile']);
+        Route::post('/deleteFile',  [VendorCertificateController::class, 'deleteAttachFile']);
     });
 
     /**
@@ -576,7 +560,6 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
         Route::post('/deleteFile',  [ManufacturerProfileController::class, 'deleteAttachFile']);
     });
 
-
     /**
      *Vendor Manufacturer Section
     */
@@ -587,7 +570,10 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
         Route::post('/store',       [VendorManufacturerController::class, "store"]);
         Route::post('/update/{id}', [VendorManufacturerController::class, "update"]);
         Route::post('/delete/{id}', [VendorManufacturerController::class, "destroy"]);
+        Route::post('/updateFile',  [VendorManufacturerController::class, 'updateAttachFile']);
+        Route::post('/deleteFile',  [VendorManufacturerController::class, 'deleteAttachFile']);
     });
+
      /**
      * Manufacturar Certificate Section
      **/
@@ -598,6 +584,8 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
         Route::post('/store',       [ManufacturerCertificateController::class, "store"]);
         Route::post('/update',      [ManufacturerCertificateController::class, "update"]);
         Route::post('/delete',      [ManufacturerCertificateController::class, "delete"]);
+        Route::post('/updateFile',  [ManufacturerCertificateController::class, 'updateAttachFile']);
+        Route::post('/deleteFile',  [ManufacturerCertificateController::class, 'deleteAttachFile']);
     });
 
      /**
