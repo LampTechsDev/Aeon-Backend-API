@@ -30,6 +30,7 @@ use App\Http\Controllers\V1\Admin\FreightManagementController;
 use App\Http\Controllers\V1\Admin\GlobalCertificateController;
 use App\Http\Controllers\V1\Admin\InspectionInformationController;
 use App\Http\Controllers\V1\Admin\InspectionManagementOrderDetailsController;
+use App\Http\Controllers\V1\Admin\InvoiceController;
 use App\Http\Controllers\V1\Admin\LabDipsEmbellishmentInformationController;
 use App\Http\Controllers\V1\Admin\VendorContactPeopleController;
 use App\Http\Controllers\V1\Admin\ManualPoDeliveryDetailsController;
@@ -645,6 +646,19 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
         Route::post('/store',       [InspectionManagementOrderDetailsController::class, "store"]);
         Route::post('/update',      [InspectionManagementOrderDetailsController::class, "update"]);
         Route::post('/delete',      [InspectionManagementOrderDetailsController::class, "delete"]);
+    });
+
+
+    /**
+     * Invoice Section
+     **/
+    Route::prefix('invoice')->group(function(){
+
+        Route::get('/list',         [InvoiceController::class, 'index']);
+        Route::get('/show',         [InvoiceController::class, "show"]);
+        Route::post('/store',       [InvoiceController::class, "store"]);
+        Route::post('/update',      [InvoiceController::class, "update"]);
+        Route::post('/delete',      [InvoiceController::class, "delete"]);
     });
 
 
