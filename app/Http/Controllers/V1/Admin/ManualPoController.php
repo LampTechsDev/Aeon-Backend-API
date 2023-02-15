@@ -97,6 +97,7 @@ class ManualPoController extends Controller
             $manualpo->season_id=$request->season_id;
             $manualpo->fabric_type=$request->fabric_type;
             $manualpo->po_type=$request->po_type;
+            $manualpo->supplier_no=$request->supplier_no;
             $manualpo->save();
             $this->saveFileInfo($request, $manualpo);
             $this->saveExtraFileInfo($request, $manualpo);
