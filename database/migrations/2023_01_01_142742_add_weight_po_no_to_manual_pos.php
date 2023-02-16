@@ -15,7 +15,7 @@ class AddWeightPoNoToManualPos extends Migration
     {
         Schema::table('manual_pos', function (Blueprint $table) {
             $table->string("fabric_weight");
-            $table->string("po_no");
+            $table->string("po_no")->unique();
         });
     }
 
