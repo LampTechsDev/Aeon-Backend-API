@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\V1\Admin\AeonContactController;
+use App\Http\Controllers\V1\Admin\BankController;
 use App\Http\Controllers\V1\Admin\BulkFabricInformationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -647,6 +648,18 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
         Route::post('/store',       [InvoiceController::class, "store"]);
         Route::post('/update',      [InvoiceController::class, "update"]);
         Route::post('/delete',      [InvoiceController::class, "delete"]);
+    });
+
+    /**
+     * Bank Section
+     **/
+    Route::prefix('bank')->group(function(){
+
+        Route::get('/list',         [BankController::class, 'index']);
+        Route::get('/show',         [BankController::class, "show"]);
+        Route::post('/store',       [BankController::class, "store"]);
+        Route::post('/update',      [BankController::class, "update"]);
+        Route::post('/delete',      [BankController::class, "delete"]);
     });
 
 
