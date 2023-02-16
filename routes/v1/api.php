@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\V1\Admin\AeonContactController;
 use App\Http\Controllers\V1\Admin\BulkFabricInformationController;
+use App\Http\Controllers\V1\Admin\BusinessSummaryController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\ManualPoDeliveryDetails;
@@ -60,6 +61,78 @@ use App\Http\Controllers\V1\Vendor\VendorController as VendorAuthController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+    /**
+     * Business Summary Section
+    **/
+    Route::prefix('business_summary')->group(function(){
+
+        Route::get('/list',         [BusinessSummaryController::class, 'index']);
+        Route::get('/show',         [BusinessSummaryController::class, "show"]);
+        Route::post('/store',       [BusinessSummaryController::class, "store"]);
+        Route::post('/update',      [BusinessSummaryController::class, "update"]);
+        Route::post('/delete',      [BusinessSummaryController::class, "delete"]);
+    });
+    Route::prefix('manual_po')->group(function(){
+
+        Route::get('/list', [ManualPoController::class, 'index']);
+        Route::post('/store', [ManualPoController::class, 'store']);
+        Route::post('/update', [ManualPoController::class, 'update']);
+        Route::get('/show', [ManualPoController::class, 'show']);
+        Route::post('/delete', [ManualPoController::class, 'delete']);
+        Route::get('/search', [ManualPoController::class, 'manualPoWithBuyerVenor']);
+        Route::post('/updatePoArtWorkFile', [ManualPoController::class, 'updatePoArtWorkFileInfo']);
+        Route::post('/updatePoGarmentsFile', [ManualPoController::class, 'updatePoPictureGarments']);
+
+
+    });
+    Route::prefix('supplier')->group(function(){
+
+        Route::get('/list', [SupplierController::class, 'index']);
+        Route::get('/show',  [SupplierController::class, "show"]);
+        Route::post('/store', [SupplierController::class, "store"]);
+        Route::post('/update', [SupplierController::class, "update"]);
+        Route::post('/delete', [SupplierController::class, "delete"]);
+    });
+
+    Route::prefix('vendor_manufacturer')->group(function(){
+
+        Route::get('/list',         [VendorManufacturerController::class, 'index']);
+        Route::get('/show',         [VendorManufacturerController::class, "show"]);
+        Route::post('/store',       [VendorManufacturerController::class, "store"]);
+        Route::post('/update/{id}', [VendorManufacturerController::class, "update"]);
+        Route::post('/delete/{id}', [VendorManufacturerController::class, "destroy"]);
+        Route::post('/updateFile',  [VendorManufacturerController::class, 'updateAttachFile']);
+        Route::post('/deleteFile',  [VendorManufacturerController::class, 'deleteAttachFile']);
+    });
+
+    Route::prefix('customer')->group(function(){
+
+        Route::get('/list',         [CustomerController::class, 'index']);
+        Route::get('/show',         [CustomerController::class, "show"]);
+        Route::post('/store',       [CustomerController::class, "store"]);
+        Route::post('/update/{id}', [CustomerController::class, "update"]);
+        Route::post('/delete/{id}', [CustomerController::class, "destroy"]);
+    });
+
+    Route::prefix('vendor')->group(function(){
+
+        Route::get('/list', [VendorController::class, 'index']);
+        Route::post('/store', [VendorController::class, 'store']);
+        Route::post('/update/{id}', [VendorController::class, 'update']);
+        Route::get('/show', [VendorController::class, 'show']);
+        Route::post('/delete/{id}', [VendorController::class, 'delete']);
+
+    });
+
+    Route::prefix('customer_department')->group(function(){
+
+        Route::get('/list',         [CustomerDepartmentController::class, 'index']);
+        Route::get('/show',         [CustomerDepartmentController::class, "show"]);
+        Route::post('/store',       [CustomerDepartmentController::class, "store"]);
+        Route::post('/update',      [CustomerDepartmentController::class, "update"]);
+        Route::post('/delete',      [CustomerDepartmentController::class, "delete"]);
+    });
+
     /**
      * Admin Login Section
      */
@@ -150,19 +223,7 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
     /**
      * Manual Po
      */
-    Route::prefix('manual_po')->group(function(){
 
-        Route::get('/list', [ManualPoController::class, 'index']);
-        Route::post('/store', [ManualPoController::class, 'store']);
-        Route::post('/update', [ManualPoController::class, 'update']);
-        Route::get('/show', [ManualPoController::class, 'show']);
-        Route::post('/delete', [ManualPoController::class, 'delete']);
-        Route::get('/search', [ManualPoController::class, 'manualPoWithBuyerVenor']);
-        Route::post('/updatePoArtWorkFile', [ManualPoController::class, 'updatePoArtWorkFileInfo']);
-        Route::post('/updatePoGarmentsFile', [ManualPoController::class, 'updatePoPictureGarments']);
-
-
-    });
 
     /**
      * Manual Po Delivery Details
@@ -246,14 +307,7 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
     /**
      *Supplier Section
     */
-    Route::prefix('supplier')->group(function(){
 
-        Route::get('/list', [SupplierController::class, 'index']);
-        Route::get('/show',  [SupplierController::class, "show"]);
-        Route::post('/store', [SupplierController::class, "store"]);
-        Route::post('/update', [SupplierController::class, "update"]);
-        Route::post('/delete', [SupplierController::class, "delete"]);
-    });
 
       /**
      *Critical Path Department
@@ -438,15 +492,7 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
     /**
      * Vendor
      */
-    Route::prefix('vendor')->group(function(){
 
-        Route::get('/list', [VendorController::class, 'index']);
-        Route::post('/store', [VendorController::class, 'store']);
-        Route::post('/update/{id}', [VendorController::class, 'update']);
-        Route::get('/show', [VendorController::class, 'show']);
-        Route::post('/delete/{id}', [VendorController::class, 'delete']);
-
-    });
 
     /**
     * Vendor Contact People Section
@@ -478,14 +524,7 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
     /**
      * Customer Section
      */
-    Route::prefix('customer')->group(function(){
 
-        Route::get('/list',         [CustomerController::class, 'index']);
-        Route::get('/show',         [CustomerController::class, "show"]);
-        Route::post('/store',       [CustomerController::class, "store"]);
-        Route::post('/update/{id}', [CustomerController::class, "update"]);
-        Route::post('/delete/{id}', [CustomerController::class, "destroy"]);
-    });
 
     /**
      * Customer Contact People Section
@@ -503,14 +542,7 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
     /**
      * Customer Department Section
      */
-     Route::prefix('customer_department')->group(function(){
 
-        Route::get('/list',         [CustomerDepartmentController::class, 'index']);
-        Route::get('/show',         [CustomerDepartmentController::class, "show"]);
-        Route::post('/store',       [CustomerDepartmentController::class, "store"]);
-        Route::post('/update',      [CustomerDepartmentController::class, "update"]);
-        Route::post('/delete',      [CustomerDepartmentController::class, "delete"]);
-    });
 
     /**
      *Vendor Certificate Section
@@ -563,16 +595,7 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
     /**
      *Vendor Manufacturer Section
     */
-    Route::prefix('vendor_manufacturer')->group(function(){
 
-        Route::get('/list',         [VendorManufacturerController::class, 'index']);
-        Route::get('/show',         [VendorManufacturerController::class, "show"]);
-        Route::post('/store',       [VendorManufacturerController::class, "store"]);
-        Route::post('/update/{id}', [VendorManufacturerController::class, "update"]);
-        Route::post('/delete/{id}', [VendorManufacturerController::class, "destroy"]);
-        Route::post('/updateFile',  [VendorManufacturerController::class, 'updateAttachFile']);
-        Route::post('/deleteFile',  [VendorManufacturerController::class, 'deleteAttachFile']);
-    });
 
      /**
      * Manufacturar Certificate Section
@@ -677,7 +700,7 @@ Route::middleware(["auth:vendor"])->prefix('vendors')->group(function(){
     });
 
 
-    
+
 });
 
 
@@ -685,9 +708,9 @@ Route::middleware(["auth:vendor"])->prefix('vendors')->group(function(){
      * Customer Login Section
      */
     Route::prefix("customer")->group(function(){
-       
+
         Route::post('/login', [CustomerAuthController::class, "login"]);
-       
+
     });
 
 
@@ -697,18 +720,18 @@ Route::middleware(["auth:vendor"])->prefix('vendors')->group(function(){
          * Customer
          */
         Route::prefix('customer')->group(function(){
-    
+
             Route::get('/list', [CustomerAuthController::class, 'index']);
             Route::post('/store', [CustomerAuthController::class, 'store']);
             Route::post('/update/{id}', [CustomerAuthController::class, 'update']);
             Route::get('/show', [CustomerAuthController::class, 'show']);
             Route::post('/delete/{id}', [CustomerAuthController::class, 'delete']);
             Route::post('/logout', [CustomerAuthController::class, "logout"]);
-    
+
         });
-    
-    
-        
+
+
+
     });
-    
+
 

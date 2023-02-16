@@ -42,6 +42,7 @@ class CustomerResource extends JsonResource
     {
         return $this->filter([
             "id"             => $this->id ?? "",
+            "customer_second_notify_details" => $this->customer_second_notify_details ?? "",
             "name"           => $this->name ?? "",
             "logo"           => $this->logo ?? "",
             "address"        => $this->address ?? "",

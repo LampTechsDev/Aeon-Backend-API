@@ -74,6 +74,7 @@ public function store(Request $request)
             $customer = new Customer();
 
             $customer->name            = $request->name;
+            $customer->customer_second_notify_details = $request->customer_second_notify_details;
             $customer->logo            = $this->uploadFileNid($request, 'logo', $this->customer_logo, 720);
             $customer->address         = $request->address;
             $customer->email           = $request->email;
@@ -116,7 +117,9 @@ public function update(Request $request,$id)
        }
 
         $customer = Customer::find($request->id);
+        
         $customer->name            = $request->name;
+        $customer->customer_second_notify_details = $request->customer_second_notify_details;
         $customer->logo            = $this->uploadFileNid($request, 'logo', $this->customer_logo, 720);
         $customer->address         = $request->address;
         $customer->email           = $request->email;
