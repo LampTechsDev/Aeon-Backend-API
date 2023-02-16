@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class VendorCertificate extends Model
+class ManufacCertiAttachFileUpload extends Model
 {
     use HasFactory;
     public function createdBy(){
@@ -14,7 +14,5 @@ class VendorCertificate extends Model
     public function updatedBy(){
         return $this->belongsTo(Admin::class, "updated_by")->withTrashed();
     }
-    public function fileInfo(){
-        return $this->hasMany(VendorCertificateAttachFileUpload::class, 'vendor_certi_id');
-    }
+
 }

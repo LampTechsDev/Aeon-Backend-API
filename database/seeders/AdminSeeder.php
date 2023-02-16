@@ -22,7 +22,7 @@ class AdminSeeder extends Seeder
             "group_id"          => 1,
             "password"          => bcrypt("admin@admin.com"),
             "email_verified_at" => now(),
-            "remember_token"    => Str::random(32),
+           
         ]);
     }
 }

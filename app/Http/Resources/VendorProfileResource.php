@@ -24,15 +24,6 @@ class VendorProfileResource extends JsonResource
     }
 
     /**
-     * Collection
-     */
-    // public static function collection($resource){
-    //     return tap(new VendorProfileCollection($resource), function ($collection) {
-    //         $collection->collects = __CLASS__;
-    //     });
-    // }
-
-    /**
      * Transform the resource into an array.
      *
      * @param  \Illuminate\Http\Request  $request
