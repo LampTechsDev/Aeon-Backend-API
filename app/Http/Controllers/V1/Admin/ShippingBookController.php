@@ -11,6 +11,19 @@ use Illuminate\Support\Facades\Validator;
 
 class ShippingBookController extends Controller
 {
+    public function index()
+    {
+       try{
+        
+            $this->data = ShippingBookingResource::collection(ShippingBook::all());
+            $this->apiSuccess("Shipping Booking Loaded Successfully");
+            return $this->apiOutput();
+
+        }catch(Exception $e){
+            return $this->apiOutput($this->getError($e), 500);
+        }
+    }
+
     public function store(Request $request){
         try{
 
@@ -42,5 +55,29 @@ class ShippingBookController extends Controller
         }catch(Exception $e){
             return $this->apiOutput($this->getError( $e), 500);
         }
+    }
+
+    public function show(Request $request)
+    {
+        try{
+            
+            $shipping = ShippingBook::find($request->id);
+            $this->data = (new ShippingBookingResource($shipping));
+            $this->apiSuccess("Shipping Booking Showed Successfully");
+            return $this->apiOutput();
+
+        }catch(Exception $e){
+            return $this->apiOutput($this->getError($e), 500);
+        }
+    }
+
+     /*
+       Delete
+    */
+    public function delete(Request $request)
+    {
+        ShippingBook::where("id", $request->id)->delete();
+        $this->apiSuccess();
+        return $this->apiOutput("Shipping Booking Deleted Successfully", 200);
     }
 }
