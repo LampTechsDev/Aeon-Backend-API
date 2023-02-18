@@ -21,5 +21,9 @@ class ShippingBook extends Model
         return $this->belongsTo(FreightManagement::class, "freight_id");
     }
 
+    public function shippingBookingItem(){
+        return $this->hasMany(ShippingBookingItem::class,"shipping_booking_id");
+    }
+
     
 }

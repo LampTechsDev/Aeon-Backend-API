@@ -43,6 +43,7 @@ class ShippingBookingResource extends JsonResource
             "invoice_no"          => $this->invoice_no ?? "",
             "exp_no"              => $this->exp_no ?? "",
             "description_goods"   => $this->description_goods ?? "",
+            "shipping_booking_item" =>count($this->shippingBookingItem)>=1 ? ShippingBookingItemResource::collection($this->shippingBookingItem) : [],
             "freight_info"          => isset($this->freight) ? (new FreightManagementResource($this->freight))->hide(["created_by", "updated_by"]) : null,
             "created_at"    => $this->created_at ?? "",
             "updated_at"    => $this->updated_at ?? "",

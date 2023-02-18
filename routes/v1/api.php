@@ -49,6 +49,7 @@ use App\Http\Controllers\V1\Admin\ProductionSampleShippingApprovalController;
 use App\Http\Controllers\V1\Admin\SampleApprovalInformationController;
 use App\Http\Controllers\V1\Admin\SeasonController;
 use App\Http\Controllers\V1\Admin\ShippingBookController;
+use App\Http\Controllers\V1\Admin\ShippingBookingItemController;
 use App\Http\Controllers\V1\Buyer\CustomerController as CustomerAuthController;
 use App\Http\Controllers\V1\Vendor\VendorController as VendorAuthController;
 
@@ -673,6 +674,19 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
         Route::post('/store',       [ShippingBookController::class, "store"]);
         Route::post('/update',      [ShippingBookController::class, "update"]);
         Route::post('/delete',      [ShippingBookController::class, "delete"]);
+    });
+
+
+    /**
+     * Shipping Booking Item Section
+     **/
+    Route::prefix('shipping-booking-item')->group(function(){
+
+        Route::get('/list',         [ShippingBookingItemController::class, 'index']);
+        Route::get('/show',         [ShippingBookingItemController::class, "show"]);
+        Route::post('/store',       [ShippingBookingItemController::class, "store"]);
+        Route::post('/update',      [ShippingBookingItemController::class, "update"]);
+        Route::post('/delete',      [ShippingBookingItemController::class, "delete"]);
     });
 
 
