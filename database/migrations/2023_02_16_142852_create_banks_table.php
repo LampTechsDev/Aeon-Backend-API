@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddWeightPoNoToManualPos extends Migration
+class CreateBanksTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,12 @@ class AddWeightPoNoToManualPos extends Migration
      */
     public function up()
     {
-        Schema::table('manual_pos', function (Blueprint $table) {
-            $table->string("fabric_weight");
-            $table->string("po_no")->unique();
+        Schema::create('banks', function (Blueprint $table) {
+            $table->id();
+            $table->string("name");
+            $table->string("status")->nullable();
+            $table->string("details")->nullable();
+            $table->timestamps();
         });
     }
 
@@ -26,8 +29,6 @@ class AddWeightPoNoToManualPos extends Migration
      */
     public function down()
     {
-        Schema::table('manual_pos', function (Blueprint $table) {
-            Schema::dropIfExists('manual_pos');
-        });
+        Schema::dropIfExists('banks');
     }
 }

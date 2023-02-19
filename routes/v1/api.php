@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\V1\Admin\AeonContactController;
+use App\Http\Controllers\V1\Admin\BankController;
 use App\Http\Controllers\V1\Admin\BulkFabricInformationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -47,6 +48,8 @@ use App\Http\Controllers\V1\Admin\ProductionInformationController;
 use App\Http\Controllers\V1\Admin\ProductionSampleShippingApprovalController;
 use App\Http\Controllers\V1\Admin\SampleApprovalInformationController;
 use App\Http\Controllers\V1\Admin\SeasonController;
+use App\Http\Controllers\V1\Admin\ShippingBookController;
+use App\Http\Controllers\V1\Admin\ShippingBookingItemController;
 use App\Http\Controllers\V1\Buyer\CustomerController as CustomerAuthController;
 use App\Http\Controllers\V1\Vendor\VendorController as VendorAuthController;
 
@@ -647,6 +650,43 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
         Route::post('/store',       [InvoiceController::class, "store"]);
         Route::post('/update',      [InvoiceController::class, "update"]);
         Route::post('/delete',      [InvoiceController::class, "delete"]);
+    });
+
+    /**
+     * Bank Section
+     **/
+    Route::prefix('bank')->group(function(){
+
+        Route::get('/list',         [BankController::class, 'index']);
+        Route::get('/show',         [BankController::class, "show"]);
+        Route::post('/store',       [BankController::class, "store"]);
+        Route::post('/update',      [BankController::class, "update"]);
+        Route::post('/delete',      [BankController::class, "delete"]);
+    });
+
+    /**
+     * Shipping Booking Section
+     **/
+    Route::prefix('shipping-booking')->group(function(){
+
+        Route::get('/list',         [ShippingBookController::class, 'index']);
+        Route::get('/show',         [ShippingBookController::class, "show"]);
+        Route::post('/store',       [ShippingBookController::class, "store"]);
+        Route::post('/update',      [ShippingBookController::class, "update"]);
+        Route::post('/delete',      [ShippingBookController::class, "delete"]);
+    });
+
+
+    /**
+     * Shipping Booking Item Section
+     **/
+    Route::prefix('shipping-booking-item')->group(function(){
+
+        Route::get('/list',         [ShippingBookingItemController::class, 'index']);
+        Route::get('/show',         [ShippingBookingItemController::class, "show"]);
+        Route::post('/store',       [ShippingBookingItemController::class, "store"]);
+        Route::post('/update',      [ShippingBookingItemController::class, "update"]);
+        Route::post('/delete',      [ShippingBookingItemController::class, "delete"]);
     });
 
 

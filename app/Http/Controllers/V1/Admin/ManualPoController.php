@@ -62,14 +62,16 @@ class ManualPoController extends Controller
                     "vendor_id"         => "required",
                     "supplier_id"       => "required",
                     "manufacturer_id"   => "required",
-                ]
+                    'po_no'             => 'required|unique:manual_pos,po_no',
+                 ]
                 
             );
 
-            if ($validator->fails()) {
+            DB::beginTransaction();
+
+            if ($validator->fails()) {    
                 $this->apiOutput($this->getValidationError($validator), 400);
             }
-            DB::beginTransaction();
 
             $manualpo = new ManualPo();
             $manualpo->buyer_id = $request->buyer_id;
@@ -110,6 +112,9 @@ class ManualPoController extends Controller
             return $this->apiOutput("Manual Po Added Successfully");
 
         }catch(Exception $e){
+            //return $this->apiOutput($this->getError( $e), 500);
+
+            //dd($this->getError($e));
             return $this->apiOutput($this->getError( $e), 500);
         }
     }
