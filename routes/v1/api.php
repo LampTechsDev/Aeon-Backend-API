@@ -689,6 +689,16 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
         Route::post('/delete',      [ShippingBookingItemController::class, "delete"]);
     });
 
+    /**
+     * Business Summary Section
+    **/
+    Route::prefix('business_summary')->group(function(){
+
+        Route::get('/list',         [BusinessSummaryController::class, 'index']);
+        Route::post('/update',      [BusinessSummaryController::class, "update"]);
+        Route::post('/delete',      [BusinessSummaryController::class, "delete"]);
+    });
+
 
 
 });
@@ -717,7 +727,7 @@ Route::middleware(["auth:vendor"])->prefix('vendors')->group(function(){
     });
 
 
-    
+
 });
 
 
@@ -725,9 +735,9 @@ Route::middleware(["auth:vendor"])->prefix('vendors')->group(function(){
      * Customer Login Section
      */
     Route::prefix("customer")->group(function(){
-       
+
         Route::post('/login', [CustomerAuthController::class, "login"]);
-       
+
     });
 
 
@@ -737,18 +747,18 @@ Route::middleware(["auth:vendor"])->prefix('vendors')->group(function(){
          * Customer
          */
         Route::prefix('customer')->group(function(){
-    
+
             Route::get('/list', [CustomerAuthController::class, 'index']);
             Route::post('/store', [CustomerAuthController::class, 'store']);
             Route::post('/update/{id}', [CustomerAuthController::class, 'update']);
             Route::get('/show', [CustomerAuthController::class, 'show']);
             Route::post('/delete/{id}', [CustomerAuthController::class, 'delete']);
             Route::post('/logout', [CustomerAuthController::class, "logout"]);
-    
+
         });
-    
-    
-        
+
+
+
     });
-    
+
 

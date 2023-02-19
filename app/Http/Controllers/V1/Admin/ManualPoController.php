@@ -2,34 +2,35 @@
 
 namespace App\Http\Controllers\V1\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Http\Resources\CriticalPathResource;
-use App\Http\Resources\FreightManagementResource;
-use App\Http\Resources\ManualPoResource;
-use App\Models\BulkFabricInformation;
-use App\Models\CriticalPath;
-use App\Models\CriticalPathMasterFile;
-use App\Models\ExFactory;
-use App\Models\FreightManagement;
-use App\Models\InspectionInformation;
-use App\Models\InspectionManagementOrderDetails;
-use App\Models\LabDipsEmbellishmentInformation;
-use App\Models\ManualPo;
-use App\Models\ManualPoDeliveryDetails;
-use App\Models\ManualPoItemDetails;
+use Exception;
+use Carbon\Carbon;
 use App\Models\Mill;
 use App\Models\Payment;
+use App\Models\ManualPo;
+use App\Models\ExFactory;
 use App\Models\PoArtwork;
-use App\Models\PoPictureGarments;
 use App\Models\PpMeeting;
-use App\Models\ProductionInformation;
-use App\Models\SampleApprovalInformation;
-use App\Models\SampleShippingApproval;
-use Carbon\Carbon;
+use App\Models\CriticalPath;
 use Illuminate\Http\Request;
+use App\Models\BusinessSummary;
+use App\Models\FreightManagement;
+use App\Models\PoPictureGarments;
 use Illuminate\Support\Facades\DB;
+use App\Models\ManualPoItemDetails;
+use App\Http\Controllers\Controller;
+use App\Models\BulkFabricInformation;
+use App\Models\InspectionInformation;
+use App\Models\ProductionInformation;
+use App\Models\CriticalPathMasterFile;
+use App\Models\SampleShippingApproval;
+use App\Models\ManualPoDeliveryDetails;
+use App\Http\Resources\ManualPoResource;
+use App\Models\SampleApprovalInformation;
 use Illuminate\Support\Facades\Validator;
-use Exception;
+use App\Http\Resources\CriticalPathResource;
+use App\Models\LabDipsEmbellishmentInformation;
+use App\Models\InspectionManagementOrderDetails;
+use App\Http\Resources\FreightManagementResource;
 
 class ManualPoController extends Controller
 {
@@ -52,10 +53,10 @@ class ManualPoController extends Controller
     */
 
     public function store(Request $request){
-       
+
 
         try{
-            $validator = Validator::make( 
+            $validator = Validator::make(
                 $request->all(),
                  [
                     "buyer_id"          => "required",
@@ -64,12 +65,12 @@ class ManualPoController extends Controller
                     "manufacturer_id"   => "required",
                     'po_no'             => 'required|unique:manual_pos,po_no',
                  ]
-                
+
             );
 
             DB::beginTransaction();
 
-            if ($validator->fails()) {    
+            if ($validator->fails()) {
                 $this->apiOutput($this->getValidationError($validator), 400);
             }
 
@@ -106,6 +107,8 @@ class ManualPoController extends Controller
             $this->deliveryDetails($request,$manualpo);
             $this->saveCriticalPath($request,$manualpo);
 
+            $this->businessSummaryDetails($request,$manualpo);
+
             DB::commit();
             $this->apiSuccess();
             $this->data = (new ManualPoResource($manualpo));
@@ -135,6 +138,14 @@ class ManualPoController extends Controller
             $data->type = $request->type;
             $data->save();
         }
+    }
+
+    // Save Business Summary Info
+    public function businessSummaryDetails($request, $manualpo){
+
+        $data = new BusinessSummary();
+        $data->po_id = $manualpo->id;
+        $data->save();
     }
 
 
@@ -173,9 +184,9 @@ class ManualPoController extends Controller
 
     public function saveCriticalPath($request,$manualpo){
 
-           
+
             $criticalPath = new CriticalPath();
-            
+
             $lab_dips_embellishment_id = $this->saveLabDipsEmbellishmentInfo($request, $manualpo);
             $bulk_fabric_information = $this->savebulkFabricInformationInfo($request, $manualpo);
             $sample_approval_information = $this->saveSampleApprovalInformation($request, $manualpo);
@@ -186,7 +197,7 @@ class ManualPoController extends Controller
             $ex_factory_vessel_info = $this->saveExFactoryVesselInfo($request,$manualpo);
             $payment_info = $this->savePaymentInfo($request,$manualpo);
             //$mill_info = $this->saveMillInfo($request,$manualpo);
-            
+
             $criticalPath->po_id = $manualpo->id;
             $criticalPath->inspection_information_id=$inspection_information;
             $criticalPath->labdips_embellishment_id = $lab_dips_embellishment_id;
@@ -208,7 +219,7 @@ class ManualPoController extends Controller
             //$differece_date = dateDiffInDays($ex_factory_date,$currentDate);
 
             //dd($currentDate
-        
+
             $current_date=Carbon::now();
             $current_date1=strtotime($current_date);
             //dd($current_date1);
@@ -220,7 +231,7 @@ class ManualPoController extends Controller
             //$current_time1=strtotime($current_time);
             //$criticalPath->official_po_actual=Carbon::now();
             //$official_po_actual1= $criticalPath->official_po_actual;
-            
+
             //dd($ex_factory_date);
             //$days = $current_date->diffInDays($ex_factory_date);
             $days = (int)(($ex_factory_date - $current_date1)/86400);
@@ -230,7 +241,7 @@ class ManualPoController extends Controller
             //dd($lead_time);
             if($manualpo->fabric_type == "solid" && $lead_time>=75){
                 $criticalPath->lead_type="Regular";
-                
+
             }else{
                 $criticalPath->lead_type="Short";
             }
@@ -238,14 +249,14 @@ class ManualPoController extends Controller
 
             if($manualpo->fabric_type == "aop" && $lead_time>=90){
                 $criticalPath->lead_type="Regular";
-                
+
             }else{
                 $criticalPath->lead_type="Short";
             }
 
             if($manualpo->fabric_type == "import" && $lead_time>=120){
                 $criticalPath->lead_type="Regular";
-                
+
             }else{
                 $criticalPath->lead_type="Short";
             }
@@ -270,9 +281,9 @@ class ManualPoController extends Controller
                 $criticalPath->official_po_plan= Carbon::parse($fabric_ordered_plan1)->subDays(15)->format("Y-m-d");
 
             }
-            
-            
-            
+
+
+
             //$criticalPath->status=$request->status;
             $criticalPath->aeon_comments=$request->aeon_comments;
             $criticalPath->vendor_comments=$request->vendor_comments;
@@ -281,10 +292,10 @@ class ManualPoController extends Controller
 
             $this->saveFreightManagementInfo($request, $criticalPath);
             $this->saveInspectionOrderDetailsInfo($request, $criticalPath);
-        
+
     }
 
-          
+
           /**
            * LabDipsEmbellishment Department
            * @return int
@@ -292,7 +303,7 @@ class ManualPoController extends Controller
 
             public function saveLabDipsEmbellishmentInfo($request, $manualpo){
                     //DB::beginTransaction();
-                    
+
                     $labDips = new LabDipsEmbellishmentInformation();
                     $labDips->po_number = $manualpo->po_no;
                     $labDips->po_id = $manualpo->id;
@@ -301,7 +312,7 @@ class ManualPoController extends Controller
                     $pp_meeting_approval1 = Carbon::parse($pp_meeting_approval)->subDays(49)->format("Y-m-d");
                     $labDips->embellishment_so_approval_plan = Carbon::parse($pp_meeting_approval1)->subDays(14)->format("Y-m-d");
 
-                    
+
 
                     $embellishment_so_approval_plan1=$labDips->embellishment_so_approval_plan;
                     $embellishment_so_approval_plan2=$labDips->embellishment_so_approval_plan;
@@ -313,12 +324,12 @@ class ManualPoController extends Controller
                     $labDips->colour_std_print_artwork_sent_to_supplier_plan = Carbon::parse($embellishment_so_approval_plan2)->subDays(7)->format("Y-m-d");
 
                     $labDips->colour_std_print_artwork_sent_to_supplier_actual = $manualpo->vendor_po_date;
-                   
+
                     $labDips->lab_dip_approval_actual = $manualpo->vendor_po_date;
                     //$labDips->lab_dip_dispatch_details = $request->lab_dip_dispatch_details;
                     $labDips->lab_dip_dispatch_sending_date = $manualpo->vendor_po_date;
                     //$labDips->lab_dip_dispatch_aob_number = $request->lab_dip_dispatch_aob_number;
-                   
+
                     $labDips->embellishment_so_approval_actual = $manualpo->vendor_po_date;
                     //$labDips->embellishment_so_dispatch_details = $request->embellishment_so_dispatch_details;
                     $labDips->embellishment_so_dispatch_sending_date = $manualpo->vendor_po_date;
@@ -331,7 +342,7 @@ class ManualPoController extends Controller
         public function savebulkFabricInformationInfo($request, $manualpo){
 
                // DB::beginTransaction();
-                
+
                 $bulkFabricInformation = new BulkFabricInformation();
                 $bulkFabricInformation->po_number =$manualpo->po_no;
                 $bulkFabricInformation->po_id = $manualpo->id;
@@ -366,17 +377,17 @@ class ManualPoController extends Controller
                 elseif($manualpo->fabric_type=="import"){
                     $bulkFabricInformation->fabric_ordered_plan = Carbon::parse($bulk_yarn_fabric_inhouse_plan6)->subDays(65)->format("Y-m-d");
                 }
-                
+
                 //$bulkFabricInformation->fabric_ordered_plan = $manualpo->vendor_po_date;
                 $bulkFabricInformation->fabric_ordered_actual = $manualpo->vendor_po_date;
-                
+
                 $bulkFabricInformation->bulk_fabric_knit_down_approval_actual = $manualpo->vendor_po_date;
                 //$bulkFabricInformation->bulk_fabric_knit_down_dispatch_details = $request->bulk_fabric_knit_down_dispatch_details;
                 //$bulkFabricInformation->bulk_fabric_knit_down_dispatch_sending_date = $request->bulk_fabric_knit_down_dispatch_sending_date;
                 //$bulkFabricInformation->bulk_fabric_knit_down_dispatch_aob_number = $request->bulk_fabric_knit_down_dispatch_aob_number;
                 //Fabric Inhouse Plan Calculation
-                
-              
+
+
                 $bulkFabricInformation->bulk_yarn_fabric_inhouse_actual = $manualpo->vendor_po_date;
 
                 $bulkFabricInformation->save();
@@ -409,24 +420,24 @@ class ManualPoController extends Controller
             $sampleApproval->development_photo_sample_sent_plan = Carbon::parse($fit_approval_plan1)->subDays(10)->format("Y-m-d");
             $sampleApproval->development_photo_sample_sent_actual = $manualpo->vendor_po_date;
             //$sampleApproval->development_photo_sample_dispatch_details = $request->first_delivery_date;
-            
+
             $sampleApproval->fit_approval_actual = $manualpo->vendor_po_date;
             //$sampleApproval->fit_sample_dispatch_details = $request->fit_sample_dispatch_details;
             //$sampleApproval->fit_sample_dispatch_sending_date = $request->fit_sample_dispatch_sending_date;
             //$sampleApproval->fit_sample_dispatch_aob_number = $request->fit_sample_dispatch_aob_number;
-            
+
             $sampleApproval->size_set_approval_actual = $manualpo->vendor_po_date;
             //$sampleApproval->size_set_sample_dispatch_details = $request->size_set_sample_dispatch_details;
             //$sampleApproval->size_set_sample_dispatch_sending_date = $request->size_set_sample_dispatch_sending_date;
             //$sampleApproval->size_set_sample_dispatch_aob_number = $request->size_set_sample_dispatch_aob_number;
 
-           
+
             $sampleApproval->pp_approval_actual = $manualpo->vendor_po_date;
            // $sampleApproval->pp_sample_dispatch_details = $request->pp_sample_dispatch_details;
             //$sampleApproval->pp_sample_sending_date = $request->pp_sample_sending_date;
             //$sampleApproval->pp_sample_courier_aob_number = $request->pp_sample_courier_aob_number;
             $sampleApproval->save();
-        
+
             return $sampleApproval->id;
         }
 
@@ -447,14 +458,14 @@ class ManualPoController extends Controller
 
                 //Material Inhouse Date plan Calculation
                 $ppMeeting->material_inhouse_date_plan = Carbon::parse($pp_meeting_date_plan1)->subDays(2)->format("Y-m-d");
-                
+
                 //Care Label Approval Plan Calculation
                 $ppMeeting->care_label_approval_plan = Carbon::parse($pp_meeting_date_plan2)->subDays(10)->format("Y-m-d");
-                
+
                 $ppMeeting->care_label_approval_actual = $manualpo->vendor_po_date;
-                
+
                 $ppMeeting->material_inhouse_date_actual = $manualpo->vendor_po_date;
-                
+
                 $ppMeeting->pp_meeting_date_actual = $manualpo->vendor_po_date;
                 $ppMeeting->pp_meeting_schedule = $manualpo->vendor_po_date;
                 $ppMeeting->save();
@@ -483,7 +494,7 @@ class ManualPoController extends Controller
              //Sewing Start Date Plan Calculation
              $production->sewing_start_date_plan = Carbon::parse($washing_complete_date_plan1)->subDays(15)->format("Y-m-d");
              $sewing_start_date_plan1=$production->sewing_start_date_plan;
-             
+
 
              //Sewing Complete Date Plan Calculation
              $production->sewing_complete_date_plan = Carbon::parse($washing_complete_date_plan2)->subDays(2)->format("Y-m-d");
@@ -494,19 +505,19 @@ class ManualPoController extends Controller
 
              //Cutting Date Plan calculation
              $production->cutting_date_plan = Carbon::parse($embellishment_plan1)->subDays(2)->format("Y-m-d");
-             
-             
+
+
              $production->cutting_date_actual = $manualpo->vendor_po_date;
-            
+
              $production->embellishment_actual = $manualpo->vendor_po_date;
-            
+
              $production->sewing_start_date_actual = $manualpo->vendor_po_date;
-             
+
              $production->sewing_complete_date_actual = $manualpo->vendor_po_date;
-            
+
              $production->washing_complete_date_actual = $manualpo->vendor_po_date;
             //$production->finishing_complete_date_plan = Carbon::parse($final_aql_plan2)->subDays(2)->format("Y-m-d");
-           
+
             $production->finishing_complete_date_actual = $manualpo->vendor_po_date;
             $production->save();
 
@@ -532,17 +543,17 @@ class ManualPoController extends Controller
             $inspection->finishing_inline_inspection_date_plan = Carbon::parse($final_aql_plan2)->subDays(3)->format("Y-m-d");
 
             $sewing_inline_date=$inspection->finishing_inline_inspection_date_plan;
-            $inspection->sewing_inline_inspection_date_plan = Carbon::parse($sewing_inline_date)->subDays(4)->format("Y-m-d");        
+            $inspection->sewing_inline_inspection_date_plan = Carbon::parse($sewing_inline_date)->subDays(4)->format("Y-m-d");
 
-            
+
             $inspection->sewing_inline_inspection_date_actual = $manualpo->vendor_po_date;
             $inspection->inline_inspection_schedule = $manualpo->vendor_po_date;
-            
+
             $inspection->finishing_inline_inspection_date_actual = $manualpo->vendor_po_date;
-           
+
             $inspection->pre_final_date_actual = $manualpo->vendor_po_date;
             $inspection->pre_final_aql_schedule = $manualpo->vendor_po_date;
-           
+
             $inspection->final_aql_date_actual = $manualpo->vendor_po_date;
             $inspection->final_aql_schedule=$manualpo->vendor_po_date;
             $inspection->save();
@@ -570,7 +581,7 @@ class ManualPoController extends Controller
             $timestamp2 = strtotime($manualpo->vendor_po_date);
             $shippingapproval->sa_approval_plan = Carbon::parse($timestamp2)->subDays(5)->format("Y-m-d");
             $shippingapproval->sa_approval_actual = $manualpo->vendor_po_date;
-            
+
             $timestamp5=$shippingapproval->sa_approval_plan;
             $timestamp4 = strtotime($timestamp5);
             $shippingapproval->production_sample_approval_plan = Carbon::parse($timestamp4)->subDays(4)->format("Y-m-d");
@@ -735,11 +746,11 @@ class ManualPoController extends Controller
     public function manualPoWithBuyerVenor(Request $request)
     {
         try{
-            
+
             $validator = Validator::make( $request->all(),[
                 'vendor_id'    => ['nullable', "exists:vendors,id"],
                 'buyer_id'    => ['nullable', "exists:customers,id"],
-               
+
             ]);
 
             if ($validator->fails()) {
@@ -758,7 +769,7 @@ class ManualPoController extends Controller
             if( !empty($request->buyer_id) ){
                 $manualpo->where("buyer_id", $request->buyer_id);
             }
-            
+
             if( !empty($request->customer_department_id)){
                 $manualpo->where("customer_department_id", $request->customer_department_id);
             }
@@ -768,10 +779,10 @@ class ManualPoController extends Controller
                     $qry->where("ship_method",$request->ship_method);
                 });
             }
-            
+
 
             $manualpo = $manualpo->get();
-            
+
             $this->data = ManualPoResource::collection($manualpo);
             $this->apiSuccess("Manual Po Loaded Successfully");
             return $this->apiOutput();
@@ -793,17 +804,17 @@ class ManualPoController extends Controller
             }
 
             $data = PoArtwork::find($request->id);
-            
+
             if($request->hasFile('picture')){
                 $data->file_url = $this->uploadFileNid($request, 'picture', $this->poartworks_uploads, null,null,$data->file_url);
             }
 
             $data->save();
-          
+
             $this->apiSuccess("Po ArtWork File Updated Successfully");
             return $this->apiOutput();
-           
-           
+
+
         }catch(Exception $e){
             return $this->apiOutput($this->getError( $e), 500);
         }
@@ -821,24 +832,24 @@ class ManualPoController extends Controller
             }
 
             $data = PoPictureGarments::find($request->id);
-            
+
             if($request->hasFile('picture')){
                 $data->file_url = $this->uploadFileNid($request, 'picture', $this->pogarments_uploads, null,null,$data->file_url);
             }
 
             $data->save();
-          
+
             $this->apiSuccess("Po Picture Garments File Updated Successfully");
             return $this->apiOutput();
-           
-           
+
+
         }catch(Exception $e){
             return $this->apiOutput($this->getError( $e), 500);
         }
     }
 
 
-   
+
 
 
 }
