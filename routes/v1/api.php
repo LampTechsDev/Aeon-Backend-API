@@ -696,6 +696,7 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
     Route::prefix('business_summary')->group(function(){
 
         Route::get('/list',         [BusinessSummaryController::class, 'index']);
+        Route::get('/show',         [BusinessSummaryController::class, 'show']);
         Route::post('/update',      [BusinessSummaryController::class, "update"]);
         Route::post('/delete',      [BusinessSummaryController::class, "delete"]);
     });
