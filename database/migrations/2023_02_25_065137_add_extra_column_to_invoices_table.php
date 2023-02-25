@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddColumnToBusinessSummaries extends Migration
+class AddExtraColumnToInvoicesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddColumnToBusinessSummaries extends Migration
      */
     public function up()
     {
-        Schema::table('business_summaries', function (Blueprint $table) {
-            $table->date("year")->nullable();
+        Schema::table('invoices', function (Blueprint $table) {
+            $table->foreignId("critical_path_id")->references("id")->on("critical_paths")->cascadeOnDelete();
         });
     }
 
@@ -25,8 +25,6 @@ class AddColumnToBusinessSummaries extends Migration
      */
     public function down()
     {
-        
-            Schema::dropIfExists('business_summaries');
-        
+        Schema::dropIfExists('invoices');
     }
 }

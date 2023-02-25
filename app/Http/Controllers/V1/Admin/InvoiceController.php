@@ -42,6 +42,7 @@ class InvoiceController extends Controller
    
             $invoice = new Invoice();
             $invoice->po_id = $request->po_id;
+            $invoice->critical_path_id  = $request->critical_path_id;
             $invoice->ctns = $request->ctns;
             $invoice->quantity = $request->quantity;
             $invoice->consignee_bank = $request->consignee_bank;
