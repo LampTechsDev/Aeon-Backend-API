@@ -43,6 +43,7 @@ class BusinessSummaryResource extends JsonResource
         return $this->filter([
             "id"                        => $this->id ?? "",
             "po_info"                     =>  isset($this->businessSummary) ? (new ManualPoResource($this->businessSummary))->hide(["created_by","updated_by"]) : null,
+            "year"                      => $this->year ?? "",
             "final_total_ship_qty"      => $this->final_total_ship_qty ?? "",
             "final_total_invoice_value" => $this->final_total_invoice_value ?? "",
             "total_commission"          => $this->total_commission ?? "",
