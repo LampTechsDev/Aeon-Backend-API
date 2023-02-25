@@ -578,7 +578,7 @@ class ManualPoController extends Controller
             //$shippingapproval->production_sample_dispatch_sending_date = $manualpo->first_delivery_date;
             //$shippingapproval->production_sample_dispatch_aob_number = $request->production_sample_dispatch_aob_number;
             $timestamp3 = strtotime($manualpo->vendor_po_date);
-            $shippingapproval->shipment_booking_with_acs_plan = Carbon::parse($timestamp3)->subDays(21)->format("Y-m-d");
+            $shippingapproval->shipment_booking_with_acs_plan = Carbon::parse($timestamp3)->subDays(19)->format("Y-m-d");
             $shippingapproval->shipment_booking_with_acs_actual = $manualpo->vendor_po_date;
             $timestamp2 = strtotime($manualpo->vendor_po_date);
             $shippingapproval->sa_approval_plan = Carbon::parse($timestamp2)->subDays(5)->format("Y-m-d");
