@@ -31,6 +31,7 @@ use App\Http\Resources\CriticalPathResource;
 use App\Models\LabDipsEmbellishmentInformation;
 use App\Models\InspectionManagementOrderDetails;
 use App\Http\Resources\FreightManagementResource;
+use App\Models\Invoice;
 
 class ManualPoController extends Controller
 {
@@ -292,6 +293,7 @@ class ManualPoController extends Controller
 
             $this->saveFreightManagementInfo($request, $criticalPath);
             $this->saveInspectionOrderDetailsInfo($request, $criticalPath);
+            $this->saveInvoiceInfo($request, $criticalPath);
 
     }
 
@@ -640,6 +642,12 @@ class ManualPoController extends Controller
             $freight = new InspectionManagementOrderDetails();
             $freight->critical_path_id = $criticalPath->id;
             $freight->save();
+
+        }
+        public function saveInvoiceInfo($request,$criticalPath){
+            $invoice = new Invoice();
+            $invoice->critical_path_id = $criticalPath->id;
+            $invoice->save();
 
         }
 

@@ -28,7 +28,7 @@ class InvoiceController extends Controller
         }
     }
 
-    public function store(Request $request){
+   /* public function store(Request $request){
         try{
 
             $validator = Validator::make( $request->all(),[
@@ -54,7 +54,7 @@ class InvoiceController extends Controller
         }catch(Exception $e){
             return $this->apiOutput($this->getError( $e), 500);
         }
-    }
+    }*/
 
       /*
     Show
