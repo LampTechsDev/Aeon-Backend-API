@@ -12,4 +12,8 @@ class Invoice extends Model
         return $this->belongsTo(ManualPo::class,"po_id");
      }
 
+     public function criticalInvoice(){
+        return $this->belongsTo(CriticalPath::class, "critical_path_id");
+     }
+
 }

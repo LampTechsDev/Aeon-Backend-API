@@ -15,7 +15,6 @@ class CreateInvoicesTable extends Migration
     {
         Schema::create('invoices', function (Blueprint $table) {
             $table->id();
-            $table->foreignId("po_id")->references("id")->on("manual_pos")->cascadeOnDelete();
             $table->integer("ctns");
             $table->integer("quantity");
             $table->timestamps();
