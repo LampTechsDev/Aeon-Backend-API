@@ -240,7 +240,7 @@ class ManualPoController extends Controller
             $criticalPath->lead_times= $days;
             $lead_time=$criticalPath->lead_times;
             //dd($lead_time);
-            if($manualpo->fabric_type == "solid" && $lead_time>=75){
+            if($manualpo->fabric_type == "solid" && $lead_time>=90){
                 $criticalPath->lead_type="Regular";
 
             }else{
