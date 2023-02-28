@@ -9,7 +9,7 @@ class ManualPoItemDetailsResource extends JsonResource
     protected $withoutFields = [];
 
     /**
-     * Set Hidden Item 
+     * Set Hidden Item
      */
     public function hide(array $hide = []){
         $this->withoutFields = $hide;
@@ -37,6 +37,7 @@ class ManualPoItemDetailsResource extends JsonResource
             "plm"                       => $this->plm ?? "",
             "style_no"                  => $this->style_no ?? "",
             "colour"                    => $this->colour ?? "",
+            "swing_tag"                 => $this->swing_tag ?? "",
             "item_no"                   => $this->item_no ?? "",
             "size"                      => $this->size ?? "",
             "qty_order"                 => $this->qty_order ?? "",
@@ -46,7 +47,7 @@ class ManualPoItemDetailsResource extends JsonResource
             "selling_price"             => $this->selling_price ?? "",
             "created_at"                => $this->created_at ?? "",
             "updated_at"                => $this->updated_at ?? "",
-            
+
         ]);
     }
 }

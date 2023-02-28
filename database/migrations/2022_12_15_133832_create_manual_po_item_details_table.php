@@ -19,6 +19,7 @@ class CreateManualPoItemDetailsTable extends Migration
             $table->string("plm");
             $table->string("style_no");
             $table->string("colour");
+            $table->string("swing_tag")->nullable();
             $table->integer("item_no");
             $table->string("size");
             $table->integer("qty_order");
