@@ -14,7 +14,7 @@ class ManualPoItemDetailsController extends Controller
 
     public function index(){
         try{
-                
+
             $this->data = ManualPoItemDetailsResource::collection(ManualPoItemDetails::all());
             $this->apiSuccess("Manual Po Item Details Loaded Successfully");
             return $this->apiOutput();
@@ -31,15 +31,16 @@ class ManualPoItemDetailsController extends Controller
                 //'description'   => ["nullable", "min:4"],
                 "po_id"      => ["required", "exists:manual_pos,id"],
             ]);
-                
-            if ($validator->fails()) {    
+
+            if ($validator->fails()) {
                 $this->apiOutput($this->getValidationError($validator), 400);
             }
-   
+
             $manualpoItemDetails = new ManualPoItemDetails();
             $manualpoItemDetails->plm = $request->plm;
             $manualpoItemDetails->po_id = $request->po_id;
             $manualpoItemDetails->style_no = $request->style_no;
+            $manualpoItemDetails->swing_tag = $request->swing_tag;
             $manualpoItemDetails->colour = $request->colour;
             $manualpoItemDetails->item_no = $request->item_no;
             $manualpoItemDetails->size = $request->size;
@@ -67,16 +68,17 @@ class ManualPoItemDetailsController extends Controller
                 //'name'          => ["required", "min:4"],
                 //'description'   => ["nullable", "min:4"],
             ]);
-                
-            if ($validator->fails()) {    
+
+            if ($validator->fails()) {
                 $this->apiOutput($this->getValidationError($validator), 400);
             }
-   
+
             $manualpoItemDetails = ManualPoItemDetails::find($request->id);
             $manualpoItemDetails->plm = $request->plm;
             $manualpoItemDetails->po_id = $request->po_id;
             $manualpoItemDetails->style_no = $request->style_no;
             $manualpoItemDetails->colour = $request->colour;
+            $manualpoItemDetails->swing_tag = $request->swing_tag;
             $manualpoItemDetails->item_no = $request->item_no;
             $manualpoItemDetails->size = $request->size;
             $manualpoItemDetails->qty_order = $request->qty_order;
@@ -102,7 +104,7 @@ class ManualPoItemDetailsController extends Controller
     public function show(Request $request)
     {
         try{
-            
+
             $manualpoItemDetails = ManualPoItemDetails::find($request->id);
             $this->data = (new ManualPoItemDetailsResource($manualpoItemDetails));
             $this->apiSuccess("ManualPo Item Details Showed Successfully");
