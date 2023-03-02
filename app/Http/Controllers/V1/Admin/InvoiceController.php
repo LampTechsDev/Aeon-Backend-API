@@ -15,7 +15,6 @@ class InvoiceController extends Controller
     public function index()
     {
        try{
-        //return 10;
             // if(!PermissionController::hasAccess("group_list")){
             //     return $this->apiOutput("Permission Missing", 403);
             // }
@@ -28,41 +27,13 @@ class InvoiceController extends Controller
         }
     }
 
-   /* public function store(Request $request){
-        try{
-
-            $validator = Validator::make( $request->all(),[
-                // 'name'          => ["required", "min:4"],
-                // 'description'   => ["nullable", "min:4"],
-            ]);
-                
-            if ($validator->fails()) {    
-                $this->apiOutput($this->getValidationError($validator), 400);
-            }
-   
-            $invoice = new Invoice();
-            $invoice->po_id = $request->po_id;
-            $invoice->critical_path_id  = $request->critical_path_id;
-            $invoice->ctns = $request->ctns;
-            $invoice->quantity = $request->quantity;
-            $invoice->consignee_bank = $request->consignee_bank;
-            $invoice->negotiating_bank = $request->negotiating_bank;
-            $invoice->save();
-            $this->apiSuccess();
-            $this->data = (new InvoiceResource($invoice));
-            return $this->apiOutput("Invoice Added Successfully");
-        }catch(Exception $e){
-            return $this->apiOutput($this->getError( $e), 500);
-        }
-    }*/
-
-      /*
+    /*
     Show
     */
     public function show(Request $request)
     {
         try{
-            
+
             $invoice = Invoice::find($request->id);
             $this->data = (new InvoiceResource($invoice));
             $this->apiSuccess("Inspection Details Show Successfully");
@@ -80,16 +51,22 @@ class InvoiceController extends Controller
                 // 'name'          => ["required", "min:4"],
                 // 'description'   => ["nullable", "min:4"],
             ]);
-                
-            if ($validator->fails()) {    
+
+            if ($validator->fails()) {
                 $this->apiOutput($this->getValidationError($validator), 400);
             }
-   
+
             $invoice = Invoice::find($request->id);
-            //$invoice->po_id = $request->po_id;
-            $invoice->ctns = $request->ctns;
-            $invoice->quantity = $request->quantity;
-            $invoice->consignee_bank = $request->consignee_bank;
+            $invoice->ctns             = $request->ctns;
+            $invoice->quantity         = $request->quantity;
+            $invoice->invoice_no       = $request->invoice_no;
+            $invoice->invoice_date     = $request->invoice_date;
+            $invoice->sales_con_no     = $request->sales_con_no;
+            $invoice->sales_con_date   = $request->sales_con_date;
+            $invoice->exp_no           = $request->exp_no;
+            $invoice->exp_no_date      = $request->exp_no_date;
+            $invoice->status           = $request->status;
+            $invoice->consignee_bank   = $request->consignee_bank;
             $invoice->negotiating_bank = $request->negotiating_bank;
             $invoice->save();
             $this->apiSuccess();

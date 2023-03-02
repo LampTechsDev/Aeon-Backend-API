@@ -15,8 +15,15 @@ class CreateInvoicesTable extends Migration
     {
         Schema::create('invoices', function (Blueprint $table) {
             $table->id();
-            $table->integer("ctns");
-            $table->integer("quantity");
+            $table->string("ctns")->nullable();
+            $table->string("quantity")->nullable();
+            $table->string("invoice_no")->nullable();
+            $table->date("invoice_date")->nullable();
+            $table->string("sales_con_no")->nullable();
+            $table->date("sales_con_date")->nullable();
+            $table->string("exp_no")->nullable();
+            $table->date("exp_no_date")->nullable();
+            $table->enum('status',["waiting","booking"]);
             $table->timestamps();
         });
     }
