@@ -14,8 +14,8 @@ class AddColumnToInvoicesTable extends Migration
     public function up()
     {
         Schema::table('invoices', function (Blueprint $table) {
-            $table->text("consignee_bank");
-            $table->text("negotiating_bank");
+            $table->string("consignee_bank")->nullable();
+            $table->string("negotiating_bank")->nullable();
         });
     }
 
