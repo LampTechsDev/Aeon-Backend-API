@@ -52,30 +52,26 @@ class VendorContactPeopleController extends Controller
                     "employee_id"          => ["required"],
                     "email"                => ["required","email"],
                     "status"               => 'required',
-
-                ],[
-                    // "group_id.exists"     => "No Record found under this group",
-                ]
-            );
+                ]);
 
                 if ($validator->fails()) {
                     return $this->apiOutput($this->getValidationError($validator), 400);
                 }
                 $vendor_contact_people = new VendorContactPeople();
-                $vendor_contact_people->vendor_id = $request->vendor_id;
-                $vendor_contact_people->employee_id = $request->employee_id;
-                $vendor_contact_people->first_name = $request->first_name;
-                $vendor_contact_people->last_name = $request->last_name;
-                $vendor_contact_people->designation = $request->designation;
-                $vendor_contact_people->department = $request->department;
-                $vendor_contact_people->category = $request->category;
-                $vendor_contact_people->phone = $request->phone;
-                $vendor_contact_people->email = $request->email;
-                $vendor_contact_people->remarks = $request->remarks;
-                $vendor_contact_people->status = $request->status;
-                $vendor_contact_people->created_at = $request->created_at;
-                $vendor_contact_people->updated_at = $request->updated_at;
-                $vendor_contact_people->deleted_by = $request->deleted_by;
+                $vendor_contact_people->vendor_id    = $request->vendor_id;
+                $vendor_contact_people->employee_id  = $request->employee_id;
+                $vendor_contact_people->first_name   = $request->first_name;
+                $vendor_contact_people->last_name    = $request->last_name;
+                $vendor_contact_people->designation  = $request->designation;
+                $vendor_contact_people->department   = $request->department;
+                $vendor_contact_people->category     = $request->category;
+                $vendor_contact_people->phone        = $request->phone;
+                $vendor_contact_people->email        = $request->email;
+                $vendor_contact_people->remarks      = $request->remarks;
+                $vendor_contact_people->status       = $request->status;
+                $vendor_contact_people->created_at   = $request->created_at;
+                $vendor_contact_people->updated_at   = $request->updated_at;
+                $vendor_contact_people->deleted_by   = $request->deleted_by;
                 $vendor_contact_people->deleted_date = $request->deleted_date;
                 $vendor_contact_people->save();
 
@@ -113,25 +109,25 @@ class VendorContactPeopleController extends Controller
 
             $vendor_contact_people = VendorContactPeople::find($request->id);
 
-            $vendor_contact_people->vendor_id = $request->vendor_id;
-            $vendor_contact_people->employee_id = $request->employee_id;
-            $vendor_contact_people->first_name = $request->first_name;
-            $vendor_contact_people->last_name = $request->last_name;
-            $vendor_contact_people->designation = $request->designation;
-            $vendor_contact_people->department = $request->department;
-            $vendor_contact_people->category = $request->category;
-            $vendor_contact_people->phone = $request->phone;
-            $vendor_contact_people->email = $request->email;
-            $vendor_contact_people->remarks = $request->remarks;
-            $vendor_contact_people->status = $request->status;
-            $vendor_contact_people->created_at = $request->created_at;
-            $vendor_contact_people->updated_at = $request->updated_at;
-            $vendor_contact_people->deleted_by = $request->deleted_by;
+            $vendor_contact_people->vendor_id    = $request->vendor_id;
+            $vendor_contact_people->employee_id  = $request->employee_id;
+            $vendor_contact_people->first_name   = $request->first_name;
+            $vendor_contact_people->last_name    = $request->last_name;
+            $vendor_contact_people->designation  = $request->designation;
+            $vendor_contact_people->department   = $request->department;
+            $vendor_contact_people->category     = $request->category;
+            $vendor_contact_people->phone        = $request->phone;
+            $vendor_contact_people->email        = $request->email;
+            $vendor_contact_people->remarks      = $request->remarks;
+            $vendor_contact_people->status       = $request->status;
+            $vendor_contact_people->created_at   = $request->created_at;
+            $vendor_contact_people->updated_at   = $request->updated_at;
+            $vendor_contact_people->deleted_by   = $request->deleted_by;
             $vendor_contact_people->deleted_date = $request->deleted_date;
 
             $vendor_contact_people->save();
             DB::commit();
-            
+
             $this->apiSuccess("Vendor Contact People Updated Successfully");
             $this->data = (new VendorContactPeopleResource($vendor_contact_people));
             return $this->apiOutput();

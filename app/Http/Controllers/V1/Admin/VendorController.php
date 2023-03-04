@@ -19,9 +19,9 @@ class VendorController extends Controller
         $this->apiSuccess("Vendor List Loaded Successfully");
         return $this->apiOutput();
 
-    }catch(Exception $e){
-        return $this->apiOutput($this->getError($e), 500);
-    }
+        }catch(Exception $e){
+            return $this->apiOutput($this->getError($e), 500);
+        }
     }
 
     public function store(Request $request){
@@ -36,21 +36,15 @@ class VendorController extends Controller
             if ($validator->fails()) {
                 $this->apiOutput($this->getValidationError($validator), 400);
             }
-
             $vendor = new Vendor();
-
             $vendor->name           = $request->name;
             $vendor->logo           = $this->uploadFileNid($request, 'logo', $this->vendor_logo, 720);
             $vendor->address        = $request->address;
             $vendor->email          = $request->email;
-            $vendor->password = !empty($request->password) ? bcrypt($request->password) : $vendor->password;
+            $vendor->password       = !empty($request->password) ? bcrypt($request->password) : $vendor->password;
             $vendor->contact_number = $request->contact_number;
             $vendor->remarks        = $request->remarks;
             $vendor->status         = $request->status;
-            // $vendor->created_at     = $request->created_at;
-            // $vendor->updated_at     = $request->updated_at;
-            // $vendor->deleted_by     = $request->deleted_by;
-            // $vendor->deleted_date   = $request->deleted_date;
 
             $vendor->save();
             $this->apiSuccess();
@@ -78,19 +72,14 @@ class VendorController extends Controller
             }
 
             $vendor = Vendor::find($request->id);
-            $vendor->name = $request->name;
-            $vendor->logo = $this->uploadFileNid($request, 'logo', $this->vendor_logo, 720);
-            $vendor->address = $request->address;
-            $vendor->email = $request->email;
-            $vendor->password = !empty($request->password) ? bcrypt($request->password) : $vendor->password;
+            $vendor->name           = $request->name;
+            $vendor->logo           = $this->uploadFileNid($request, 'logo', $this->vendor_logo, 720);
+            $vendor->address        = $request->address;
+            $vendor->email          = $request->email;
+            $vendor->password       = !empty($request->password) ? bcrypt($request->password) : $vendor->password;
             $vendor->contact_number = $request->contact_number;
-            $vendor->remarks = $request->remarks;
-            $vendor->status = $request->status;
-            // $vendor->created_at = $request->created_at;
-            // $vendor->updated_at = $request->updated_at;
-            // $vendor->deleted_by = $request->deleted_by;
-            // $vendor->deleted_date = $request->deleted_date;
-
+            $vendor->remarks        = $request->remarks;
+            $vendor->status         = $request->status;
             $vendor->save();
             $this->apiSuccess();
             $this->data = (new VendorResource($vendor));
@@ -118,9 +107,9 @@ class VendorController extends Controller
         }
     }
 
-     /*
+    /**
        Delete
-    */
+    **/
     public function delete(Request $request)
     {
         Vendor::where("id", $request->id)->delete();

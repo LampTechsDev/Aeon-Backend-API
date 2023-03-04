@@ -49,7 +49,7 @@ class ManualPoController extends Controller
         }
     }
 
-     /*
+    /**
     Store
     */
 
@@ -59,15 +59,13 @@ class ManualPoController extends Controller
         try{
             $validator = Validator::make(
                 $request->all(),
-                 [
+                [
                     "buyer_id"          => "required",
                     "vendor_id"         => "required",
                     "supplier_id"       => "required",
                     "manufacturer_id"   => "required",
                     'po_no'             => 'required|unique:manual_pos,po_no',
-                 ]
-
-            );
+                ]);
 
             DB::beginTransaction();
 
@@ -190,28 +188,26 @@ class ManualPoController extends Controller
 
             $criticalPath = new CriticalPath();
 
-            $lab_dips_embellishment_id = $this->saveLabDipsEmbellishmentInfo($request, $manualpo);
-            $bulk_fabric_information = $this->savebulkFabricInformationInfo($request, $manualpo);
+            $lab_dips_embellishment_id   = $this->saveLabDipsEmbellishmentInfo($request, $manualpo);
+            $bulk_fabric_information     = $this->savebulkFabricInformationInfo($request, $manualpo);
             $sample_approval_information = $this->saveSampleApprovalInformation($request, $manualpo);
-            $pp_meeting_information = $this->savePpMeetingInformation($request, $manualpo);
-            $production_information = $this->saveProductionInformation($request, $manualpo);
-            $inspection_information = $this->saveInspectionInformation($request,$manualpo);
-            $sample_shipping_approval = $this->saveSampleShippingApproval($request,$manualpo);
-            $ex_factory_vessel_info = $this->saveExFactoryVesselInfo($request,$manualpo);
-            $payment_info = $this->savePaymentInfo($request,$manualpo);
-            //$mill_info = $this->saveMillInfo($request,$manualpo);
+            $pp_meeting_information      = $this->savePpMeetingInformation($request, $manualpo);
+            $production_information      = $this->saveProductionInformation($request, $manualpo);
+            $inspection_information      = $this->saveInspectionInformation($request,$manualpo);
+            $sample_shipping_approval    = $this->saveSampleShippingApproval($request,$manualpo);
+            $ex_factory_vessel_info      = $this->saveExFactoryVesselInfo($request,$manualpo);
+            $payment_info                = $this->savePaymentInfo($request,$manualpo);
 
-            $criticalPath->po_id = $manualpo->id;
-            $criticalPath->inspection_information_id=$inspection_information;
-            $criticalPath->labdips_embellishment_id = $lab_dips_embellishment_id;
-            $criticalPath->bulk_fabric_information_id =$bulk_fabric_information;
-            //$criticalPath->fabric_mill_id = $mill_info;
-            $criticalPath->sample_approval_id=$sample_approval_information;
-            $criticalPath->pp_meeting_id=$pp_meeting_information;
-            $criticalPath->production_information_id=$production_information;
-            $criticalPath->production_information_id=$inspection_information;
-            $criticalPath->sample_shipping_approvals_id=$sample_shipping_approval;
-            $criticalPath->ex_factories_id=$ex_factory_vessel_info;
+            $criticalPath->po_id                       = $manualpo->id;
+            $criticalPath->inspection_information_id   = $inspection_information;
+            $criticalPath->labdips_embellishment_id    = $lab_dips_embellishment_id;
+            $criticalPath->bulk_fabric_information_id  = $bulk_fabric_information;
+            $criticalPath->sample_approval_id          = $sample_approval_information;
+            $criticalPath->pp_meeting_id               = $pp_meeting_information;
+            $criticalPath->production_information_id   = $production_information;
+            $criticalPath->production_information_id   = $inspection_information;
+            $criticalPath->sample_shipping_approvals_id= $sample_shipping_approval;
+            $criticalPath->ex_factories_id             = $ex_factory_vessel_info;
             $criticalPath->payments_id=$payment_info;
             //Lead Time Calculation
             $ex_factory_date=strtotime($manualpo->vendor_po_date);
@@ -288,9 +284,10 @@ class ManualPoController extends Controller
 
 
             //$criticalPath->status=$request->status;
-            $criticalPath->aeon_comments=$request->aeon_comments;
+            $criticalPath->block          =$request->block;
+            $criticalPath->aeon_comments  =$request->aeon_comments;
             $criticalPath->vendor_comments=$request->vendor_comments;
-            $criticalPath->other_comments=$request->other_comments;
+            $criticalPath->other_comments =$request->other_comments;
             $criticalPath->save();
 
             $this->saveFreightManagementInfo($request, $criticalPath);
@@ -613,12 +610,12 @@ class ManualPoController extends Controller
 
         public function savePaymentInfo($request,$manualpo){
             $payment = new Payment();
-            $payment->po_number = $manualpo->po_no;
-            $payment->po_id=$manualpo->id;
-            $payment->late_delivery_discount=$manualpo->vendor_po_date;
-            $payment->invoice_number=$manualpo->vendor_po_date;
-            $payment->invoice_create_date=$manualpo->vendor_po_date;
-            $payment->payment_receive_date=$manualpo->vendor_po_date;
+            $payment->po_number             = $manualpo->po_no;
+            $payment->po_id                 = $manualpo->id;
+            $payment->late_delivery_discount= $manualpo->vendor_po_date;
+            $payment->invoice_number        = $manualpo->vendor_po_date;
+            $payment->invoice_create_date   = $manualpo->vendor_po_date;
+            $payment->payment_receive_date  = $manualpo->vendor_po_date;
             $payment->save();
             return $payment->id;
         }
@@ -691,7 +688,7 @@ class ManualPoController extends Controller
 
 
 
-      /*
+    /*
     Update
     */
 
@@ -745,7 +742,7 @@ class ManualPoController extends Controller
     }
 
 
-     /*
+    /*
        Delete
     */
     public function delete(Request $request)
@@ -761,7 +758,7 @@ class ManualPoController extends Controller
 
             $validator = Validator::make( $request->all(),[
                 'vendor_id'    => ['nullable', "exists:vendors,id"],
-                'buyer_id'    => ['nullable', "exists:customers,id"],
+                'buyer_id'     => ['nullable', "exists:customers,id"],
 
             ]);
 
@@ -791,8 +788,6 @@ class ManualPoController extends Controller
                     $qry->where("ship_method",$request->ship_method);
                 });
             }
-
-
             $manualpo = $manualpo->get();
 
             $this->data = ManualPoResource::collection($manualpo);

@@ -180,7 +180,6 @@ class VendorCertificateController extends Controller
         try{
             $validator = Validator::make( $request->all(),[
                 "id"            => ["required"],
-
             ]);
 
             if ($validator->fails()) {
