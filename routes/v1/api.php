@@ -781,5 +781,3 @@ Route::middleware(["auth:vendor"])->prefix('vendors')->group(function(){
 
 
     });
-
-

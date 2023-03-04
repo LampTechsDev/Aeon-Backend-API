@@ -9,7 +9,7 @@ class CriticalPathResource extends JsonResource
     protected $withoutFields = [];
 
     /**
-     * Set Hidden Item 
+     * Set Hidden Item
      */
     public function hide(array $hide = []){
         $this->withoutFields = $hide;
@@ -41,13 +41,14 @@ class CriticalPathResource extends JsonResource
             "sample_approval_info"                     => isset($this->sampleApproval) ?(new ProductionSampleShippingResource($this->sampleApproval))->hide(["created_by","updated_by"]) : null,
             "pp_meeting_info"                          => isset($this->ppMeeting) ?(new PpMeetingResource($this->ppMeeting))->hide(["created_by","updated_by"]) : null,
             "production_information_info"              => isset($this->productInformation) ?(new ProductInformationResource($this->productInformation))->hide(["created_by","updated_by"]) : null,
-            "production_shipping_approval_information"              => isset($this->sampleShippingInfo) ?(new SampleApprovalInformationResource($this->sampleShippingInfo))->hide(["created_by","updated_by"]) : null,
-            "ex-factory_eta_vessel_information"              => isset($this->exFactoryInfo) ?(new ExFactoryResource($this->exFactoryInfo))->hide(["created_by","updated_by"]) : null,
-            "payment_information"              => isset($this->paymentInfo) ?(new PaymentResource($this->paymentInfo))->hide(["created_by","updated_by"]) : null,
+            "production_shipping_approval_information" => isset($this->sampleShippingInfo) ?(new SampleApprovalInformationResource($this->sampleShippingInfo))->hide(["created_by","updated_by"]) : null,
+            "ex-factory_eta_vessel_information"        => isset($this->exFactoryInfo) ?(new ExFactoryResource($this->exFactoryInfo))->hide(["created_by","updated_by"]) : null,
+            "payment_information"                      => isset($this->paymentInfo) ?(new PaymentResource($this->paymentInfo))->hide(["created_by","updated_by"]) : null,
             "lead_times"                               => $this->lead_times?? "",
             "lead_type"                                => $this->lead_type?? "",
             "official_po_plan"                         => $this->official_po_plan??"",
             "official_po_actual"                       => $this->official_po_actual??"",
+            "block"                                    => $this->block ?? "",
             "aeon_comments"                            => $this->aeon_comments ?? "",
             "vendor_comments"                          => $this->vendor_comments ?? "",
             "other_comments"                           => $this->other_comments ?? "",

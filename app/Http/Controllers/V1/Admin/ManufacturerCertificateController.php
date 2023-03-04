@@ -147,10 +147,6 @@ class ManufacturerCertificateController extends Controller
 
             $certificate->remarks               = $request->remarks;
             $certificate->status                = $request->status;
-            // $certificate->created_at            = $request->created_at;
-            // $certificate->updated_at            = $request->updated_at;
-            // $certificate->deleted_by            = $request->deleted_by;
-            // $certificate->deleted_date          = $request->deleted_date;
 
             $certificate->save();
             DB::commit();

@@ -41,7 +41,7 @@ class CriticalPathController extends Controller
         }
     }
 
-    
+
       //Additional Critical Path Save File Info
       public function addCriticalPathFile(Request $request){
         try{
@@ -57,8 +57,8 @@ class CriticalPathController extends Controller
             $this->saveAdditionalCriticalPathFileInfo($request);
             $this->apiSuccess("Critical Path File Added Successfully");
             return $this->apiOutput();
-        
-        
+
+
         }catch(Exception $e){
             return $this->apiOutput($this->getError( $e), 500);
         }
@@ -90,11 +90,11 @@ class CriticalPathController extends Controller
                 // 'name'          => ["required", "min:4"],
                 // 'description'   => ["nullable", "min:4"],
             ]);
-                
-            if ($validator->fails()) {    
+
+            if ($validator->fails()) {
                 $this->apiOutput($this->getValidationError($validator), 400);
             }
-   
+
             $criticalPath = CriticalPath::find($request->id);
             // $criticalPath->po_id=$request->po_id;
             // $criticalPath->inspection_information_id=$request->inspection_information_id;
@@ -104,15 +104,16 @@ class CriticalPathController extends Controller
             // $criticalPath->sample_approval_id=$request->sample_approval_id;
             // $criticalPath->pp_meeting_id=$request->pp_meeting_id;
             // $criticalPath->production_information_id=$request->production_information_id;
-            $criticalPath->	lead_times=$request->lead_times;
-            $criticalPath->lead_type=$request->lead_type;
-            $criticalPath->	official_po_plan=$request->official_po_plan;
+            $criticalPath->	lead_times       =$request->lead_times;
+            $criticalPath->lead_type         =$request->lead_type;
+            $criticalPath->	official_po_plan =$request->official_po_plan;
             $criticalPath->official_po_actual=$request->official_po_actual;
-            $criticalPath->status=$request->status;
-            $criticalPath->aeon_comments=$request->aeon_comments;
-            $criticalPath->vendor_comments=$request->vendor_comments;
-            $criticalPath->other_comments=$request->other_comments;
-            $criticalPath->fabric_mill_id = $request->fabric_mill_id;
+            $criticalPath->status            =$request->status;
+            $criticalPath->block             =$request->block;
+            $criticalPath->aeon_comments     =$request->aeon_comments;
+            $criticalPath->vendor_comments   =$request->vendor_comments;
+            $criticalPath->other_comments    =$request->other_comments;
+            $criticalPath->fabric_mill_id    = $request->fabric_mill_id;
             $criticalPath->save();
             $this->saveLabDipsEmbellishmentInfo($request);
             $this-> savebulkFabricInformationInfo($request);
@@ -131,7 +132,7 @@ class CriticalPathController extends Controller
         }
     }
 
-   
+
     public function show(Request $request)
     {
         try{
@@ -168,17 +169,17 @@ class CriticalPathController extends Controller
             }
 
             $data = CriticalPathMasterFile::find($request->id);
-            
+
             if($request->hasFile('picture')){
                 $data->file_url = $this->uploadFileNid($request, 'picture', $this->labdips_uploads, null,null,$data->file_url);
             }
 
             $data->save();
-          
+
             $this->apiSuccess("Critical File Updated Successfully");
             return $this->apiOutput();
-           
-           
+
+
         }catch(Exception $e){
             return $this->apiOutput($this->getError( $e), 500);
         }
@@ -187,7 +188,7 @@ class CriticalPathController extends Controller
 
     public function deleteFileCriticalPath(Request $request){
         try{
-           
+
             $validator = Validator::make( $request->all(),[
                 //"id"            => ["required", "exists:ticket_uploads,id"],
             ]);
@@ -195,7 +196,7 @@ class CriticalPathController extends Controller
             if ($validator->fails()) {
                 return $this->apiOutput($this->getValidationError($validator), 200);
             }
-    
+
             $labDipupload=CriticalPathMasterFile::where('id',$request->id);
             $labDipupload->delete();
             $this->apiSuccess("Critical Path Image Deleted successfully");
@@ -212,12 +213,12 @@ class CriticalPathController extends Controller
 
            public function saveLabDipsEmbellishmentInfo($request){
             //DB::beginTransaction();
-                    
+
                     //return 10;
                     $labDips =  LabDipsEmbellishmentInformation::find($request->id);
                     // $labDips->po_number = $manualpo->po_no;
                     // $labDips->po_id = $manualpo->id;
-                   
+
                     $labDips->colour_std_print_artwork_sent_to_supplier_plan = $request->colour_std_print_artwork_sent_to_supplier_plan;
                     $labDips->colour_std_print_artwork_sent_to_supplier_actual = $request->colour_std_print_artwork_sent_to_supplier_actual;
                     $labDips->lab_dip_approval_plan = $request->lab_dip_approval_plan;
@@ -238,7 +239,7 @@ class CriticalPathController extends Controller
                 public function savebulkFabricInformationInfo($request){
 
                     // DB::beginTransaction();
-                    
+
                     $bulkFabricInformation = BulkFabricInformation::find($request->id);
                     // $bulkFabricInformation->po_number =$manualpo->po_no;
                     // $bulkFabricInformation->po_id = $manualpo->id;
@@ -284,7 +285,7 @@ class CriticalPathController extends Controller
             $sampleApproval->pp_sample_sending_date = $request->pp_sample_sending_date;
             $sampleApproval->pp_sample_courier_aob_number = $request->pp_sample_courier_aob_number;
             $sampleApproval->save();
-        
+
             //return $sampleApproval->id;
         }
 
@@ -349,11 +350,11 @@ class CriticalPathController extends Controller
                     $inspection->final_aql_date_actual = $request->final_aql_date_actual;
                     $inspection->final_aql_schedule=$request->final_aql_schedule;
                     $inspection->save();
-        
+
                     //return $inspection->id;
                 }
-        
-        
+
+
                 //Sample ShippingApproval
                 public function saveSampleShippingApproval($request){
                     $shippingapproval = SampleShippingApproval::find($request->id);
@@ -371,7 +372,7 @@ class CriticalPathController extends Controller
                     $shippingapproval->save();
                     //return $shippingapproval->id;
                 }
-        
+
                 public function saveExFactoryVesselInfo($request){
                     $exfactory = ExFactory::find($request->id);
                     // $exfactory->po_number = $manualpo->po_no;
@@ -393,7 +394,7 @@ class CriticalPathController extends Controller
                     $exfactory->save();
                     //return $exfactory->id;
                 }
-        
+
                 public function savePaymentInfo($request){
                     $payment = Payment::find($request->id);
                     // $payment->po_number = $manualpo->po_no;

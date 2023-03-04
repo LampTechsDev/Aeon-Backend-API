@@ -15,9 +15,6 @@ class InvoiceController extends Controller
     public function index()
     {
        try{
-            // if(!PermissionController::hasAccess("group_list")){
-            //     return $this->apiOutput("Permission Missing", 403);
-            // }
             $this->data = InvoiceResource::collection(Invoice::all());
             $this->apiSuccess("Invoice List Loaded Successfully");
             return $this->apiOutput();
@@ -47,10 +44,7 @@ class InvoiceController extends Controller
     public function update(Request $request){
         try{
 
-            $validator = Validator::make( $request->all(),[
-                // 'name'          => ["required", "min:4"],
-                // 'description'   => ["nullable", "min:4"],
-            ]);
+            $validator = Validator::make( $request->all(),[]);
 
             if ($validator->fails()) {
                 $this->apiOutput($this->getValidationError($validator), 400);
