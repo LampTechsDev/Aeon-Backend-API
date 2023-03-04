@@ -10,7 +10,7 @@ class ManualPoResource extends JsonResource
     protected $withoutFields = [];
 
     /**
-     * Set Hidden Item 
+     * Set Hidden Item
      */
     public function hide(array $hide = []){
         $this->withoutFields = $hide;
@@ -33,7 +33,7 @@ class ManualPoResource extends JsonResource
     public function toArray($request)
     {
         return $this->filter([
-            
+
             "id"                        => $this->id ?? null,
             "note"                      => $this->note ?? null,
             "terms_conditions"          => $this->terms_conditions ?? null,
@@ -51,6 +51,8 @@ class ManualPoResource extends JsonResource
             "payment_method"            => $this->payment_method ?? null,
             "payment_terms"             => $this->payment_terms ?? null,
             "fabric_weight"             => $this->fabric_weight ?? null,
+            "total_value"               => $this->total_value ?? null,
+            "total_quantity"            => $this->total_quantity ?? null,
             "po_no"                     => $this->po_no ?? null,
             "fabric_type"               => $this->fabric_type ?? null,
             "po_type"                   => $this->po_type ?? null,
@@ -59,16 +61,16 @@ class ManualPoResource extends JsonResource
             "updated_at"                => $this->updated_at ?? null,
             "upload_files"              => PictureGarmentsResource::collection($this->fileInfo),
             "upload_files_artwork"      => PoArtworkResource::collection($this-> fileInfoArt),
-            "manualPoDeliveryDetails"    => ManualPoDeliveryDetailsResource::collection($this->manualpoDeliveryDetails),
-            "buyer_info"                  =>isset($this->buyer) ? (new CustomerResource($this->buyer))->hide(["created_by", "updated_by"]) : null,
-            "vendor_info"                 =>isset($this->vendor) ? (new VendorResource($this->vendor))->hide(["created_by", "updated_by"]) : null,
-            "supplier_info"                =>isset($this->supplier) ? (new SupplierResource($this->supplier))->hide(["created_by", "updated_by"]) : null,
-            "manufacturer_info"            =>isset($this->manufacturer) ? (new VendorManufacturerResource($this->manufacturer))->hide(["created_by", "updated_by"]) : null,
-            "customer_department_info"      =>isset($this->customerDepartment) ? (new CustomerDepartmentResource($this->customerDepartment))->hide(["created_by", "updated_by"]) : null,
-            "season_info"                   =>isset($this->season) ? (new SeasonResource($this->season))->hide(["created_by", "updated_by"]) : null,
-            "manual_po_item_details"        => count($this->manualpoItemDetails) >= 1 ? ManualPoItemDetailsResource::collection($this->manualpoItemDetails) : [],
+            "manualPoDeliveryDetails"   => ManualPoDeliveryDetailsResource::collection($this->manualpoDeliveryDetails),
+            "buyer_info"                =>isset($this->buyer) ? (new CustomerResource($this->buyer))->hide(["created_by", "updated_by"]) : null,
+            "vendor_info"               =>isset($this->vendor) ? (new VendorResource($this->vendor))->hide(["created_by", "updated_by"]) : null,
+            "supplier_info"             =>isset($this->supplier) ? (new SupplierResource($this->supplier))->hide(["created_by", "updated_by"]) : null,
+            "manufacturer_info"         =>isset($this->manufacturer) ? (new VendorManufacturerResource($this->manufacturer))->hide(["created_by", "updated_by"]) : null,
+            "customer_department_info"  =>isset($this->customerDepartment) ? (new CustomerDepartmentResource($this->customerDepartment))->hide(["created_by", "updated_by"]) : null,
+            "season_info"               =>isset($this->season) ? (new SeasonResource($this->season))->hide(["created_by", "updated_by"]) : null,
+            "manual_po_item_details"    => count($this->manualpoItemDetails) >= 1 ? ManualPoItemDetailsResource::collection($this->manualpoItemDetails) : [],
 
-           
+
 
 
         ]);

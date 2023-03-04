@@ -40,13 +40,13 @@ class ManualPoController extends Controller
     public function index(){
         try{
 
-                $this->data = ManualPoResource::collection(ManualPo::all());
-                $this->apiSuccess("Manual Po Loaded Successfully");
-                return $this->apiOutput();
+            $this->data = ManualPoResource::collection(ManualPo::all());
+            $this->apiSuccess("Manual Po Loaded Successfully");
+            return $this->apiOutput();
 
-            }catch(Exception $e){
-                return $this->apiOutput($this->getError($e), 500);
-            }
+        }catch(Exception $e){
+            return $this->apiOutput($this->getError($e), 500);
+        }
     }
 
      /*
@@ -76,32 +76,34 @@ class ManualPoController extends Controller
             }
 
             $manualpo = new ManualPo();
-            $manualpo->buyer_id = $request->buyer_id;
-            $manualpo->vendor_id = $request->vendor_id;
-            $manualpo->supplier_id = $request->supplier_id;
-            $manualpo->manufacturer_id = $request->manufacturer_id;
+            $manualpo->buyer_id               = $request->buyer_id;
+            $manualpo->vendor_id              = $request->vendor_id;
+            $manualpo->supplier_id            = $request->supplier_id;
+            $manualpo->manufacturer_id        = $request->manufacturer_id;
             $manualpo->customer_department_id = $request->customer_department_id;
-            $manualpo->	note = $request->note;
-            $manualpo->terms_conditions = $request->terms_conditions;
-            $manualpo->first_delivery_date = $request->first_delivery_date;
-            $manualpo->second_shipment_date = $request->second_shipment_date;
-            $manualpo->vendor_po_date = $request->vendor_po_date;
+            $manualpo->	note                  = $request->note;
+            $manualpo->terms_conditions       = $request->terms_conditions;
+            $manualpo->first_delivery_date    = $request->first_delivery_date;
+            $manualpo->second_shipment_date   = $request->second_shipment_date;
+            $manualpo->vendor_po_date         = $request->vendor_po_date;
             $manualpo->current_buyer_po_price = $request->current_buyer_po_price;
-            $manualpo->vendor_po_price = $request->vendor_po_price;
-            $manualpo->accessorize_price = $request->accessorize_price;
-            $manualpo->plm_no = $request->plm_no;
-            $manualpo->description = $request->description;
-            $manualpo->fabric_quality = $request->fabric_quality;
-            $manualpo->fabric_content = $request->fabric_content;
-            $manualpo->currency=$request->currency;
-            $manualpo->payment_method=$request->payment_method;
-            $manualpo->payment_terms=$request->payment_terms;
-            $manualpo->fabric_weight=$request->fabric_weight;
-            $manualpo->po_no=$request->po_no;
-            $manualpo->season_id=$request->season_id;
-            $manualpo->fabric_type=$request->fabric_type;
-            $manualpo->po_type=$request->po_type;
-            $manualpo->supplier_no=$request->supplier_no;
+            $manualpo->vendor_po_price        = $request->vendor_po_price;
+            $manualpo->accessorize_price      = $request->accessorize_price;
+            $manualpo->plm_no                 = $request->plm_no;
+            $manualpo->description            = $request->description;
+            $manualpo->fabric_quality         = $request->fabric_quality;
+            $manualpo->fabric_content         = $request->fabric_content;
+            $manualpo->currency               = $request->currency;
+            $manualpo->payment_method         = $request->payment_method;
+            $manualpo->payment_terms          = $request->payment_terms;
+            $manualpo->fabric_weight          = $request->fabric_weight;
+            $manualpo->po_no                  = $request->po_no;
+            $manualpo->season_id              = $request->season_id;
+            $manualpo->fabric_type            = $request->fabric_type;
+            $manualpo->po_type                = $request->po_type;
+            $manualpo->supplier_no            = $request->supplier_no;
+            $manualpo->total_value            = $request->total_value;
+            $manualpo->total_quantity         = $request->total_quantity;
             $manualpo->save();
             $this->saveFileInfo($request, $manualpo);
             $this->saveExtraFileInfo($request, $manualpo);
@@ -707,26 +709,28 @@ class ManualPoController extends Controller
             DB::beginTransaction();
 
             $manualpo = ManualPo::find($request->id);
-            $manualpo->buyer_id = $request->buyer_id;
-            $manualpo->vendor_id = $request->vendor_id;
-            $manualpo->supplier_id = $request->supplier_id;
-            $manualpo->manufacturer_id = $request->manufacturer_id;
+            $manualpo->buyer_id               = $request->buyer_id;
+            $manualpo->vendor_id              = $request->vendor_id;
+            $manualpo->supplier_id            = $request->supplier_id;
+            $manualpo->manufacturer_id        = $request->manufacturer_id;
             $manualpo->customer_department_id = $request->customer_department_id;
-            $manualpo->	note = $request->note;
-            $manualpo->terms_conditions = $request->terms_conditions;
-            $manualpo->first_delivery_date = $request->first_delivery_date;
-            $manualpo->second_shipment_date = $request->second_shipment_date;
-            $manualpo->vendor_po_date = $request->vendor_po_date;
+            $manualpo->note                   = $request->note;
+            $manualpo->terms_conditions       = $request->terms_conditions;
+            $manualpo->first_delivery_date    = $request->first_delivery_date;
+            $manualpo->second_shipment_date   = $request->second_shipment_date;
+            $manualpo->vendor_po_date         = $request->vendor_po_date;
             $manualpo->current_buyer_po_price = $request->current_buyer_po_price;
-            $manualpo->vendor_po_price = $request->vendor_po_price;
-            $manualpo->accessorize_price = $request->accessorize_price;
-            $manualpo->plm_no = $request->plm_no;
-            $manualpo->description = $request->description;
-            $manualpo->fabric_quality = $request->fabric_quality;
-            $manualpo->fabric_content = $request->fabric_content;
-            $manualpo->fabric_weight=$request->fabric_weight;
-            $manualpo->po_no=$request->po_no;
-            $manualpo->season_id=$request->season_id;
+            $manualpo->vendor_po_price        = $request->vendor_po_price;
+            $manualpo->accessorize_price      = $request->accessorize_price;
+            $manualpo->plm_no                 = $request->plm_no;
+            $manualpo->description            = $request->description;
+            $manualpo->fabric_quality         = $request->fabric_quality;
+            $manualpo->fabric_content         = $request->fabric_content;
+            $manualpo->fabric_weight          = $request->fabric_weight;
+            $manualpo->po_no                  = $request->po_no;
+            $manualpo->season_id              = $request->season_id;
+            $manualpo->total_value            = $request->total_value;
+            $manualpo->total_quantity         = $request->total_quantity;
             $manualpo->save();
             $this->deliveryDetails($request,$manualpo);
 
