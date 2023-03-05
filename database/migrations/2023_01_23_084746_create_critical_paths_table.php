@@ -30,7 +30,7 @@ class CreateCriticalPathsTable extends Migration
             $table->string("lead_type")->nullable();
             $table->date("official_po_plan")->nullable();
             $table->date("official_po_actual")->nullable();
-            $table->enum('block',["repeat","initial"])->nullable();
+            $table->enum('block',["repeat","initial;"])->nullable();
             $table->string("status")->nullable();
             $table->string("aeon_comments")->nullable();
             $table->string("vendor_comments")->nullable();
