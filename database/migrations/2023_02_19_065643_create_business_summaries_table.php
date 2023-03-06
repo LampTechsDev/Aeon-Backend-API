@@ -16,6 +16,8 @@ class CreateBusinessSummariesTable extends Migration
         Schema::create('business_summaries', function (Blueprint $table) {
             $table->id();
             $table->foreignId("po_id")->references("id")->on("manual_pos");
+            $table->string("total_order_qty")->nullable();
+            $table->string("total_value")->nullable();
             $table->string("final_total_ship_qty")->nullable();
             $table->string("final_total_invoice_value")->nullable();
             $table->string("total_commission")->nullable();
