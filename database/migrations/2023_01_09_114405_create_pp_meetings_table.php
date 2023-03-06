@@ -18,10 +18,13 @@ class CreatePpMeetingsTable extends Migration
             $table->string("po_number");
             $table->integer("po_id");
             $table->date("care_label_approval_plan");
+            $table->date("care_label_approval_plan_buyer");
             $table->date("care_label_approval_actual");
             $table->date("material_inhouse_date_plan");
+            $table->date("material_inhouse_date_plan_buyer");
             $table->date("material_inhouse_date_actual");
             $table->date("pp_meeting_date_plan");
+            $table->date("pp_meeting_date_plan_buyer");
             $table->date("pp_meeting_date_actual");
             $table->date("pp_meeting_schedule");
             $table->timestamps();

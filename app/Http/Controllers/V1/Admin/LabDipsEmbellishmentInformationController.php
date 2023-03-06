@@ -17,7 +17,7 @@ class LabDipsEmbellishmentInformationController extends Controller
 
     public function index(){
         try{
-                
+
             $this->data = LabDipsEmbellishmentInformationResource::collection(LabDipsEmbellishmentInformation::all());
             $this->apiSuccess("LabDipsEmbellishmentInformation List Loaded Successfully");
             return $this->apiOutput();
@@ -29,7 +29,7 @@ class LabDipsEmbellishmentInformationController extends Controller
 
     public function store(Request $request)
     {
-     
+
         try{
 
             // if(!PermissionController::hasAccess("group_create")){
@@ -40,8 +40,8 @@ class LabDipsEmbellishmentInformationController extends Controller
                 // 'name'          => ["required", "min:4"],
                 // 'description'   => ["nullable", "min:4"],
             ]);
-                
-            if ($validator->fails()) {    
+
+            if ($validator->fails()) {
                 $this->apiOutput($this->getValidationError($validator), 400);
             }
             DB::beginTransaction();
@@ -50,13 +50,16 @@ class LabDipsEmbellishmentInformationController extends Controller
             $labDips->po_number = $request->po_number ;
             $labDips->po_id = $request->po_id;
             $labDips->colour_std_print_artwork_sent_to_supplier_plan = $request->colour_std_print_artwork_sent_to_supplier_plan;
+            $labDips->colour_std_print_artwork_sent_to_supplier_plan_buyer = $request->colour_std_print_artwork_sent_to_supplier_plan_buyer;
             $labDips->colour_std_print_artwork_sent_to_supplier_actual = $request->colour_std_print_artwork_sent_to_supplier_actual;
             $labDips->lab_dip_approval_plan = $request->lab_dip_approval_plan;
+            $labDips->lab_dip_approval_plan_buyer = $request->lab_dip_approval_plan_buyer;
             $labDips->lab_dip_approval_actual = $request->lab_dip_approval_actual;
             $labDips->lab_dip_dispatch_details = $request->lab_dip_dispatch_details;
             $labDips->lab_dip_dispatch_sending_date = $request->lab_dip_dispatch_sending_date;
             $labDips->lab_dip_dispatch_aob_number = $request->lab_dip_dispatch_aob_number;
             $labDips->embellishment_so_approval_plan = $request->embellishment_so_approval_plan;
+            $labDips->embellishment_so_approval_plan_buyer = $request->embellishment_so_approval_plan_buyer;
             $labDips->embellishment_so_approval_actual = $request->embellishment_so_approval_actual;
             $labDips->embellishment_so_dispatch_details = $request->embellishment_so_dispatch_details;
             $labDips->embellishment_so_dispatch_sending_date = $request->embellishment_so_dispatch_sending_date;
@@ -119,22 +122,25 @@ class LabDipsEmbellishmentInformationController extends Controller
                 // 'name'          => ["required", "min:4"],
                 // 'description'   => ["nullable", "min:4"],
             ]);
-                
-            if ($validator->fails()) {    
+
+            if ($validator->fails()) {
                 $this->apiOutput($this->getValidationError($validator), 400);
             }
-   
+
             $labDips = LabDipsEmbellishmentInformation::find($request->id);
             $labDips->po_number = $request->po_number ;
             $labDips->po_id = $request->po_id;
             $labDips->colour_std_print_artwork_sent_to_supplier_plan = $request->colour_std_print_artwork_sent_to_supplier_plan;
+            $labDips->colour_std_print_artwork_sent_to_supplier_plan_buyer = $request->colour_std_print_artwork_sent_to_supplier_plan_buyer;
             $labDips->colour_std_print_artwork_sent_to_supplier_actual = $request->colour_std_print_artwork_sent_to_supplier_actual;
             $labDips->lab_dip_approval_plan = $request->lab_dip_approval_plan;
+            $labDips->lab_dip_approval_plan_buyer = $request->lab_dip_approval_plan_buyer;
             $labDips->lab_dip_approval_actual = $request->lab_dip_approval_actual;
             $labDips->lab_dip_dispatch_details = $request->lab_dip_dispatch_details;
             $labDips->lab_dip_dispatch_sending_date = $request->lab_dip_dispatch_sending_date;
             $labDips->lab_dip_dispatch_aob_number = $request->lab_dip_dispatch_aob_number;
             $labDips->embellishment_so_approval_plan = $request->embellishment_so_approval_plan;
+            $labDips->embellishment_so_approval_plan_buyer = $request->embellishment_so_approval_plan_buyer;
             $labDips->embellishment_so_approval_actual = $request->embellishment_so_approval_actual;
             $labDips->embellishment_so_dispatch_details = $request->embellishment_so_dispatch_details;
             $labDips->embellishment_so_dispatch_sending_date = $request->embellishment_so_dispatch_sending_date;
@@ -151,7 +157,7 @@ class LabDipsEmbellishmentInformationController extends Controller
     public function show(Request $request)
     {
         try{
-           
+
             $labDips = LabDipsEmbellishmentInformation::find($request->id);
             $this->data = (new LabDipsEmbellishmentInformationResource($labDips));
             $this->apiSuccess("LabdipsEmbellishmentInformation Showed Successfully");
@@ -181,17 +187,17 @@ class LabDipsEmbellishmentInformationController extends Controller
             }
 
             $data = LabDipImage::find($request->id);
-            
+
             if($request->hasFile('picture')){
                 $data->file_url = $this->uploadFileNid($request, 'picture', $this->labdips_uploads, null,null,$data->file_url);
             }
 
             $data->save();
-          
+
             $this->apiSuccess("LabDip File Updated Successfully");
             return $this->apiOutput();
-           
-           
+
+
         }catch(Exception $e){
             return $this->apiOutput($this->getError( $e), 500);
         }
@@ -209,17 +215,17 @@ class LabDipsEmbellishmentInformationController extends Controller
             }
 
             $data = EmbellishmentImage::find($request->id);
-            
+
             if($request->hasFile('picture')){
                 $data->file_url = $this->uploadFileNid($request, 'picture', $this->labdips_uploads, null,null,$data->file_url);
             }
 
             $data->save();
-          
+
             $this->apiSuccess("EmbellishmentFile File Updated Successfully");
             return $this->apiOutput();
-           
-           
+
+
         }catch(Exception $e){
             return $this->apiOutput($this->getError( $e), 500);
         }
@@ -240,8 +246,8 @@ class LabDipsEmbellishmentInformationController extends Controller
             $this->saveAdditonalLabDipFileInfo($request);
             $this->apiSuccess("LabDip File Added Successfully");
             return $this->apiOutput();
-           
-           
+
+
         }catch(Exception $e){
             return $this->apiOutput($this->getError( $e), 500);
         }
@@ -265,7 +271,7 @@ class LabDipsEmbellishmentInformationController extends Controller
     }
 
 
-    
+
      //Additional Embellish Save File Info
      public function addFileEmbellish(Request $request){
         try{
@@ -281,8 +287,8 @@ class LabDipsEmbellishmentInformationController extends Controller
             $this->saveAdditionalEmbellishmentFileInfo($request);
             $this->apiSuccess("Embellishment File Added Successfully");
             return $this->apiOutput();
-           
-           
+
+
         }catch(Exception $e){
             return $this->apiOutput($this->getError( $e), 500);
         }
@@ -307,7 +313,7 @@ class LabDipsEmbellishmentInformationController extends Controller
 
     public function deleteFileLabDip(Request $request){
         try{
-           
+
             $validator = Validator::make( $request->all(),[
                 //"id"            => ["required", "exists:ticket_uploads,id"],
             ]);
@@ -315,7 +321,7 @@ class LabDipsEmbellishmentInformationController extends Controller
             if ($validator->fails()) {
                 return $this->apiOutput($this->getValidationError($validator), 200);
             }
-    
+
             $labDipupload=LabDipImage::where('id',$request->id);
             $labDipupload->delete();
             $this->apiSuccess("Lab Dip Image Deleted successfully");
@@ -327,7 +333,7 @@ class LabDipsEmbellishmentInformationController extends Controller
 
     public function deleteFileEmbellish(Request $request){
         try{
-           
+
             $validator = Validator::make( $request->all(),[
                 //"id"            => ["required", "exists:ticket_uploads,id"],
             ]);
@@ -335,7 +341,7 @@ class LabDipsEmbellishmentInformationController extends Controller
             if ($validator->fails()) {
                 return $this->apiOutput($this->getValidationError($validator), 200);
             }
-    
+
             $labDipupload=EmbellishmentImage::where('id',$request->id);
             $labDipupload->delete();
             $this->apiSuccess("Embellish Image Deleted successfully");

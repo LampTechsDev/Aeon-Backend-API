@@ -32,7 +32,7 @@ class InspectionInformationController extends Controller
         }
     }
 
-   
+
     public function store(Request $request){
         try{
 
@@ -44,22 +44,27 @@ class InspectionInformationController extends Controller
                 // 'name'          => ["required", "min:4"],
                 // 'description'   => ["nullable", "min:4"],
             ]);
-                
-            if ($validator->fails()) {    
+
+            if ($validator->fails()) {
                 $this->apiOutput($this->getValidationError($validator), 400);
             }
-   
+
             $inspection = new InspectionInformation();
             $inspection->po_number = $request->po_number;
             $inspection->po_id = $request->po_id;
             $inspection->sewing_inline_inspection_date_plan = $request->sewing_inline_inspection_date_plan;
+            $inspection->sewing_inline_inspection_date_plan_buyer = $request->sewing_inline_inspection_date_plan_buyer;
             $inspection->sewing_inline_inspection_date_actual = $request->sewing_inline_inspection_date_actual;
             $inspection->inline_inspection_schedule = $request->inline_inspection_schedule;
             $inspection->finishing_inline_inspection_date_plan = $request->finishing_inline_inspection_date_plan;
+            $inspection->finishing_inline_inspection_date_plan_buyer = $request->finishing_inline_inspection_date_plan_buyer;
             $inspection->finishing_inline_inspection_date_actual = $request->finishing_inline_inspection_date_actual;
+            $inspection->pre_final_date_plan = $request->pre_final_date_plan;
+            $inspection->pre_final_date_plan_buyer = $request->pre_final_date_plan_buyer;
             $inspection->pre_final_date_actual = $request->pre_final_date_actual;
             $inspection->pre_final_aql_schedule = $request->pre_final_aql_schedule;
             $inspection->final_aql_date_plan = $request->final_aql_date_plan;
+            $inspection->final_aql_date_plan_buyer = $request->final_aql_date_plan_buyer;
             $inspection->final_aql_date_actual = $request->final_aql_date_actual;
             $inspection->final_aql_schedule=$request->final_aql_schedule;
             $inspection->save();
@@ -154,22 +159,27 @@ class InspectionInformationController extends Controller
                 'name'          => ["required", "min:4"],
                 'description'   => ["nullable", "min:4"],
             ]);
-                
-            if ($validator->fails()) {    
+
+            if ($validator->fails()) {
                 $this->apiOutput($this->getValidationError($validator), 400);
             }
-   
+
             $inspection = InspectionInformation::find($request->id);
             $inspection->po_number = $request->po_number;
             $inspection->po_id = $request->po_id;
             $inspection->sewing_inline_inspection_date_plan = $request->sewing_inline_inspection_date_plan;
+            $inspection->sewing_inline_inspection_date_plan_buyer = $request->sewing_inline_inspection_date_plan_buyer;
             $inspection->sewing_inline_inspection_date_actual = $request->sewing_inline_inspection_date_actual;
             $inspection->inline_inspection_schedule = $request->inline_inspection_schedule;
             $inspection->finishing_inline_inspection_date_plan = $request->finishing_inline_inspection_date_plan;
+            $inspection->finishing_inline_inspection_date_plan_buyer = $request->finishing_inline_inspection_date_plan_buyer;
             $inspection->finishing_inline_inspection_date_actual = $request->finishing_inline_inspection_date_actual;
+            $inspection->pre_final_date_plan = $request->pre_final_date_plan;
+            $inspection->pre_final_date_plan_buyer = $request->pre_final_date_plan_buyer;
             $inspection->pre_final_date_actual = $request->pre_final_date_actual;
             $inspection->pre_final_aql_schedule = $request->pre_final_aql_schedule;
             $inspection->final_aql_date_plan = $request->final_aql_date_plan;
+            $inspection->final_aql_date_plan_buyer = $request->final_aql_date_plan_buyer;
             $inspection->final_aql_date_actual = $request->final_aql_date_actual;
             $inspection->final_aql_schedule=$request->final_aql_schedule;
             $inspection->save();
