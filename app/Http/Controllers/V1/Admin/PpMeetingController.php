@@ -16,7 +16,7 @@ class PpMeetingController extends Controller
     public function index()
     {
        try{
-    
+
             $this->data = PpMeetingResource::collection(PpMeeting::all());
             $this->apiSuccess("PP Meeting Loaded Successfully");
             return $this->apiOutput();
@@ -37,22 +37,25 @@ class PpMeetingController extends Controller
                 // 'name'          => ["required", "min:4"],
                 // 'description'   => ["nullable", "min:4"],
             ]);
-                
-            if ($validator->fails()) {    
+
+            if ($validator->fails()) {
                 $this->apiOutput($this->getValidationError($validator), 400);
             }
             DB::beginTransaction();
 
             $ppMeeting = new PpMeeting();
-            $ppMeeting->po_id=$request->po_id;
-            $ppMeeting->po_number=$request->po_number;
-            $ppMeeting->care_label_approval_plan = $request->care_label_approval_plan;
-            $ppMeeting->care_label_approval_actual = $request->care_label_approval_actual;
-            $ppMeeting->material_inhouse_date_plan = $request->material_inhouse_date_plan;
-            $ppMeeting->material_inhouse_date_actual = $request->material_inhouse_date_actual;
-            $ppMeeting->pp_meeting_date_plan = $request->pp_meeting_date_plan;
-            $ppMeeting->pp_meeting_date_actual = $request->pp_meeting_date_actual;
-            $ppMeeting->pp_meeting_schedule = $request->pp_meeting_schedule;
+            $ppMeeting->po_id                            = $request->po_id;
+            $ppMeeting->po_number                        = $request->po_number;
+            $ppMeeting->care_label_approval_plan         = $request->care_label_approval_plan;
+            $ppMeeting->care_label_approval_plan_buyer   = $request->care_label_approval_plan_buyer;
+            $ppMeeting->care_label_approval_actual       = $request->care_label_approval_actual;
+            $ppMeeting->material_inhouse_date_plan       = $request->material_inhouse_date_plan;
+            $ppMeeting->material_inhouse_date_plan_buyer = $request->material_inhouse_date_plan_buyer;
+            $ppMeeting->material_inhouse_date_actual     = $request->material_inhouse_date_actual;
+            $ppMeeting->pp_meeting_date_plan             = $request->pp_meeting_date_plan;
+            $ppMeeting->pp_meeting_date_plan_buyer       = $request->pp_meeting_date_plan_buyer;
+            $ppMeeting->pp_meeting_date_actual           = $request->pp_meeting_date_actual;
+            $ppMeeting->pp_meeting_schedule              = $request->pp_meeting_schedule;
             $ppMeeting->save();
             $this->saveFileInfo($request, $ppMeeting);
 
@@ -93,19 +96,22 @@ class PpMeetingController extends Controller
                 // 'name'          => ["required", "min:4"],
                 // 'description'   => ["nullable", "min:4"],
             ]);
-                
-            if ($validator->fails()) {    
+
+            if ($validator->fails()) {
                 $this->apiOutput($this->getValidationError($validator), 400);
             }
-   
+
             $ppMeeting = PpMeeting::find($request->id);
-            $ppMeeting->care_label_approval_plan = $request->care_label_approval_plan;
-            $ppMeeting->care_label_approval_actual = $request->care_label_approval_actual;
-            $ppMeeting->material_inhouse_date_plan = $request->material_inhouse_date_plan;
-            $ppMeeting->material_inhouse_date_actual = $request->material_inhouse_date_actual;
-            $ppMeeting->pp_meeting_date_plan = $request->pp_meeting_date_plan;
-            $ppMeeting->pp_meeting_date_actual = $request->pp_meeting_date_actual;
-            $ppMeeting->pp_meeting_schedule = $request->pp_meeting_schedule;
+            $ppMeeting->care_label_approval_plan         = $request->care_label_approval_plan;
+            $ppMeeting->care_label_approval_plan_buyer   = $request->care_label_approval_plan_buyer;
+            $ppMeeting->care_label_approval_actual       = $request->care_label_approval_actual;
+            $ppMeeting->material_inhouse_date_plan       = $request->material_inhouse_date_plan;
+            $ppMeeting->material_inhouse_date_plan_buyer = $request->material_inhouse_date_plan_buyer;
+            $ppMeeting->material_inhouse_date_actual     = $request->material_inhouse_date_actual;
+            $ppMeeting->pp_meeting_date_plan             = $request->pp_meeting_date_plan;
+            $ppMeeting->pp_meeting_date_plan_buyer       = $request->pp_meeting_date_plan_buyer;
+            $ppMeeting->pp_meeting_date_actual           = $request->pp_meeting_date_actual;
+            $ppMeeting->pp_meeting_schedule              = $request->pp_meeting_schedule;
             $ppMeeting->save();
             $this->apiSuccess();
             $this->data = (new PpMeetingResource($ppMeeting));
@@ -118,7 +124,7 @@ class PpMeetingController extends Controller
     public function show(Request $request)
     {
         try{
-          
+
             $ppMeeting = PpMeeting::find($request->id);
             $this->data = (new PpMeetingResource($ppMeeting));
             $this->apiSuccess("PP Meeting Showed Successfully");

@@ -9,7 +9,7 @@ class SampleApprovalInformationResource extends JsonResource
     protected $withoutFields = [];
 
     /**
-     * Set Hidden Item 
+     * Set Hidden Item
      */
     public function hide(array $hide = []){
         $this->withoutFields = $hide;
@@ -33,22 +33,27 @@ class SampleApprovalInformationResource extends JsonResource
     {
         return $this->filter([
 
-                "id"                                          => $this->id ?? "",
-                "po_id"                                       => $this->po_id ?? "",   
-                "po_number"                                   => $this->po_number ?? "",
-                "production_sample_approval_plan"             => $this->production_sample_approval_plan ?? "",
-                "production_sample_approval_actual"           => $this->production_sample_approval_actual ?? "",
-                "production_sample_dispatch_details"          => $this->production_sample_dispatch_details ?? "",
-                "production_sample_dispatch_sending_date"     => $this->production_sample_dispatch_sending_date ?? "",
-                "production_sample_dispatch_aob_number"       => $this->production_sample_dispatch_aob_number ?? "",
-                "shipment_booking_with_acs_plan"              => $this->shipment_booking_with_acs_plan ?? "",
-                "shipment_booking_with_acs_actual"            => $this->shipment_booking_with_acs_actual ?? "",
-                "sa_approval_plan"                            => $this->sa_approval_plan ?? "",
-                "sa_approval_actual"                          => $this->sa_approval_actual ?? "",
-                "created_at"                                  => $this->created_at ?? "",
-                "updated_at"                                  => $this->updated_at ?? "",
-                "production_sample_image"                             => ProductionSampleImageResource::collection($this->fileInfo),
-                
+            "id"                                          => $this->id ?? "",
+            "po_id"                                       => $this->po_id ?? "",
+            "po_number"                                   => $this->po_number ?? "",
+            "production_sample_approval_plan"             => $this->production_sample_approval_plan ?? "",
+            "production_sample_approval_plan_buyer"       => $this->production_sample_approval_plan_buyer ?? "",
+            "production_sample_approval_actual"           => $this->production_sample_approval_actual ?? "",
+            "production_sample_dispatch_details"          => $this->production_sample_dispatch_details ?? "",
+            "production_sample_dispatch_sending_date"     => $this->production_sample_dispatch_sending_date ?? "",
+            "production_sample_dispatch_aob_number"       => $this->production_sample_dispatch_aob_number ?? "",
+            "shipment_booking_with_acs_plan"              => $this->shipment_booking_with_acs_plan ?? "",
+            "shipment_booking_with_acs_plan_buyer"        => $this->shipment_booking_with_acs_plan_buyer ?? "",
+            "shipment_booking_with_acs_actual"            => $this->shipment_booking_with_acs_actual ?? "",
+            "invoice_booking_plan"                        => $this->invoice_booking_plan ?? "",
+            "invoice_booking_plan_buyer"                  => $this->invoice_booking_plan_buyer ?? "",
+            "sa_approval_plan"                            => $this->sa_approval_plan ?? "",
+            "sa_approval_plan_buyer"                      => $this->sa_approval_plan_buyer ?? "",
+            "sa_approval_actual"                          => $this->sa_approval_actual ?? "",
+            "created_at"                                  => $this->created_at ?? "",
+            "updated_at"                                  => $this->updated_at ?? "",
+            "production_sample_image"                     => ProductionSampleImageResource::collection($this->fileInfo),
+
 
 
         ]);

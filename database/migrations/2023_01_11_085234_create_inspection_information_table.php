@@ -18,14 +18,18 @@ class CreateInspectionInformationTable extends Migration
             $table->string("po_number");
             $table->integer("po_id");
             $table->date("sewing_inline_inspection_date_plan");
+            $table->date("sewing_inline_inspection_date_plan_buyer");
             $table->date("sewing_inline_inspection_date_actual");
             $table->string("inline_inspection_schedule");
             $table->date("finishing_inline_inspection_date_plan");
+            $table->date("finishing_inline_inspection_date_plan_buyer");
             $table->date("finishing_inline_inspection_date_actual");
             $table->date("pre_final_date_plan");
+            $table->date("pre_final_date_plan_buyer");
             $table->date("pre_final_date_actual");
             $table->string("pre_final_aql_schedule");
             $table->date("final_aql_date_plan");
+            $table->date("final_aql_date_plan_buyer");
             $table->date("final_aql_date_actual");
             $table->string("final_aql_schedule");
             $table->timestamps();

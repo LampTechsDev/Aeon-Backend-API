@@ -18,13 +18,16 @@ class CreateLabDipsEmbellishmentInformationTable extends Migration
             $table->string("po_number");
             $table->integer("po_id");
             $table->date("colour_std_print_artwork_sent_to_supplier_plan");
+            $table->date("colour_std_print_artwork_sent_to_supplier_plan_buyer");
             $table->date("colour_std_print_artwork_sent_to_supplier_actual");
             $table->date("lab_dip_approval_plan");
+            $table->date("lab_dip_approval_plan_buyer");
             $table->date("lab_dip_approval_actual");
             $table->text("lab_dip_dispatch_details")->nullable();
             $table->date("lab_dip_dispatch_sending_date")->nullable();
             $table->string("lab_dip_dispatch_aob_number")->nullable();
             $table->date("embellishment_so_approval_plan");
+            $table->date("embellishment_so_approval_plan_buyer");
             $table->date("embellishment_so_approval_actual");
             $table->text("embellishment_so_dispatch_details")->nullable();
             $table->date("embellishment_so_dispatch_sending_date")->nullable();

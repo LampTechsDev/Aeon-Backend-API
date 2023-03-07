@@ -96,33 +96,32 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
      * Group Section
      */
     Route::prefix("group")->group(function(){
-        Route::get('/',[GroupController::class,'index']);
-        Route::get('/show', [GroupController::class, 'show']);
-        Route::post('/store',[GroupController::class,'store']);
-        Route::post('/update',[GroupController::class,'update']);
-        Route::post('/delete',[GroupController::class,'destroy']);
+        Route::get('/',         [GroupController::class,'index']);
+        Route::get('/show',     [GroupController::class, 'show']);
+        Route::post('/store',   [GroupController::class,'store']);
+        Route::post('/update',  [GroupController::class,'update']);
+        Route::post('/delete',  [GroupController::class,'destroy']);
     });
 
     /**
      * Group Permission Section
      */
     Route::prefix('group/permission')->group(function(){
-        Route::get('/list', [PermissionController::class, "permissionList"]);
-        Route::post('/store', [PermissionController::class, "store"]);
-        Route::get('/view', [PermissionController::class, "viewGroupPermission"]);
-        Route::get('/user-access', [PermissionController::class, "userAccess"]);
+        Route::get('/list',         [PermissionController::class, "permissionList"]);
+        Route::post('/store',       [PermissionController::class, "store"]);
+        Route::get('/view',         [PermissionController::class, "viewGroupPermission"]);
+        Route::get('/user-access',  [PermissionController::class, "userAccess"]);
     });
 
     /**
      * Email Template
      */
     Route::prefix('email-template')->group(function(){
-        Route::get('/list', [EmailController::class, 'index']);
-        Route::get('/create', [EmailController::class, 'create']);
-        Route::post('/create', [EmailController::class, 'store']);
-        Route::post('/update', [EmailController::class, 'update']);
-        Route::get('view',    [EmailController::class, 'view']);
-        Route::get('/delete', [EmailController::class, 'delete']);
+        Route::get('/list',     [EmailController::class, 'index']);
+        Route::post('/create',  [EmailController::class, 'store']);
+        Route::post('/update',  [EmailController::class, 'update']);
+        Route::get('view',      [EmailController::class, 'view']);
+        Route::get('/delete',   [EmailController::class, 'delete']);
     });
 
 
@@ -131,13 +130,13 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
      */
     Route::prefix('compliance-audit')->group(function(){
 
-        Route::get('/list', [ComplianceAuditController::class, 'index']);
-        Route::post('/store', [ComplianceAuditController::class, 'store']);
-        Route::post('/update', [ComplianceAuditController::class, 'update']);
-        Route::get('view', [ComplianceAuditController::class, 'show']);
-        Route::post('/delete', [ComplianceAuditController::class, 'destroy']);
-        Route::post('/updateFile', [ComplianceAuditController::class, 'updateComplianceFileInfo']);
-        Route::post('/deleteFile', [ComplianceAuditController::class, 'deleteFileCompliance']);
+        Route::get('/list',         [ComplianceAuditController::class, 'index']);
+        Route::post('/store',       [ComplianceAuditController::class, 'store']);
+        Route::post('/update',      [ComplianceAuditController::class, 'update']);
+        Route::get('view',          [ComplianceAuditController::class, 'show']);
+        Route::post('/delete',      [ComplianceAuditController::class, 'destroy']);
+        Route::post('/updateFile',  [ComplianceAuditController::class, 'updateComplianceFileInfo']);
+        Route::post('/deleteFile',  [ComplianceAuditController::class, 'deleteFileCompliance']);
     });
 
      /**
@@ -145,11 +144,11 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
      */
     Route::prefix('inspection')->group(function(){
 
-        Route::get('/list', [InspectionController::class, 'index']);
-        Route::post('/store', [InspectionController::class, 'store']);
-        Route::post('/update', [InspectionController::class, 'update']);
-        Route::get('/show', [InspectionController::class, 'show']);
-        Route::post('/delete', [InspectionController::class, 'delete']);
+        Route::get('/list',     [InspectionController::class, 'index']);
+        Route::post('/store',   [InspectionController::class, 'store']);
+        Route::post('/update',  [InspectionController::class, 'update']);
+        Route::get('/show',     [InspectionController::class, 'show']);
+        Route::post('/delete',  [InspectionController::class, 'delete']);
 
     });
 
@@ -169,18 +168,16 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
 
     });
 
-
-
     /**
      * Manual Po Delivery Details
      */
      Route::prefix('manual_po_delivery_details')->group(function(){
 
-        Route::get('/list', [ManualPoDeliveryDetailsController::class, 'index']);
-        Route::post('/store', [ManualPoDeliveryDetailsController::class, 'store']);
-        Route::post('/update', [ManualPoDeliveryDetailsController::class, 'update']);
-        Route::get('/show', [ManualPoDeliveryDetailsController::class, 'show']);
-        Route::post('/delete', [ManualPoDeliveryDetailsController::class, 'delete']);
+        Route::get('/list',     [ManualPoDeliveryDetailsController::class, 'index']);
+        Route::post('/store',   [ManualPoDeliveryDetailsController::class, 'store']);
+        Route::post('/update',  [ManualPoDeliveryDetailsController::class, 'update']);
+        Route::get('/show',     [ManualPoDeliveryDetailsController::class, 'show']);
+        Route::post('/delete',  [ManualPoDeliveryDetailsController::class, 'delete']);
     });
 
 
@@ -189,51 +186,51 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
      */
      Route::prefix('manual_po_item_details')->group(function(){
 
-        Route::get('/list', [ManualPoItemDetailsController::class, 'index']);
-        Route::post('/store', [ManualPoItemDetailsController::class, 'store']);
-        Route::post('/update', [ManualPoItemDetailsController::class, 'update']);
-        Route::get('/show', [ManualPoItemDetailsController::class, 'show']);
-        Route::post('/delete', [ManualPoItemDetailsController::class, 'delete']);
+        Route::get('/list',     [ManualPoItemDetailsController::class, 'index']);
+        Route::post('/store',   [ManualPoItemDetailsController::class, 'store']);
+        Route::post('/update',  [ManualPoItemDetailsController::class, 'update']);
+        Route::get('/show',     [ManualPoItemDetailsController::class, 'show']);
+        Route::post('/delete',  [ManualPoItemDetailsController::class, 'delete']);
     });
 
 
-     /**
+    /**
      * Fabric Content
      */
      Route::prefix('fabric-content')->group(function(){
 
-        Route::get('/list', [FabricContentController::class, 'index']);
-        Route::post('/store', [FabricContentController::class, 'store']);
-        Route::post('/update', [FabricContentController::class, 'update']);
-        Route::get('/show', [FabricContentController::class, 'show']);
-        Route::post('/delete', [FabricContentController::class, 'delete']);
+        Route::get('/list',     [FabricContentController::class, 'index']);
+        Route::post('/store',   [FabricContentController::class, 'store']);
+        Route::post('/update',  [FabricContentController::class, 'update']);
+        Route::get('/show',     [FabricContentController::class, 'show']);
+        Route::post('/delete',  [FabricContentController::class, 'delete']);
     });
 
 
-     /**
+    /**
      * Fabric Quality
      */
 
      Route::prefix('fabric-quality')->group(function(){
 
-        Route::get('/list', [FabricQualityController::class, 'index']);
-        Route::post('/store', [FabricQualityController::class, 'store']);
-        Route::post('/update', [FabricQualityController::class, 'update']);
-        Route::get('/show', [FabricQualityController::class, 'show']);
-        Route::post('/delete', [FabricQualityController::class, 'delete']);
+        Route::get('/list',     [FabricQualityController::class, 'index']);
+        Route::post('/store',   [FabricQualityController::class, 'store']);
+        Route::post('/update',  [FabricQualityController::class, 'update']);
+        Route::get('/show',     [FabricQualityController::class, 'show']);
+        Route::post('/delete',  [FabricQualityController::class, 'delete']);
 
     });
 
-     /**
+    /**
      * Fabric Quality
      */
      Route::prefix('fabric-weight')->group(function(){
 
-        Route::get('/list', [FabricWeightController::class, 'index']);
-        Route::post('/store', [FabricWeightController::class, 'store']);
-        Route::post('/update', [FabricWeightController::class, 'update']);
-        Route::get('/show', [FabricWeightController::class, 'show']);
-        Route::post('/delete', [FabricWeightController::class, 'delete']);
+        Route::get('/list',     [FabricWeightController::class, 'index']);
+        Route::post('/store',   [FabricWeightController::class, 'store']);
+        Route::post('/update',  [FabricWeightController::class, 'update']);
+        Route::get('/show',     [FabricWeightController::class, 'show']);
+        Route::post('/delete',  [FabricWeightController::class, 'delete']);
     });
 
 
@@ -242,11 +239,11 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
     */
     Route::prefix('aeon-contact')->group(function(){
 
-        Route::get('/list', [AeonContactController::class, 'index']);
-        Route::get('/show',  [AeonContactController::class, "show"]);
-        Route::post('/store', [AeonContactController::class, "store"]);
-        Route::post('/update', [AeonContactController::class, "update"]);
-        Route::post('/delete', [AeonContactController::class, "delete"]);
+        Route::get('/list',     [AeonContactController::class, 'index']);
+        Route::get('/show',     [AeonContactController::class, "show"]);
+        Route::post('/store',   [AeonContactController::class, "store"]);
+        Route::post('/update',  [AeonContactController::class, "update"]);
+        Route::post('/delete',  [AeonContactController::class, "delete"]);
     });
 
 
@@ -255,11 +252,11 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
     */
     Route::prefix('supplier')->group(function(){
 
-        Route::get('/list', [SupplierController::class, 'index']);
-        Route::get('/show',  [SupplierController::class, "show"]);
-        Route::post('/store', [SupplierController::class, "store"]);
-        Route::post('/update', [SupplierController::class, "update"]);
-        Route::post('/delete', [SupplierController::class, "delete"]);
+        Route::get('/list',     [SupplierController::class, 'index']);
+        Route::get('/show',     [SupplierController::class, "show"]);
+        Route::post('/store',   [SupplierController::class, "store"]);
+        Route::post('/update',  [SupplierController::class, "update"]);
+        Route::post('/delete',  [SupplierController::class, "delete"]);
     });
 
     /**
@@ -267,11 +264,11 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
     */
     Route::prefix('critical-path-department')->group(function(){
 
-        Route::get('/list', [CriticalPathDepartmentController::class, 'index']);
-        Route::get('/show',  [CriticalPathDepartmentController::class, "show"]);
-        Route::post('/store', [CriticalPathDepartmentController::class, "store"]);
-        Route::post('/update', [CriticalPathDepartmentController::class, "update"]);
-        Route::post('/delete', [CriticalPathDepartmentController::class, "delete"]);
+        Route::get('/list',     [CriticalPathDepartmentController::class, 'index']);
+        Route::get('/show',     [CriticalPathDepartmentController::class, "show"]);
+        Route::post('/store',   [CriticalPathDepartmentController::class, "store"]);
+        Route::post('/update',  [CriticalPathDepartmentController::class, "update"]);
+        Route::post('/delete',  [CriticalPathDepartmentController::class, "delete"]);
     });
 
      /**
@@ -279,11 +276,11 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
     */
     Route::prefix('critical-path-fabric-type')->group(function(){
 
-        Route::get('/list', [CriticalPathFabricTypeController::class, 'index']);
-        Route::get('/show',  [CriticalPathFabricTypeController::class, "show"]);
-        Route::post('/store', [CriticalPathFabricTypeController::class, "store"]);
-        Route::post('/update', [CriticalPathFabricTypeController::class, "update"]);
-        Route::post('/delete', [CriticalPathFabricTypeController::class, "delete"]);
+        Route::get('/list',      [CriticalPathFabricTypeController::class, 'index']);
+        Route::get('/show',      [CriticalPathFabricTypeController::class, "show"]);
+        Route::post('/store',    [CriticalPathFabricTypeController::class, "store"]);
+        Route::post('/update',   [CriticalPathFabricTypeController::class, "update"]);
+        Route::post('/delete',   [CriticalPathFabricTypeController::class, "delete"]);
     });
 
     /**
@@ -291,11 +288,11 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
     */
     Route::prefix('season')->group(function(){
 
-        Route::get('/list', [SeasonController::class, 'index']);
-        Route::get('/show',  [SeasonController::class, "show"]);
-        Route::post('/store', [SeasonController::class, "store"]);
-        Route::post('/update', [SeasonController::class, "update"]);
-        Route::post('/delete', [SeasonController::class, "delete"]);
+        Route::get('/list',     [SeasonController::class, 'index']);
+        Route::get('/show',     [SeasonController::class, "show"]);
+        Route::post('/store',   [SeasonController::class, "store"]);
+        Route::post('/update',  [SeasonController::class, "update"]);
+        Route::post('/delete',  [SeasonController::class, "delete"]);
     });
 
     /**
@@ -303,11 +300,11 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
     */
     Route::prefix('mill')->group(function(){
 
-        Route::get('/list', [MillController::class, 'index']);
-        Route::get('/show',  [MillController::class, "show"]);
-        Route::post('/store', [MillController::class, "store"]);
-        Route::post('/update', [MillController::class, "update"]);
-        Route::post('/delete', [MillController::class, "delete"]);
+        Route::get('/list',     [MillController::class, 'index']);
+        Route::get('/show',     [MillController::class, "show"]);
+        Route::post('/store',   [MillController::class, "store"]);
+        Route::post('/update',  [MillController::class, "update"]);
+        Route::post('/delete',  [MillController::class, "delete"]);
     });
 
 
@@ -316,18 +313,19 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
     */
     Route::prefix('labdips-embellishment-Information')->group(function(){
 
-        Route::get('/list', [LabDipsEmbellishmentInformationController::class, 'index']);
-        Route::get('/show',  [LabDipsEmbellishmentInformationController::class, "show"]);
-        Route::post('/store', [LabDipsEmbellishmentInformationController::class, "store"]);
-        Route::post('/update', [LabDipsEmbellishmentInformationController::class, "update"]);
-        Route::post('/delete', [LabDipsEmbellishmentInformationController::class, "delete"]);
-        Route::post('/updateLabDipFile', [LabDipsEmbellishmentInformationController::class, 'updateLabDipFileInfo']);
+        Route::get('/list',                     [LabDipsEmbellishmentInformationController::class, 'index']);
+        Route::get('/show',                     [LabDipsEmbellishmentInformationController::class, "show"]);
+        Route::post('/store',                   [LabDipsEmbellishmentInformationController::class, "store"]);
+        Route::post('/update',                  [LabDipsEmbellishmentInformationController::class, "update"]);
+        Route::post('/delete',                  [LabDipsEmbellishmentInformationController::class, "delete"]);
+        Route::post('/updateLabDipFile',        [LabDipsEmbellishmentInformationController::class, 'updateLabDipFileInfo']);
         Route::post('/updateEmbellishmentFile', [LabDipsEmbellishmentInformationController::class, 'updateEmbellishmentFileInfo']);
-        Route::post('/additionalLabDipFile', [LabDipsEmbellishmentInformationController::class, 'addFileLabDip']);
+        Route::post('/additionalLabDipFile',    [LabDipsEmbellishmentInformationController::class, 'addFileLabDip']);
         Route::post('/additionalEmbellishFile', [LabDipsEmbellishmentInformationController::class, 'addFileEmbellish']);
-        Route::post('/deleteLabDipFile', [LabDipsEmbellishmentInformationController::class, 'deleteFileLabDip']);
-        Route::post('/deleteEmbellishFile', [LabDipsEmbellishmentInformationController::class, 'deleteFileEmbellish']);
+        Route::post('/deleteLabDipFile',        [LabDipsEmbellishmentInformationController::class, 'deleteFileLabDip']);
+        Route::post('/deleteEmbellishFile',     [LabDipsEmbellishmentInformationController::class, 'deleteFileEmbellish']);
     });
+
 
 
      /**
@@ -335,16 +333,17 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
     */
     Route::prefix('bulk-fabric-Information')->group(function(){
 
-        Route::get('/list', [BulkFabricInformationController::class, 'index']);
-        Route::get('/show',  [BulkFabricInformationController::class, "show"]);
-        Route::post('/store', [BulkFabricInformationController::class, "store"]);
-        Route::post('/update', [BulkFabricInformationController::class, "update"]);
-        Route::post('/delete', [BulkFabricInformationController::class, "delete"]);
-        Route::post('/updateBulkFile', [BulkFabricInformationController::class, 'updateBulkFileInfo']);
-        Route::post('/additionalBulkFile', [BulkFabricInformationController::class, 'addBulkFabricFile']);
-        Route::post('/deleteBulkFile', [BulkFabricInformationController::class, 'deleteFileBulk']);
+        Route::get('/list',                 [BulkFabricInformationController::class, 'index']);
+        Route::get('/show',                 [BulkFabricInformationController::class, "show"]);
+        Route::post('/store',               [BulkFabricInformationController::class, "store"]);
+        Route::post('/update',              [BulkFabricInformationController::class, "update"]);
+        Route::post('/delete',              [BulkFabricInformationController::class, "delete"]);
+        Route::post('/updateBulkFile',      [BulkFabricInformationController::class, 'updateBulkFileInfo']);
+        Route::post('/additionalBulkFile',  [BulkFabricInformationController::class, 'addBulkFabricFile']);
+        Route::post('/deleteBulkFile',      [BulkFabricInformationController::class, 'deleteFileBulk']);
 
     });
+
 
 
     /**
@@ -352,94 +351,97 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
     */
     Route::prefix('sample-approval-Information')->group(function(){
 
-        Route::get('/list', [SampleApprovalInformationController::class, 'index']);
-        Route::get('/show',  [SampleApprovalInformationController::class, "show"]);
-        Route::post('/store', [SampleApprovalInformationController::class, "store"]);
-        Route::post('/update', [SampleApprovalInformationController::class, "update"]);
-        Route::post('/delete', [SampleApprovalInformationController::class, "delete"]);
-        Route::post('/updatePhotoSampleFileInfo', [SampleApprovalInformationController::class, 'updatePhotoSampleFileInfo']);
-        Route::post('/updateFitSampleFileInfo', [SampleApprovalInformationController::class, 'updateFitSampleFileInfo']);
+        Route::get('/list',                         [SampleApprovalInformationController::class, 'index']);
+        Route::get('/show',                         [SampleApprovalInformationController::class, "show"]);
+        Route::post('/store',                       [SampleApprovalInformationController::class, "store"]);
+        Route::post('/update',                      [SampleApprovalInformationController::class, "update"]);
+        Route::post('/delete',                      [SampleApprovalInformationController::class, "delete"]);
+        Route::post('/updatePhotoSampleFileInfo',   [SampleApprovalInformationController::class, 'updatePhotoSampleFileInfo']);
+        Route::post('/updateFitSampleFileInfo',     [SampleApprovalInformationController::class, 'updateFitSampleFileInfo']);
         Route::post('/updateSizeSetSampleFileInfo', [SampleApprovalInformationController::class, 'updateSizeSetSampleFileInfo']);
         Route::post('/updatePpSampleImageFileInfo', [SampleApprovalInformationController::class, 'updatePpSampleImageFileInfo']);
-        Route::post('/addSampleImageFile', [SampleApprovalInformationController::class, 'addPhotoSampleFile']);
-        Route::post('/addFitSampleImageFile', [SampleApprovalInformationController::class, 'addFitSampleFile']);
-        Route::post('/addSizeSetSampleImageFile', [SampleApprovalInformationController::class, 'addSizeSetSampleImageFile']);
-        Route::post('/addPpSampleImageFile', [SampleApprovalInformationController::class, 'addAdditionalPpSampleImageFile']);
+        Route::post('/addSampleImageFile',          [SampleApprovalInformationController::class, 'addPhotoSampleFile']);
+        Route::post('/addFitSampleImageFile',       [SampleApprovalInformationController::class, 'addFitSampleFile']);
+        Route::post('/addSizeSetSampleImageFile',   [SampleApprovalInformationController::class, 'addSizeSetSampleImageFile']);
+        Route::post('/addPpSampleImageFile',        [SampleApprovalInformationController::class, 'addAdditionalPpSampleImageFile']);
     });
+
 
     /**
      *PP Meeting Details Information
     */
     Route::prefix('pp-meeting-details')->group(function(){
 
-        Route::get('/list', [PpMeetingController::class, 'index']);
-        Route::get('/show',  [PpMeetingController::class, "show"]);
-        Route::post('/store', [PpMeetingController::class, "store"]);
-        Route::post('/update', [PpMeetingController::class, "update"]);
-        Route::post('/delete', [PpMeetingController::class, "delete"]);
+        Route::get('/list',     [PpMeetingController::class, 'index']);
+        Route::get('/show',     [PpMeetingController::class, "show"]);
+        Route::post('/store',   [PpMeetingController::class, "store"]);
+        Route::post('/update',  [PpMeetingController::class, "update"]);
+        Route::post('/delete',  [PpMeetingController::class, "delete"]);
     });
+
 
     /**
      *Production Information Details Information
     */
     Route::prefix('production-information-details')->group(function(){
 
-        Route::get('/list', [ProductionInformationController::class, 'index']);
-        Route::get('/show',  [ProductionInformationController::class, "show"]);
-        Route::post('/store', [ProductionInformationController::class, "store"]);
-        Route::post('/update', [ProductionInformationController::class, "update"]);
-        Route::post('/delete', [ProductionInformationController::class, "delete"]);
+        Route::get('/list',     [ProductionInformationController::class, 'index']);
+        Route::get('/show',     [ProductionInformationController::class, "show"]);
+        Route::post('/store',   [ProductionInformationController::class, "store"]);
+        Route::post('/update',  [ProductionInformationController::class, "update"]);
+        Route::post('/delete',  [ProductionInformationController::class, "delete"]);
     });
+
 
     /**
      *Inspection Information Details Information
     */
     Route::prefix('inspection-information')->group(function(){
 
-        Route::get('/list', [InspectionInformationController::class, 'index']);
-        Route::get('/show',  [InspectionInformationController::class, "show"]);
-        Route::post('/store', [InspectionInformationController::class, "store"]);
-        Route::post('/update', [InspectionInformationController::class, "update"]);
-        Route::post('/delete', [InspectionInformationController::class, "delete"]);
+        Route::get('/list',     [InspectionInformationController::class, 'index']);
+        Route::get('/show',     [InspectionInformationController::class, "show"]);
+        Route::post('/store',   [InspectionInformationController::class, "store"]);
+        Route::post('/update',  [InspectionInformationController::class, "update"]);
+        Route::post('/delete',  [InspectionInformationController::class, "delete"]);
     });
 
     /**
-     *Inspection Information Details Information
+     *ExFactory Section
     */
-    Route::prefix('shipping-approval-information')->group(function(){
+    Route::prefix('ex-factory')->group(function(){
 
-        Route::get('/list', [ProductionSampleShippingApprovalController::class, 'index']);
-        Route::get('/show',  [ProductionSampleShippingApprovalController::class, "show"]);
-        Route::post('/store', [ProductionSampleShippingApprovalController::class, "store"]);
-        Route::post('/update', [ProductionSampleShippingApprovalController::class, "update"]);
-        Route::post('/delete', [ProductionSampleShippingApprovalController::class, "delete"]);
+        Route::get('/list',         [ExFactoryController::class, 'index']);
+        Route::get('/show',         [ExFactoryController::class, "show"]);
+        Route::post('/store',       [ExFactoryController::class, "store"]);
+        Route::post('/update',      [ExFactoryController::class, "update"]);
+        Route::post('/delete',      [ExFactoryController::class, "delete"]);
     });
+
 
     /**
      *Critical Path
     */
     Route::prefix('critical-path')->group(function(){
 
-        Route::get('/list', [CriticalPathController::class, 'index']);
-        Route::get('/show',  [CriticalPathController::class, "show"]);
-        Route::post('/store', [CriticalPathController::class, "store"]);
-        Route::post('/update', [CriticalPathController::class, "update"]);
-        Route::post('/delete', [CriticalPathController::class, "delete"]);
-        Route::post('/updateCriticalPathFile', [CriticalPathController::class, "updateCriticalPathFileInfo"]);
-        Route::post('/deleteCriticalPathFile', [CriticalPathController::class, "deleteFileCriticalPath"]);
-        Route::post('/additionalCriticalPathFile', [CriticalPathController::class, "addCriticalPathFile"]);
+        Route::get('/list',                         [CriticalPathController::class, 'index']);
+        Route::get('/show',                         [CriticalPathController::class, "show"]);
+        Route::post('/store',                       [CriticalPathController::class, "store"]);
+        Route::post('/update',                      [CriticalPathController::class, "update"]);
+        Route::post('/delete',                      [CriticalPathController::class, "delete"]);
+        Route::post('/updateCriticalPathFile',      [CriticalPathController::class, "updateCriticalPathFileInfo"]);
+        Route::post('/deleteCriticalPathFile',      [CriticalPathController::class, "deleteFileCriticalPath"]);
+        Route::post('/additionalCriticalPathFile',  [CriticalPathController::class, "addCriticalPathFile"]);
     });
+
 
      /**
      *Freight Mangement
     */
     Route::prefix('freight-management')->group(function(){
 
-        Route::get('/list', [FreightManagementController::class, 'index']);
-        Route::get('/show',  [FreightManagementController::class, "show"]);
-        // Route::post('/store', [ProductionSampleShippingApprovalController::class, "store"]);
-        Route::post('/update', [FreightManagementController::class, "update"]);
-        // Route::post('/delete', [ProductionSampleShippingApprovalController::class, "delete"]);
+        Route::get('/list',     [FreightManagementController::class, 'index']);
+        Route::get('/show',     [FreightManagementController::class, "show"]);
+        Route::post('/update',  [FreightManagementController::class, "update"]);
     });
 
     /**
@@ -447,14 +449,13 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
     */
     Route::prefix('vendor')->group(function(){
 
-        Route::get('/list', [VendorController::class, 'index']);
-        Route::post('/store', [VendorController::class, 'store']);
+        Route::get('/list',         [VendorController::class, 'index']);
+        Route::post('/store',       [VendorController::class, 'store']);
         Route::post('/update/{id}', [VendorController::class, 'update']);
-        Route::get('/show', [VendorController::class, 'show']);
+        Route::get('/show',         [VendorController::class, 'show']);
         Route::post('/delete/{id}', [VendorController::class, 'delete']);
 
     });
-
 
     /**
     * Vendor Contact People Section
@@ -495,6 +496,7 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
         Route::post('/delete/{id}', [CustomerController::class, "destroy"]);
     });
 
+
     /**
      * Customer Contact People Section
      */
@@ -510,7 +512,7 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
 
     /**
      * Customer Department Section
-     */
+    */
     Route::prefix('customer_department')->group(function(){
 
         Route::get('/list',         [CustomerDepartmentController::class, 'index']);
@@ -539,8 +541,8 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
     * PDF File Process
      */
     Route::prefix('pdf')->group(function(){
-        Route::get('process/list', [FileProcessingController::class, "processDataList"]);
-        Route::post('process', [FileProcessingController::class, "process"]);
+        Route::get('process/list',  [FileProcessingController::class, "processDataList"]);
+        Route::post('process',      [FileProcessingController::class, "process"]);
     });
 
     /**
@@ -553,20 +555,6 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
         Route::post('/store',       [GlobalCertificateController::class, "store"]);
         Route::post('/update',      [GlobalCertificateController::class, "update"]);
         Route::post('/delete',      [GlobalCertificateController::class, "delete"]);
-    });
-
-    /**
-     *Manufacturer Profile Section
-    */
-    Route::prefix('manufacturer_profile')->group(function(){
-
-        Route::get('/list',         [ManufacturerProfileController::class, 'index']);
-        Route::get('/show',         [ManufacturerProfileController::class, "show"]);
-        Route::post('/store',       [ManufacturerProfileController::class, "store"]);
-        Route::post('/update',      [ManufacturerProfileController::class, "update"]);
-        Route::post('/delete',      [ManufacturerProfileController::class, "delete"]);
-        Route::post('/updateFile',  [ManufacturerProfileController::class, 'updateAttachFile']);
-        Route::post('/deleteFile',  [ManufacturerProfileController::class, 'deleteAttachFile']);
     });
 
     /**
@@ -583,10 +571,8 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
         Route::post('/deleteFile',  [VendorManufacturerController::class, 'deleteAttachFile']);
     });
 
-
-
      /**
-     * Manufacturar Certificate Section
+     * Manufacturer Certificate Section
      **/
     Route::prefix('manufacturer_certificate')->group(function(){
 
@@ -598,9 +584,22 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
         Route::post('/updateFile',  [ManufacturerCertificateController::class, 'updateAttachFile']);
         Route::post('/deleteFile',  [ManufacturerCertificateController::class, 'deleteAttachFile']);
     });
+        /**
+     *Manufacturer Profile Section
+    */
+    Route::prefix('manufacturer_profile')->group(function(){
+
+        Route::get('/list',         [ManufacturerProfileController::class, 'index']);
+        Route::get('/show',         [ManufacturerProfileController::class, "show"]);
+        Route::post('/store',       [ManufacturerProfileController::class, "store"]);
+        Route::post('/update',      [ManufacturerProfileController::class, "update"]);
+        Route::post('/delete',      [ManufacturerProfileController::class, "delete"]);
+        Route::post('/updateFile',  [ManufacturerProfileController::class, 'updateAttachFile']);
+        Route::post('/deleteFile',  [ManufacturerProfileController::class, 'deleteAttachFile']);
+    });
 
      /**
-     * Manufacturar Contact People Section
+     * Manufacturer Contact People Section
      **/
     Route::prefix('manufacturer_contact')->group(function(){
 
@@ -612,7 +611,7 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
     });
 
      /**
-     * Manufacturar Contact People Section
+     * Payment Section
      **/
     Route::prefix('payment')->group(function(){
 
@@ -623,20 +622,8 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
         Route::post('/delete',      [PaymentInfoController::class, "delete"]);
     });
 
-     /**
-     * Manufacturar Contact People Section
-     **/
-    Route::prefix('ex-factory')->group(function(){
-
-        Route::get('/list',         [ExFactoryController::class, 'index']);
-        Route::get('/show',         [ExFactoryController::class, "show"]);
-        Route::post('/store',       [ExFactoryController::class, "store"]);
-        Route::post('/update',      [ExFactoryController::class, "update"]);
-        Route::post('/delete',      [ExFactoryController::class, "delete"]);
-    });
-
     /**
-     * Manufacturar Contact People Section
+     * Inspection Order Details Section
      **/
     Route::prefix('inspection-order-details')->group(function(){
 
@@ -698,6 +685,19 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
         Route::post('/delete',      [ShippingBookingItemController::class, "delete"]);
     });
 
+
+    /**
+     * Shipping Approval Information Section
+     **/
+    Route::prefix('shipping-approval-information')->group(function(){
+
+        Route::get('/list',    [ProductionSampleShippingApprovalController::class, 'index']);
+        Route::get('/show',    [ProductionSampleShippingApprovalController::class, "show"]);
+        Route::post('/store',  [ProductionSampleShippingApprovalController::class, "store"]);
+        Route::post('/update', [ProductionSampleShippingApprovalController::class, "update"]);
+        Route::post('/delete', [ProductionSampleShippingApprovalController::class, "delete"]);
+    });
+
     /**
      * Business Summary Section
     **/
@@ -709,39 +709,35 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
         Route::post('/delete',      [BusinessSummaryController::class, "delete"]);
     });
 
-
-
 });
-
-   /**
-     * Vendor Login Section
-     */
-    Route::prefix("vendor")->group(function(){
-
-            Route::post('/login', [VendorAuthController::class, "login"]);
-
-    });
-Route::middleware(["auth:vendor"])->prefix('vendors')->group(function(){
 
     /**
-     * Vendor
-     */
-    Route::prefix('vendor')->group(function(){
+     * Vendor Login Section
+    */
+    Route::prefix("vendor")->group(function(){
 
-        Route::get('/list', [VendorAuthController::class, 'index']);
-        Route::post('/store', [VendorAuthController::class, 'store']);
-        Route::post('/update/{id}', [VendorAuthController::class, 'update']);
-        Route::get('/show', [VendorAuthController::class, 'show']);
-        Route::post('/delete/{id}', [VendorAuthController::class, 'delete']);
+        Route::post('/login', [VendorAuthController::class, "login"]);
+
+    });
+    Route::middleware(["auth:vendor"])->prefix('vendors')->group(function(){
+
+        /**
+         * Vendor
+         */
+        Route::prefix('vendor')->group(function(){
+
+            Route::get('/list',         [VendorAuthController::class, 'index']);
+            Route::post('/store',       [VendorAuthController::class, 'store']);
+            Route::post('/update/{id}', [VendorAuthController::class, 'update']);
+            Route::get('/show',         [VendorAuthController::class, 'show']);
+            Route::post('/delete/{id}', [VendorAuthController::class, 'delete']);
+
+        });
 
     });
 
 
-
-});
-
-
-/**
+    /**
      * Customer Login Section
      */
     Route::prefix("customer")->group(function(){
@@ -758,15 +754,12 @@ Route::middleware(["auth:vendor"])->prefix('vendors')->group(function(){
          */
         Route::prefix('customer')->group(function(){
 
-            Route::get('/list', [CustomerAuthController::class, 'index']);
-            Route::post('/store', [CustomerAuthController::class, 'store']);
+            Route::get('/list',         [CustomerAuthController::class, 'index']);
+            Route::post('/store',       [CustomerAuthController::class, 'store']);
             Route::post('/update/{id}', [CustomerAuthController::class, 'update']);
-            Route::get('/show', [CustomerAuthController::class, 'show']);
+            Route::get('/show',         [CustomerAuthController::class, 'show']);
             Route::post('/delete/{id}', [CustomerAuthController::class, 'delete']);
-            Route::post('/logout', [CustomerAuthController::class, "logout"]);
+            Route::post('/logout',      [CustomerAuthController::class, "logout"]);
 
         });
-
-
-
     });

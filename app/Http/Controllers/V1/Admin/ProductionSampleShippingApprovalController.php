@@ -16,7 +16,7 @@ class ProductionSampleShippingApprovalController extends Controller
     public function index()
     {
        try{
-    
+
             $this->data = SampleApprovalInformationResource::collection(SampleShippingApproval::all());
             $this->apiSuccess("Sample Approval Information Loaded Successfully");
             return $this->apiOutput();
@@ -29,7 +29,7 @@ class ProductionSampleShippingApprovalController extends Controller
     public function store(Request $request){
 
         try{
-            $validator = Validator::make( 
+            $validator = Validator::make(
                 $request->all(),
                  [
                     // "buyer_id"          => "required",
@@ -37,7 +37,7 @@ class ProductionSampleShippingApprovalController extends Controller
                     // "supplier_id"       => "required",
                     // "manufacturer_id"   => "required",
                 ]
-                
+
             );
 
             if ($validator->fails()) {
@@ -49,13 +49,18 @@ class ProductionSampleShippingApprovalController extends Controller
             $shippingapproval->po_number = $request->po_number;
             $shippingapproval->po_id = $request->po_id;
             $shippingapproval->production_sample_approval_plan = $request->production_sample_approval_plan;
+            $shippingapproval->production_sample_approval_plan_buyer = $request->production_sample_approval_plan_buyer;
             $shippingapproval->production_sample_approval_actual = $request->production_sample_approval_actual;
             $shippingapproval->production_sample_dispatch_details = $request->production_sample_dispatch_details;
             $shippingapproval->production_sample_dispatch_sending_date = $request->production_sample_dispatch_sending_date;
             $shippingapproval->production_sample_dispatch_aob_number = $request->production_sample_dispatch_aob_number;
             $shippingapproval->shipment_booking_with_acs_plan = $request->shipment_booking_with_acs_plan;
+            $shippingapproval->shipment_booking_with_acs_plan_buyer = $request->shipment_booking_with_acs_plan_buyer;
             $shippingapproval->shipment_booking_with_acs_actual = $request->shipment_booking_with_acs_actual;
+            $shippingapproval->invoice_booking_plan = $request->invoice_booking_plan;
+            $shippingapproval->invoice_booking_plan_buyer = $request->invoice_booking_plan_buyer;
             $shippingapproval->sa_approval_plan = $request->sa_approval_plan;
+            $shippingapproval->sa_approval_plan_buyer = $request->sa_approval_plan_buyer;
             $shippingapproval->sa_approval_actual = $request->sa_approval_actual;
             $shippingapproval->save();
             $this->saveFileInfo($request, $shippingapproval);
@@ -90,7 +95,7 @@ class ProductionSampleShippingApprovalController extends Controller
     public function update(Request $request){
 
         try{
-            $validator = Validator::make( 
+            $validator = Validator::make(
                 $request->all(),
                  [
                     // "buyer_id"          => "required",
@@ -98,7 +103,7 @@ class ProductionSampleShippingApprovalController extends Controller
                     // "supplier_id"       => "required",
                     // "manufacturer_id"   => "required",
                 ]
-                
+
             );
 
             if ($validator->fails()) {
@@ -110,13 +115,18 @@ class ProductionSampleShippingApprovalController extends Controller
             $shippingapproval->po_number = $request->po_number;
             $shippingapproval->po_id = $request->po_id;
             $shippingapproval->production_sample_approval_plan = $request->production_sample_approval_plan;
+            $shippingapproval->production_sample_approval_plan_buyer = $request->production_sample_approval_plan_buyer;
             $shippingapproval->production_sample_approval_actual = $request->production_sample_approval_actual;
             $shippingapproval->production_sample_dispatch_details = $request->production_sample_dispatch_details;
             $shippingapproval->production_sample_dispatch_sending_date = $request->production_sample_dispatch_sending_date;
             $shippingapproval->production_sample_dispatch_aob_number = $request->production_sample_dispatch_aob_number;
             $shippingapproval->shipment_booking_with_acs_plan = $request->shipment_booking_with_acs_plan;
+            $shippingapproval->shipment_booking_with_acs_plan_buyer = $request->shipment_booking_with_acs_plan_buyer;
             $shippingapproval->shipment_booking_with_acs_actual = $request->shipment_booking_with_acs_actual;
+            $shippingapproval->invoice_booking_plan = $request->invoice_booking_plan;
+            $shippingapproval->invoice_booking_plan_buyer = $request->invoice_booking_plan_buyer;
             $shippingapproval->sa_approval_plan = $request->sa_approval_plan;
+            $shippingapproval->sa_approval_plan_buyer = $request->sa_approval_plan_buyer;
             $shippingapproval->sa_approval_actual = $request->sa_approval_actual;
             $shippingapproval->save();
             $this->saveFileInfo($request, $shippingapproval);
@@ -134,7 +144,7 @@ class ProductionSampleShippingApprovalController extends Controller
     public function show(Request $request)
     {
         try{
-            
+
             $production =  SampleShippingApproval::find($request->id);
             $this->data = (new SampleApprovalInformationResource($production));
             $this->apiSuccess("Sample Approval Information Showed Successfully");
