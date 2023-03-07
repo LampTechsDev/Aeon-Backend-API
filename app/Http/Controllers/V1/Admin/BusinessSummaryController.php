@@ -55,8 +55,10 @@ class BusinessSummaryController extends Controller
 
             $business_summary = BusinessSummary::find($request->id);
 
-            
-            $business_summary->year                     = $request->year;
+
+            $business_summary->year                      = $request->year;
+            $business_summary->total_order_qty           = $request->total_order_qty;
+            $business_summary->total_value               = $request->total_value;
             $business_summary->final_total_ship_qty      = $request->final_total_ship_qty ;
             $business_summary->final_total_invoice_value = $request->final_total_invoice_value ;
             $business_summary->total_commission          = $request->total_commission ;

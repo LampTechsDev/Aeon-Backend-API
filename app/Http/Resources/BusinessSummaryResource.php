@@ -44,6 +44,8 @@ class BusinessSummaryResource extends JsonResource
             "id"                        => $this->id ?? "",
             "po_info"                     =>  isset($this->businessSummary) ? (new ManualPoResource($this->businessSummary))->hide(["created_by","updated_by"]) : null,
             "year"                      => $this->year ?? "",
+            "total_order_qty"           => $this->total_order_qty ?? "",
+            "total_value"               => $this->total_value ?? "",
             "final_total_ship_qty"      => $this->final_total_ship_qty ?? "",
             "final_total_invoice_value" => $this->final_total_invoice_value ?? "",
             "total_commission"          => $this->total_commission ?? "",
