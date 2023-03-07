@@ -64,6 +64,7 @@ use App\Http\Controllers\V1\Buyer\CustomerController as CustomerAuthController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
     /**
      * Admin Login Section
      */
@@ -120,9 +121,10 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
         Route::get('/create', [EmailController::class, 'create']);
         Route::post('/create', [EmailController::class, 'store']);
         Route::post('/update', [EmailController::class, 'update']);
-        Route::get('view', [EmailController::class, 'view']);
+        Route::get('view',    [EmailController::class, 'view']);
         Route::get('/delete', [EmailController::class, 'delete']);
     });
+
 
     /**
      * Compliance Audit

@@ -13,9 +13,40 @@ use Illuminate\Validation\Rule;
 class EmailController extends Controller
 {
     protected $template_type = [
-        "contact_mail"                          => "Contact Email",
-        "signup_mail"                           => "Signup Email",
-        "patient_registration_confirmation"     => "Patient Registration Confirmation",
+        "vendor_po_create_mail"                             =>"Vendor PO Create Email",
+        "manufacturer_po_create_mail"                       =>"Sub Vendor PO Create Email",
+        "buyer_po_create_mail"                              =>"Buyer PO Create Email",
+        "aeon_po_create_mail"                               =>"AEON PO Create Email",
+        "vendor_shipping_booking_done_mail"                 =>"Vendor Shipping Booking Done Email",
+        "buyer_shipping_booking_done_mail"                  =>"Buyer Shipping Booking Done Email",
+        "aeon_shipping_booking_done_mail"                   =>"Aeon Shipping Booking Done Email",
+        "vendor_invoice_submit_mail"                        =>"Vendor Invoice Submitting Email",
+        "buyer_invoice_submit_mail"                         =>"Buyer Invoice Submitting Email",
+        "aeon_invoice_submit_mail"                          =>"Aeon Invoice Submitting Email",
+        "vendor_create_schedule_mail"                       =>"Vendor Invoice Submitting Email",
+        "manufacturer_create_schedule_mail"                 =>"Sub Vendor Invoice Submitting Email",
+        "aeon_create_schedule_mail"                         =>"Sub Vendor Invoice Submitting Email",
+        "vendor_exception_mail"                             =>"Vendor Exception Email",
+        "manufacturer_exception_mail"                       =>"Sub Vendor Exception Email",
+        "aeon_exception_mail"                               =>"Aeon Exception Email",
+        "Vendor_critical_mail"                              =>"Vendor Critical Email",
+        "manufacturer_critical_mail"                        =>"Sub Vendor Critical Email",
+        "aeon_critical_mail"                                =>"Aeon Critical Email",
+        "contact_mail"                                      => "Contact Email",
+        "signup_mail"                                       => "Signup Email",
+        "vendor_registration_confirmation"                  => "Vendor Registration Confirmation",
+        "buyer_registration_confirmation"                   => "Buyer Registration Confirmation",
+        "manufacturer_registration_confirmation"            => "Sub Vendor Registration Confirmation",
+        "aeon_registration_confirmation"                    => "Aeon Registration Confirmation",
+        "vendor_password_change"                            => "Vendor Password Change",
+        "manufacturer_password_change"                      => "Manufacturer Password Change",
+        "buyer_password_change"                             => "Buyer Password Change",
+        "aeon_password_change"                              => "Aeon Password Change",
+        "vendor_email_verification"                         => "Vendor Email Verification",
+        "manufacturer_email_verification"                   => "Sub Vendor Email Verification",
+        "buyer_email_verification"                          => "Buyer Email Verification",
+        "aeon_email_verification"                           => "Aeon Email Verification",
+        
         "therapist_registration_confirmation"   => "Therapist Registration Confirmation",
         "appointment_confirmation"              => "Appointment Confirmation",
         "appointment_cancellation"              => "Appointment Cancellation",
@@ -77,7 +108,7 @@ class EmailController extends Controller
             if($validator->fails()){
                 return $this->apiOutput($this->getValidationError($validator));
             }
-            
+
             $template = new EmailTemplate();
             $template->email_type   = $request->email_type;
             $template->subject      = $request->subject;
@@ -86,7 +117,7 @@ class EmailController extends Controller
             $template->template     = $request->template;
             $template->created_by   = $request->user()->id;
             $template->save();
-           
+
             $this->data["email_templates"] = new EmailTemplateResource($template);
             $this->apiSuccess("Template Configuration Added Successfully");
             return $this->apiOutput();
@@ -112,7 +143,7 @@ class EmailController extends Controller
             if($validator->fails()){
                 return $this->apiOutput($this->getValidationError($validator));
             }
-            
+
             $template = EmailTemplate::find($request->id);
             $template->email_type   = $request->email_type;
             $template->subject      = $request->subject;
@@ -121,7 +152,7 @@ class EmailController extends Controller
             $template->template     = $request->template;
             $template->updated_by   = $request->user()->id;
             $template->save();
-           
+
             $this->data["email_templates"] = new EmailTemplateResource($template);
             $this->apiSuccess("Template Configuration Updated Successfully");
             return $this->apiOutput();
@@ -141,7 +172,7 @@ class EmailController extends Controller
             if($validator->fails()){
                 return $this->apiOutput($this->getValidationError($validator));
             }
-            
+
             $template = EmailTemplate::withTrashed()->find($request->id);
             //$template = EmailTemplate::find($request->id);
             $template_type_use = EmailTemplate::select("email_type")
@@ -168,7 +199,7 @@ class EmailController extends Controller
             if($validator->fails()){
                 return $this->apiOutput($this->getValidationError($validator));
             }
-            EmailTemplate::where("id", $request->id)->delete();            
+            EmailTemplate::where("id", $request->id)->delete();
             $this->apiSuccess("Template Configuration Deleted Successfully");
             return $this->apiOutput();
         }catch(Exception $e){
