@@ -18,13 +18,18 @@ class CreateSampleShippingApprovalsTable extends Migration
             $table->string("po_number");
             $table->integer("po_id");
             $table->date("production_sample_approval_plan");
+            $table->date("production_sample_approval_plan_buyer");
             $table->date("production_sample_approval_actual");
             $table->text("production_sample_dispatch_details")->nullable();
             $table->date("production_sample_dispatch_sending_date")->nullable();
             $table->string("production_sample_dispatch_aob_number")->nullable();
             $table->date("shipment_booking_with_acs_plan");
+            $table->date("shipment_booking_with_acs_plan_buyer");
             $table->date("shipment_booking_with_acs_actual");
+            $table->date("invoice_booking_plan");
+            $table->date("invoice_booking_plan_buyer");
             $table->date("sa_approval_plan");
+            $table->date("sa_approval_plan_buyer");
             $table->date("sa_approval_actual");
             $table->timestamps();
         });

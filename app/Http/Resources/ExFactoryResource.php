@@ -9,7 +9,7 @@ class ExFactoryResource extends JsonResource
     protected $withoutFields = [];
 
     /**
-     * Set Hidden Item 
+     * Set Hidden Item
      */
     public function hide(array $hide = []){
         $this->withoutFields = $hide;
@@ -32,17 +32,17 @@ class ExFactoryResource extends JsonResource
     public function toArray($request)
     {
         return $this->filter([
-            "id"            => $this->id ?? "",
-            "po_number"          => $this->po_number ?? "",
-            "po_id"         => $this->po_id ?? "",
-            "ex_factory_date_po"       => $this->ex_factory_date_po ?? "",
-            "revised_ex_factory_date"        => $this->revised_ex_factory_date ?? "",
-            "shipped_units"   => $this->shipped_units ?? "",
-            "original_eta_sa_date"  => $this->original_eta_sa_date ?? "",
-            "revised_eta_sa_date"   => $this->revised_eta_sa_date ?? "",
+            "id"                        => $this->id ?? "",
+            "po_number"                 => $this->po_number ?? "",
+            "po_id"                     => $this->po_id ?? "",
+            "ex_factory_date_po"        => $this->ex_factory_date_po ?? "",
+            "revised_ex_factory_date"   => $this->revised_ex_factory_date ?? "",
+            "shipped_units"             => $this->shipped_units ?? "",
+            "original_eta_sa_date"      => $this->original_eta_sa_date ?? "",
+            "revised_eta_sa_date"       => $this->revised_eta_sa_date ?? "",
             "forwarded_ref_vessel_name" => $this->forwarded_ref_vessel_name ?? "",
-            "created_at"    => $this->created_at ?? "",
-            "updated_at"    => $this->updated_at ?? "",
+            "created_at"                => $this->created_at ?? "",
+            "updated_at"                => $this->updated_at ?? "",
         ]);
     }
 }

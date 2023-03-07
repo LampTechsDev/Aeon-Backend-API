@@ -261,23 +261,32 @@ class ManualPoController extends Controller
             }
             //$criticalPath->lead_type=$request->lead_type;
             //Official Pos Sent(Plan)
-            $ex_factory_date1=strtotime($manualpo->vendor_po_date);
-            $ex_factory_date2=strtotime($manualpo->vendor_po_date);
-            $ex_factory_date3=strtotime($manualpo->vendor_po_date);
+            $ex_factory_date1      =strtotime($manualpo->vendor_po_date);
+            $ex_factory_date1_buyer=strtotime($manualpo->first_delivery_date);
+            $ex_factory_date2      =strtotime($manualpo->vendor_po_date);
+            $ex_factory_date2_buyer=strtotime($manualpo->first_delivery_date);
+            $ex_factory_date3      =strtotime($manualpo->vendor_po_date);
+            $ex_factory_date3_buyer=strtotime($manualpo->first_delivery_date);
             if($manualpo->fabric_type=="solid"){
 
-                $fabric_ordered_plan1=Carbon::parse($ex_factory_date1)->subDays(73)->format("Y-m-d");
-                $criticalPath->official_po_plan= Carbon::parse($fabric_ordered_plan1)->subDays(15)->format("Y-m-d");
+                $fabric_ordered_plan1                 = Carbon::parse($ex_factory_date1)->subDays(73)->format("Y-m-d");
+                $fabric_ordered_plan1_buyer           = Carbon::parse($ex_factory_date1_buyer)->subDays(73)->format("Y-m-d");
+                $criticalPath->official_po_plan       = Carbon::parse($fabric_ordered_plan1)->subDays(15)->format("Y-m-d");
+                $criticalPath->official_po_plan_buyer = Carbon::parse($fabric_ordered_plan1_buyer)->subDays(15)->format("Y-m-d");
 
             }
             elseif($manualpo->fabric_type=="aop"){
-                $fabric_ordered_plan1=Carbon::parse($ex_factory_date2)->subDays(83)->format("Y-m-d");
-                $criticalPath->official_po_plan= Carbon::parse($fabric_ordered_plan1)->subDays(15)->format("Y-m-d");
+                $fabric_ordered_plan1                 = Carbon::parse($ex_factory_date2)->subDays(83)->format("Y-m-d");
+                $fabric_ordered_plan1_buyer           = Carbon::parse($ex_factory_date2_buyer)->subDays(83)->format("Y-m-d");
+                $criticalPath->official_po_plan       = Carbon::parse($fabric_ordered_plan1)->subDays(15)->format("Y-m-d");
+                $criticalPath->official_po_plan_buyer = Carbon::parse($fabric_ordered_plan1_buyer)->subDays(15)->format("Y-m-d");
             }
             elseif($manualpo->fabric_type=="import"){
 
-                $fabric_ordered_plan1=Carbon::parse($ex_factory_date3)->subDays(108)->format("Y-m-d");
-                $criticalPath->official_po_plan= Carbon::parse($fabric_ordered_plan1)->subDays(15)->format("Y-m-d");
+                $fabric_ordered_plan1                 = Carbon::parse($ex_factory_date3)->subDays(108)->format("Y-m-d");
+                $fabric_ordered_plan1_buyer           = Carbon::parse($ex_factory_date3_buyer)->subDays(108)->format("Y-m-d");
+                $criticalPath->official_po_plan       = Carbon::parse($fabric_ordered_plan1)->subDays(15)->format("Y-m-d");
+                $criticalPath->official_po_plan_buyer = Carbon::parse($fabric_ordered_plan1_buyer)->subDays(15)->format("Y-m-d");
 
             }
 
@@ -308,21 +317,30 @@ class ManualPoController extends Controller
                     $labDips = new LabDipsEmbellishmentInformation();
                     $labDips->po_number = $manualpo->po_no;
                     $labDips->po_id = $manualpo->id;
+
+
                     //Embellishment/so Approval Plan Calculation
                     $pp_meeting_approval=strtotime($manualpo->vendor_po_date);
+                    $pp_meeting_approval_buyer=strtotime($manualpo->first_delivery_date);
                     $pp_meeting_approval1 = Carbon::parse($pp_meeting_approval)->subDays(49)->format("Y-m-d");
+                    $pp_meeting_approval1_buyer = Carbon::parse($pp_meeting_approval_buyer)->subDays(49)->format("Y-m-d");
                     $labDips->embellishment_so_approval_plan = Carbon::parse($pp_meeting_approval1)->subDays(14)->format("Y-m-d");
+                    $labDips->embellishment_so_approval_plan_buyer = Carbon::parse($pp_meeting_approval1_buyer)->subDays(14)->format("Y-m-d");
 
 
 
                     $embellishment_so_approval_plan1=$labDips->embellishment_so_approval_plan;
+                    $embellishment_so_approval_plan1_buyer=$labDips->embellishment_so_approval_plan_buyer;
                     $embellishment_so_approval_plan2=$labDips->embellishment_so_approval_plan;
+                    $embellishment_so_approval_plan2_buyer=$labDips->embellishment_so_approval_plan_buyer;
 
                     //Lab Dip Approval Plan Calculation
                     $labDips->lab_dip_approval_plan = Carbon::parse($embellishment_so_approval_plan1)->subDays(7)->format("Y-m-d");
+                    $labDips->lab_dip_approval_plan_buyer = Carbon::parse($embellishment_so_approval_plan1_buyer)->subDays(7)->format("Y-m-d");
 
                     //Colour std/print artwork artwork Calculation
                     $labDips->colour_std_print_artwork_sent_to_supplier_plan = Carbon::parse($embellishment_so_approval_plan2)->subDays(7)->format("Y-m-d");
+                    $labDips->colour_std_print_artwork_sent_to_supplier_plan_buyer = Carbon::parse($embellishment_so_approval_plan2_buyer)->subDays(7)->format("Y-m-d");
 
                     $labDips->colour_std_print_artwork_sent_to_supplier_actual = $manualpo->vendor_po_date;
 
@@ -344,55 +362,71 @@ class ManualPoController extends Controller
 
                // DB::beginTransaction();
 
-                $bulkFabricInformation = new BulkFabricInformation();
-                $bulkFabricInformation->po_number =$manualpo->po_no;
-                $bulkFabricInformation->po_id = $manualpo->id;
-                //Fabric Inhouse Plan Calculation
-                $fabric_inhouse_plan=strtotime($manualpo->vendor_po_date);
-                $cutting_date_plan1 = Carbon::parse($fabric_inhouse_plan)->subDays(36)->format("Y-m-d");
-                $bulkFabricInformation->bulk_yarn_fabric_inhouse_plan = Carbon::parse($cutting_date_plan1)->subDays(7)->format("Y-m-d");
-                $bulk_yarn_fabric_inhouse_plan1=$bulkFabricInformation->bulk_yarn_fabric_inhouse_plan;
-                $bulk_yarn_fabric_inhouse_plan2=$bulkFabricInformation->bulk_yarn_fabric_inhouse_plan;
-                $bulk_yarn_fabric_inhouse_plan3=$bulkFabricInformation->bulk_yarn_fabric_inhouse_plan;
-                $bulk_yarn_fabric_inhouse_plan4=$bulkFabricInformation->bulk_yarn_fabric_inhouse_plan;
-                $bulk_yarn_fabric_inhouse_plan5=$bulkFabricInformation->bulk_yarn_fabric_inhouse_plan;
-                $bulk_yarn_fabric_inhouse_plan6=$bulkFabricInformation->bulk_yarn_fabric_inhouse_plan;
-                //Bulk Fabric/Knit Down Approval Plan Calculation
-                if($manualpo->fabric_type=="solid"){
-                    $bulkFabricInformation->bulk_fabric_knit_down_approval_plan = Carbon::parse($bulk_yarn_fabric_inhouse_plan1)->subDays(15)->format("Y-m-d");
-                }
-                elseif($manualpo->fabric_type=="aop"){
-                    $bulkFabricInformation->bulk_fabric_knit_down_approval_plan = Carbon::parse($bulk_yarn_fabric_inhouse_plan2)->subDays(25)->format("Y-m-d");
-                }
-                elseif($manualpo->fabric_type=="import"){
-                    $bulkFabricInformation->bulk_fabric_knit_down_approval_plan = Carbon::parse($bulk_yarn_fabric_inhouse_plan3)->subDays(45)->format("Y-m-d");
-                }
+               $bulkFabricInformation = new BulkFabricInformation();
+               $bulkFabricInformation->po_number =$manualpo->po_no;
+               $bulkFabricInformation->po_id = $manualpo->id;
+               //Fabric Inhouse Plan Calculation
+               $fabric_inhouse_plan=strtotime($manualpo->vendor_po_date);
+               $fabric_inhouse_plan_buyer=strtotime($manualpo->first_delivery_date);
+               $cutting_date_plan1 = Carbon::parse($fabric_inhouse_plan)->subDays(36)->format("Y-m-d");
+               $cutting_date_plan1_buyer = Carbon::parse($fabric_inhouse_plan_buyer)->subDays(36)->format("Y-m-d");
+               $bulkFabricInformation->bulk_yarn_fabric_inhouse_plan = Carbon::parse($cutting_date_plan1)->subDays(7)->format("Y-m-d");
+               $bulkFabricInformation->bulk_yarn_fabric_inhouse_plan_buyer = Carbon::parse($cutting_date_plan1_buyer)->subDays(7)->format("Y-m-d");
+               $bulk_yarn_fabric_inhouse_plan1=$bulkFabricInformation->bulk_yarn_fabric_inhouse_plan;
+               $bulk_yarn_fabric_inhouse_plan1_buyer=$bulkFabricInformation->bulk_yarn_fabric_inhouse_plan_buyer;
+               $bulk_yarn_fabric_inhouse_plan2=$bulkFabricInformation->bulk_yarn_fabric_inhouse_plan;
+               $bulk_yarn_fabric_inhouse_plan2_buyer=$bulkFabricInformation->bulk_yarn_fabric_inhouse_plan_buyer;
+               $bulk_yarn_fabric_inhouse_plan3=$bulkFabricInformation->bulk_yarn_fabric_inhouse_plan;
+               $bulk_yarn_fabric_inhouse_plan3_buyer=$bulkFabricInformation->bulk_yarn_fabric_inhouse_plan_buyer;
+               $bulk_yarn_fabric_inhouse_plan4=$bulkFabricInformation->bulk_yarn_fabric_inhouse_plan;
+               $bulk_yarn_fabric_inhouse_plan4_buyer=$bulkFabricInformation->bulk_yarn_fabric_inhouse_plan_buyer;
+               $bulk_yarn_fabric_inhouse_plan5=$bulkFabricInformation->bulk_yarn_fabric_inhouse_plan;
+               $bulk_yarn_fabric_inhouse_plan5_buyer=$bulkFabricInformation->bulk_yarn_fabric_inhouse_plan_buyer;
+               $bulk_yarn_fabric_inhouse_plan6=$bulkFabricInformation->bulk_yarn_fabric_inhouse_plan;
+               $bulk_yarn_fabric_inhouse_plan6_buyer=$bulkFabricInformation->bulk_yarn_fabric_inhouse_plan_buyer;
+               //Bulk Fabric/Knit Down Approval Plan Calculation
+               if($manualpo->fabric_type=="solid"){
+                   $bulkFabricInformation->bulk_fabric_knit_down_approval_plan = Carbon::parse($bulk_yarn_fabric_inhouse_plan1)->subDays(25)->format("Y-m-d");
+                   $bulkFabricInformation->bulk_fabric_knit_down_approval_plan_buyer = Carbon::parse($bulk_yarn_fabric_inhouse_plan1_buyer)->subDays(25)->format("Y-m-d");
 
-                //Fabric Order Plan Calculation
-                if($manualpo->fabric_type=="solid"){
-                    $bulkFabricInformation->fabric_ordered_plan = Carbon::parse($bulk_yarn_fabric_inhouse_plan4)->subDays(30)->format("Y-m-d");
-                }
-                elseif($manualpo->fabric_type=="aop"){
-                    $bulkFabricInformation->fabric_ordered_plan = Carbon::parse($bulk_yarn_fabric_inhouse_plan5)->subDays(40)->format("Y-m-d");
-                }
-                elseif($manualpo->fabric_type=="import"){
-                    $bulkFabricInformation->fabric_ordered_plan = Carbon::parse($bulk_yarn_fabric_inhouse_plan6)->subDays(65)->format("Y-m-d");
-                }
+               }
+               elseif($manualpo->fabric_type=="aop" ){
+                   $bulkFabricInformation->bulk_fabric_knit_down_approval_plan = Carbon::parse($bulk_yarn_fabric_inhouse_plan2)->subDays(25)->format("Y-m-d");
+                   $bulkFabricInformation->bulk_fabric_knit_down_approval_plan_buyer = Carbon::parse($bulk_yarn_fabric_inhouse_plan2_buyer)->subDays(25)->format("Y-m-d");
+               }
+               elseif($manualpo->fabric_type=="import"){
+                   $bulkFabricInformation->bulk_fabric_knit_down_approval_plan = Carbon::parse($bulk_yarn_fabric_inhouse_plan3)->subDays(45)->format("Y-m-d");
+                   $bulkFabricInformation->bulk_fabric_knit_down_approval_plan_buyer = Carbon::parse($bulk_yarn_fabric_inhouse_plan3_buyer)->subDays(45)->format("Y-m-d");
+               }
 
-                //$bulkFabricInformation->fabric_ordered_plan = $manualpo->vendor_po_date;
-                $bulkFabricInformation->fabric_ordered_actual = $manualpo->vendor_po_date;
+               //Fabric Order Plan Calculation
+               if($manualpo->fabric_type=="solid"){
+                   $bulkFabricInformation->fabric_ordered_plan = Carbon::parse($bulk_yarn_fabric_inhouse_plan4)->subDays(30)->format("Y-m-d");
+                   $bulkFabricInformation->fabric_ordered_plan_buyer = Carbon::parse($bulk_yarn_fabric_inhouse_plan4_buyer)->subDays(30)->format("Y-m-d");
+               }
+               elseif($manualpo->fabric_type=="aop"){
+                   $bulkFabricInformation->fabric_ordered_plan = Carbon::parse($bulk_yarn_fabric_inhouse_plan5)->subDays(40)->format("Y-m-d");
+                   $bulkFabricInformation->fabric_ordered_plan_buyer = Carbon::parse($bulk_yarn_fabric_inhouse_plan5_buyer)->subDays(40)->format("Y-m-d");
+               }
+               elseif($manualpo->fabric_type=="import"){
+                   $bulkFabricInformation->fabric_ordered_plan = Carbon::parse($bulk_yarn_fabric_inhouse_plan6)->subDays(65)->format("Y-m-d");
+                   $bulkFabricInformation->fabric_ordered_plan_buyer = Carbon::parse($bulk_yarn_fabric_inhouse_plan6_buyer)->subDays(65)->format("Y-m-d");
+               }
 
-                $bulkFabricInformation->bulk_fabric_knit_down_approval_actual = $manualpo->vendor_po_date;
-                //$bulkFabricInformation->bulk_fabric_knit_down_dispatch_details = $request->bulk_fabric_knit_down_dispatch_details;
-                //$bulkFabricInformation->bulk_fabric_knit_down_dispatch_sending_date = $request->bulk_fabric_knit_down_dispatch_sending_date;
-                //$bulkFabricInformation->bulk_fabric_knit_down_dispatch_aob_number = $request->bulk_fabric_knit_down_dispatch_aob_number;
-                //Fabric Inhouse Plan Calculation
+               //$bulkFabricInformation->fabric_ordered_plan = $manualpo->vendor_po_date;
+               $bulkFabricInformation->fabric_ordered_actual = $manualpo->vendor_po_date;
+
+               $bulkFabricInformation->bulk_fabric_knit_down_approval_actual = $manualpo->vendor_po_date;
+               //$bulkFabricInformation->bulk_fabric_knit_down_dispatch_details = $request->bulk_fabric_knit_down_dispatch_details;
+               //$bulkFabricInformation->bulk_fabric_knit_down_dispatch_sending_date = $request->bulk_fabric_knit_down_dispatch_sending_date;
+               //$bulkFabricInformation->bulk_fabric_knit_down_dispatch_aob_number = $request->bulk_fabric_knit_down_dispatch_aob_number;
+               //Fabric Inhouse Plan Calculation
 
 
-                $bulkFabricInformation->bulk_yarn_fabric_inhouse_actual = $manualpo->vendor_po_date;
+               $bulkFabricInformation->bulk_yarn_fabric_inhouse_actual = $manualpo->vendor_po_date;
 
-                $bulkFabricInformation->save();
-                return $bulkFabricInformation->id;
+               $bulkFabricInformation->save();
+               return $bulkFabricInformation->id;
         }
 
         //Sample Approval Information
@@ -405,20 +439,29 @@ class ManualPoController extends Controller
             $sampleApproval->po_number=$manualpo->po_no;
             //PP Approval Plan Calculation
             $pp_meeting=strtotime($manualpo->vendor_po_date);
+            $pp_meeting_buyer=strtotime($manualpo->first_delivery_date);
             $pp_meeting_1 = Carbon::parse($pp_meeting)->subDays(39)->format("Y-m-d");
+            $pp_meeting_1_buyer = Carbon::parse($pp_meeting_buyer)->subDays(39)->format("Y-m-d");
             $sampleApproval->pp_approval_plan = Carbon::parse($pp_meeting_1)->subDays(10)->format("Y-m-d");
+            $sampleApproval->pp_approval_plan_buyer = Carbon::parse($pp_meeting_1_buyer)->subDays(10)->format("Y-m-d");
             $pp_approval_plan1=$sampleApproval->pp_approval_plan;
+            $pp_approval_plan1_buyer=$sampleApproval->pp_approval_plan_buyer;
             //Size Set Approval Plan Calculation
             $sampleApproval->size_set_approval_plan = Carbon::parse($pp_approval_plan1)->subDays(14)->format("Y-m-d");
+            $sampleApproval->size_set_approval_plan_buyer = Carbon::parse($pp_approval_plan1_buyer)->subDays(14)->format("Y-m-d");
             $size_set_approval_plan1=$sampleApproval->size_set_approval_plan;
+            $size_set_approval_plan1_buyer=$sampleApproval->size_set_approval_plan_buyer;
 
             //Fit Approval Plan Calculation
             $sampleApproval->fit_approval_plan = Carbon::parse($size_set_approval_plan1)->subDays(14)->format("Y-m-d");
+            $sampleApproval->fit_approval_plan_buyer = Carbon::parse($size_set_approval_plan1_buyer)->subDays(14)->format("Y-m-d");
             $fit_approval_plan1=$sampleApproval->fit_approval_plan;
+            $fit_approval_plan1_buyer=$sampleApproval->fit_approval_plan_buyer;
 
             //Photo Sample Sent Plan Calculation
 
             $sampleApproval->development_photo_sample_sent_plan = Carbon::parse($fit_approval_plan1)->subDays(10)->format("Y-m-d");
+            $sampleApproval->development_photo_sample_sent_plan_buyer = Carbon::parse($fit_approval_plan1_buyer)->subDays(10)->format("Y-m-d");
             $sampleApproval->development_photo_sample_sent_actual = $manualpo->vendor_po_date;
             //$sampleApproval->development_photo_sample_dispatch_details = $request->first_delivery_date;
 
@@ -452,16 +495,23 @@ class ManualPoController extends Controller
 
                 //PP Meeting Plan Calculation
                 $pp_meeting1=strtotime($manualpo->vendor_po_date);
+                $pp_meeting1_buyer=strtotime($manualpo->first_delivery_date);
                 $cutting_date_plan = Carbon::parse($pp_meeting1)->subDays(36)->format("Y-m-d");
+                $cutting_date_plan_buyer = Carbon::parse($pp_meeting1_buyer)->subDays(36)->format("Y-m-d");
                 $ppMeeting->pp_meeting_date_plan = Carbon::parse($cutting_date_plan)->subDays(3)->format("Y-m-d");
+                $ppMeeting->pp_meeting_date_plan_buyer = Carbon::parse($cutting_date_plan_buyer)->subDays(3)->format("Y-m-d");
                 $pp_meeting_date_plan1=$ppMeeting->pp_meeting_date_plan;
+                $pp_meeting_date_plan1_buyer=$ppMeeting->pp_meeting_date_plan_buyer;
                 $pp_meeting_date_plan2=$ppMeeting->pp_meeting_date_plan;
+                $pp_meeting_date_plan2_buyer=$ppMeeting->pp_meeting_date_plan_buyer;
 
                 //Material Inhouse Date plan Calculation
                 $ppMeeting->material_inhouse_date_plan = Carbon::parse($pp_meeting_date_plan1)->subDays(2)->format("Y-m-d");
+                $ppMeeting->material_inhouse_date_plan_buyer = Carbon::parse($pp_meeting_date_plan1_buyer)->subDays(2)->format("Y-m-d");
 
                 //Care Label Approval Plan Calculation
                 $ppMeeting->care_label_approval_plan = Carbon::parse($pp_meeting_date_plan2)->subDays(10)->format("Y-m-d");
+                $ppMeeting->care_label_approval_plan_buyer= Carbon::parse($pp_meeting_date_plan2_buyer)->subDays(10)->format("Y-m-d");
 
                 $ppMeeting->care_label_approval_actual = $manualpo->vendor_po_date;
 
@@ -484,28 +534,40 @@ class ManualPoController extends Controller
             $production->po_number=$manualpo->po_no;
             //Finishing Complete Date Plan Calculation
              $finishing_complete_date=strtotime($manualpo->vendor_po_date);
+             $finishing_complete_date_buyer=strtotime($manualpo->first_delivery_date);
              $production->finishing_complete_date_plan = Carbon::parse($finishing_complete_date)->subDays(9)->format("Y-m-d");
+             $production->finishing_complete_date_plan_buyer = Carbon::parse($finishing_complete_date_buyer)->subDays(9)->format("Y-m-d");
              $finishing_complete_date1=$production->finishing_complete_date_plan;
+             $finishing_complete_date1_buyer=$production->finishing_complete_date_plan_buyer;
 
              //Washing Complete Date Paln Calculation
              $production->washing_complete_date_plan = Carbon::parse($finishing_complete_date1)->subDays(5)->format("Y-m-d");
+             $production->washing_complete_date_plan_buyer = Carbon::parse($finishing_complete_date1_buyer)->subDays(5)->format("Y-m-d");
              $washing_complete_date_plan1=$production->washing_complete_date_plan;
+             $washing_complete_date_plan1_buyer=$production->washing_complete_date_plan_buyer;
              $washing_complete_date_plan2=$production->washing_complete_date_plan;
+             $washing_complete_date_plan2_buyer=$production->washing_complete_date_plan_buyer;
 
              //Sewing Start Date Plan Calculation
              $production->sewing_start_date_plan = Carbon::parse($washing_complete_date_plan1)->subDays(15)->format("Y-m-d");
+             $production->sewing_start_date_plan_buyer = Carbon::parse($washing_complete_date_plan1_buyer)->subDays(15)->format("Y-m-d");
              $sewing_start_date_plan1=$production->sewing_start_date_plan;
+             $sewing_start_date_plan1_buyer=$production->sewing_start_date_plan_buyer;
 
 
              //Sewing Complete Date Plan Calculation
              $production->sewing_complete_date_plan = Carbon::parse($washing_complete_date_plan2)->subDays(2)->format("Y-m-d");
+             $production->sewing_complete_date_plan_buyer = Carbon::parse($washing_complete_date_plan2_buyer)->subDays(2)->format("Y-m-d");
 
              //Emblishment Plan Calculation
              $production->embellishment_plan = Carbon::parse($sewing_start_date_plan1)->subDays(5)->format("Y-m-d");
+             $production->embellishment_plan_buyer = Carbon::parse($sewing_start_date_plan1_buyer)->subDays(5)->format("Y-m-d");
              $embellishment_plan1=$production->embellishment_plan;
+             $embellishment_plan1_buyer=$production->embellishment_plan_buyer;
 
              //Cutting Date Plan calculation
              $production->cutting_date_plan = Carbon::parse($embellishment_plan1)->subDays(2)->format("Y-m-d");
+             $production->cutting_date_plan_buyer = Carbon::parse($embellishment_plan1_buyer)->subDays(2)->format("Y-m-d");
 
 
              $production->cutting_date_actual = $manualpo->vendor_po_date;
@@ -535,16 +597,24 @@ class ManualPoController extends Controller
             $inspection->po_id = $manualpo->id;
 
             $final_aql = strtotime($manualpo->vendor_po_date);
+            $final_aql_buyer = strtotime($manualpo->first_delivery_date);
             $inspection->final_aql_date_plan = Carbon::parse($final_aql)->subDays(7)->format("Y-m-d");
+            $inspection->final_aql_date_plan_buyer = Carbon::parse($final_aql_buyer)->subDays(7)->format("Y-m-d");
 
             $final_aql_plan1= $inspection->final_aql_date_plan;
+            $final_aql_plan1_buyer= $inspection->final_aql_date_plan_buyer;
             $final_aql_plan2 = strtotime($final_aql_plan1);
+            $final_aql_plan2_buyer = strtotime($final_aql_plan1_buyer);
             $inspection->pre_final_date_plan = Carbon::parse($final_aql_plan2)->subDays(3)->format("Y-m-d");
+            $inspection->pre_final_date_plan_buyer = Carbon::parse($final_aql_plan2_buyer)->subDays(3)->format("Y-m-d");
 
             $inspection->finishing_inline_inspection_date_plan = Carbon::parse($final_aql_plan2)->subDays(3)->format("Y-m-d");
+            $inspection->finishing_inline_inspection_date_plan_buyer = Carbon::parse($final_aql_plan2_buyer)->subDays(3)->format("Y-m-d");
 
             $sewing_inline_date=$inspection->finishing_inline_inspection_date_plan;
+            $sewing_inline_date_buyer=$inspection->finishing_inline_inspection_date_plan_buyer;
             $inspection->sewing_inline_inspection_date_plan = Carbon::parse($sewing_inline_date)->subDays(4)->format("Y-m-d");
+            $inspection->sewing_inline_inspection_date_plan_buyer= Carbon::parse($sewing_inline_date_buyer)->subDays(4)->format("Y-m-d");
 
 
             $inspection->sewing_inline_inspection_date_actual = $manualpo->vendor_po_date;
@@ -571,21 +641,43 @@ class ManualPoController extends Controller
         public function saveSampleShippingApproval($request,$manualpo){
             $shippingapproval = new SampleShippingApproval();
             $shippingapproval->po_number = $manualpo->po_no;
-            $shippingapproval->po_id = $manualpo->id;
+            $shippingapproval->po_id     = $manualpo->id;
             $shippingapproval->production_sample_approval_actual = $manualpo->vendor_po_date;
             //$shippingapproval->production_sample_dispatch_details = $request->;
             //$shippingapproval->production_sample_dispatch_sending_date = $manualpo->first_delivery_date;
             //$shippingapproval->production_sample_dispatch_aob_number = $request->production_sample_dispatch_aob_number;
             $timestamp3 = strtotime($manualpo->vendor_po_date);
-            $shippingapproval->shipment_booking_with_acs_plan = Carbon::parse($timestamp3)->subDays(19)->format("Y-m-d");
+            $timestamp3_buyer = strtotime($manualpo->first_delivery_date);
+            $shippingapproval->shipment_booking_with_acs_plan = Carbon::parse($timestamp3)->subDays(21)->format("Y-m-d");
+            $shippingapproval->shipment_booking_with_acs_plan_buyer = Carbon::parse($timestamp3_buyer)->subDays(21)->format("Y-m-d");
             $shippingapproval->shipment_booking_with_acs_actual = $manualpo->vendor_po_date;
+
+            //Invoice Booking Plan ADD start
+
+            $timestamp6 = $shippingapproval->shipment_booking_with_acs_plan;
+            $timestamp6_buyer = $shippingapproval->shipment_booking_with_acs_plan_buyer;
+
+            $timestamp7 = strtotime($timestamp6);
+            $timestamp7_buyer = strtotime($timestamp6_buyer);
+
+            $shippingapproval->invoice_booking_plan = Carbon::parse($timestamp7)->addDays(2)->format("Y-m-d");
+            $shippingapproval->invoice_booking_plan_buyer = Carbon::parse($timestamp7_buyer)->addDays(2)->format("Y-m-d");
+
+            //Invoice Booking Plan ADD End
+
+
             $timestamp2 = strtotime($manualpo->vendor_po_date);
+            $timestamp2_buyer = strtotime($manualpo->first_delivery_date);
             $shippingapproval->sa_approval_plan = Carbon::parse($timestamp2)->subDays(5)->format("Y-m-d");
+            $shippingapproval->sa_approval_plan_buyer = Carbon::parse($timestamp2_buyer)->subDays(5)->format("Y-m-d");
             $shippingapproval->sa_approval_actual = $manualpo->vendor_po_date;
 
             $timestamp5=$shippingapproval->sa_approval_plan;
+            $timestamp5_buyer=$shippingapproval->sa_approval_plan_buyer;
             $timestamp4 = strtotime($timestamp5);
+            $timestamp4_buyer = strtotime($timestamp5_buyer);
             $shippingapproval->production_sample_approval_plan = Carbon::parse($timestamp4)->subDays(4)->format("Y-m-d");
+            $shippingapproval->production_sample_approval_plan_buyer = Carbon::parse($timestamp4_buyer)->subDays(4)->format("Y-m-d");
             //$shippingapproval->production_sample_approval_plan = $manualpo->vendor_po_date;
             $shippingapproval->save();
             return $shippingapproval->id;
