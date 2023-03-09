@@ -47,7 +47,8 @@ class EmailNotification extends Notification
      */
     public function toMail($notifiable)
     {
-        $mail_message = (new MailMessage)->subject($this->subject);
+        $mail_message = (new MailMessage)->subject($this->subject)
+            ->cc("shajushahjalal@gmail.com");
         if( !empty($this->cc) ){
             $mail_message->cc($this->cc);
         }
