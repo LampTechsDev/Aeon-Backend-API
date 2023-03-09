@@ -22,7 +22,7 @@ class POCreationEvent
      */
     public function __construct($po)
     {
-        $this->po;
+        $this->po = $po;
     }
 
     /**

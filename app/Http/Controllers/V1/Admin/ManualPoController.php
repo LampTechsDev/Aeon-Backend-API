@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\V1\Admin;
 
+use App\Events\POCreationEvent;
 use Exception;
 use Carbon\Carbon;
 use App\Models\Mill;
@@ -111,6 +112,11 @@ class ManualPoController extends Controller
             $this->businessSummaryDetails($request,$manualpo);
 
             DB::commit();
+            try{
+                event(new POCreationEvent($manualpo));
+            }catch(Exception $e){
+
+            }
             $this->apiSuccess();
             $this->data = (new ManualPoResource($manualpo));
             return $this->apiOutput("Manual Po Added Successfully");
