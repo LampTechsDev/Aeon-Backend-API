@@ -46,21 +46,7 @@ class EmailController extends Controller
         "manufacturer_email_verification"                   => "Sub Vendor Email Verification",
         "buyer_email_verification"                          => "Buyer Email Verification",
         "aeon_email_verification"                           => "Aeon Email Verification",
-        
-        "therapist_registration_confirmation"   => "Therapist Registration Confirmation",
-        "appointment_confirmation"              => "Appointment Confirmation",
-        "appointment_cancellation"              => "Appointment Cancellation",
-        "appointment_reschedule"                => "Appointment Reschedule",
-        "admin_registration_confirmation"       => "Admin Registration Confirmation",
-        "therapist_password_change"             => "Therapist Password Change",
-        "patient_password_change"               => "Patient Password Change",
-        "admin_password_change"                 => "Admin Password Change",
-        "admin_email_verification"              => "Admin Email Verification",
-        "patient_verification"                  => "Patient Email Verification",
-        "therapist_email_verification"          => "Therapist Email Verification",
-        "ticket_create"                         => "Create Or Issue New Ticket",
-        "ticket_update"                         => "Update New Ticket",
-        "password_reset"                        => "Password Reset",
+        "password_reset"                                    => "Password Reset",
     ];
     /**
      * Email Template List

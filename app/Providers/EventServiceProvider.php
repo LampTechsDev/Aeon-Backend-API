@@ -2,6 +2,11 @@
 
 namespace App\Providers;
 
+use App\Events\POCreationEvent;
+use App\Listeners\BuyerPOCreationEmailSend;
+use App\Listeners\ManufacturerPOCreationEmailSend;
+use App\Listeners\POCreationEmailSend;
+use App\Listeners\VendorPOCreationEmailSend;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -17,6 +22,13 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         Registered::class => [
             SendEmailVerificationNotification::class,
+        ],
+
+        POCreationEvent::class => [
+            POCreationEmailSend::class,
+            VendorPOCreationEmailSend::class,
+            ManufacturerPOCreationEmailSend::class,
+            BuyerPOCreationEmailSend::class,
         ],
     ];
 

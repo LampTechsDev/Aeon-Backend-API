@@ -12,7 +12,7 @@ class EmailNotification extends Notification
 {
     use Queueable;
 
-    public $subject, $message, $cc, $page, $atachment;
+    public $subject, $message, $cc, $page, $atachment_file;
 
     /**
      * Create a new notification instance.
