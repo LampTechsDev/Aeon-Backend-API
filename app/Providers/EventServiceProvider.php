@@ -2,9 +2,11 @@
 
 namespace App\Providers;
 
+use App\Events\PasswordReset;
 use App\Events\POCreationEvent;
 use App\Listeners\BuyerPOCreationEmailSend;
 use App\Listeners\ManufacturerPOCreationEmailSend;
+use App\Listeners\PasswordResetEmailSend;
 use App\Listeners\POCreationEmailSend;
 use App\Listeners\VendorPOCreationEmailSend;
 use Illuminate\Auth\Events\Registered;
@@ -29,6 +31,10 @@ class EventServiceProvider extends ServiceProvider
             VendorPOCreationEmailSend::class,
             ManufacturerPOCreationEmailSend::class,
             BuyerPOCreationEmailSend::class,
+        ],
+
+        PasswordReset::class => [
+            PasswordResetEmailSend::class
         ],
     ];
 
