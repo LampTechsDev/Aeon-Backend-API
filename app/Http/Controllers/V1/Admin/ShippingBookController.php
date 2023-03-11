@@ -38,17 +38,18 @@ class ShippingBookController extends Controller
 
             $shippingbook = new ShippingBook();
             $shippingbook->critical_path_id    = $request->critical_path_id;
+            $shippingbook->bank_details        = $request->bank_details;
             $shippingbook->booking_date        = $request->booking_date;
-            $shippingbook ->cargo_delivery_date=$request->cargo_delivery_date;
-            $shippingbook ->so_number          =$request->so_number;
-            $shippingbook ->bank_id            =$request->bank_id;
-            $shippingbook ->cf_agent_details   =$request->cf_agent_details;
-            $shippingbook ->lc_no              =$request->lc_no;
-            $shippingbook ->invoice_no         =$request->invoice_no;
-            $shippingbook ->exp_no             =$request->exp_no;
-            $shippingbook ->description_goods  =$request->description_goods;
-            $shippingbook ->status             =$request->status;
-            $shippingbook ->freight_id         =$request->freight_id;
+            $shippingbook ->cargo_delivery_date= $request->cargo_delivery_date;
+            $shippingbook ->so_number          = $request->so_number;
+            $shippingbook ->cf_agent_details   = $request->cf_agent_details;
+            $shippingbook ->lc_no              = $request->lc_no;
+            $shippingbook ->invoice_no         = $request->invoice_no;
+            $shippingbook ->exp_no             = $request->exp_no;
+            $shippingbook ->description_goods  = $request->description_goods;
+            $shippingbook ->destination_country= $request->destination_country;
+            $shippingbook ->freight_type       = $request->freight_type;
+            $shippingbook ->status             = $request->status;
             $shippingbook->save();
             $this->apiSuccess();
             $this->data = (new ShippingBookingResource($shippingbook));
