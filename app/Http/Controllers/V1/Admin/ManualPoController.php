@@ -33,6 +33,8 @@ use App\Models\LabDipsEmbellishmentInformation;
 use App\Models\InspectionManagementOrderDetails;
 use App\Http\Resources\FreightManagementResource;
 use App\Models\Invoice;
+use App\Models\ShippingBook;
+
 
 class ManualPoController extends Controller
 {
@@ -108,8 +110,8 @@ class ManualPoController extends Controller
             $this->saveExtraFileInfo($request, $manualpo);
             $this->deliveryDetails($request,$manualpo);
             $this->saveCriticalPath($request,$manualpo);
-
             $this->businessSummaryDetails($request,$manualpo);
+            // $this->shippingBookingDetalis($request,$manualpo);
 
             DB::commit();
             try{
@@ -154,6 +156,14 @@ class ManualPoController extends Controller
         $data->po_id = $manualpo->id;
         $data->save();
     }
+
+    // Save Shipping Booking Info
+    // public function shippingBookingDetalis($request, $manualpo){
+
+    //     $data = new ShippingBook();
+    //     $data->po_id = $manualpo->id;
+    //     $data->save();
+    // }
 
 
     // Save Extra File Info
@@ -308,6 +318,7 @@ class ManualPoController extends Controller
             $this->saveFreightManagementInfo($request, $criticalPath);
             $this->saveInspectionOrderDetailsInfo($request, $criticalPath);
             $this->saveInvoiceInfo($request, $criticalPath);
+            $this->saveShippingBookingInfo($request, $criticalPath);
 
     }
 
@@ -743,6 +754,14 @@ class ManualPoController extends Controller
         }
         public function saveInvoiceInfo($request,$criticalPath){
             $invoice = new Invoice();
+            $invoice->critical_path_id = $criticalPath->id;
+            $invoice->save();
+
+        }
+        //Save Shipping Booking Critical Path
+
+        public function saveShippingBookingInfo($request,$criticalPath){
+            $invoice = new ShippingBook();
             $invoice->critical_path_id = $criticalPath->id;
             $invoice->save();
 

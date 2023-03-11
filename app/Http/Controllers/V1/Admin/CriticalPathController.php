@@ -116,7 +116,7 @@ class CriticalPathController extends Controller
             $criticalPath->fabric_mill_id    = $request->fabric_mill_id;
             $criticalPath->save();
             $this->saveLabDipsEmbellishmentInfo($request);
-            $this-> savebulkFabricInformationInfo($request);
+            $this->savebulkFabricInformationInfo($request);
             $this->saveSampleApprovalInformation($request);
             $this->savePpMeetingInformation($request);
             $this->saveProductionInformation($request);

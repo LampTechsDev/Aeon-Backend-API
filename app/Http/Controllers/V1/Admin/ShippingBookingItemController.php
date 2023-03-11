@@ -15,7 +15,7 @@ class ShippingBookingItemController extends Controller
     public function index()
     {
        try{
-        
+
             $this->data = ShippingBookingItemResource::collection(ShippingBookingItem::all());
             $this->apiSuccess("Shipping Booking Loaded Successfully");
             return $this->apiOutput();
@@ -32,19 +32,19 @@ class ShippingBookingItemController extends Controller
                 // 'name'          => ["required", "min:4"],
                 // 'description'   => ["nullable", "min:4"],
             ]);
-                
-            if ($validator->fails()) {    
+
+            if ($validator->fails()) {
                 $this->apiOutput($this->getValidationError($validator), 400);
             }
-   
+
             $shippingbookItem = new ShippingBookingItem();
-            $shippingbookItem->shipping_booking_id  = $request->shipping_booking_id;
-            $shippingbookItem->line_code = $request->line_code;
-            $shippingbookItem ->no_of_packages=$request->no_of_packages;
-            $shippingbookItem ->no_of_pieces=$request->no_of_pieces;
-            $shippingbookItem ->gross_wt=$request->gross_wt;
-            $shippingbookItem ->authorized=$request->authorized;
-            $shippingbookItem ->status=$request->status;
+            $shippingbookItem->shipping_booking_id  =   $request->shipping_booking_id;
+            $shippingbookItem->line_code            =   $request->line_code;
+            $shippingbookItem ->no_of_packages      =   $request->no_of_packages;
+            $shippingbookItem ->no_of_pieces        =   $request->no_of_pieces;
+            $shippingbookItem ->gross_wt            =   $request->gross_wt;
+            $shippingbookItem ->authorized          =   $request->authorized;
+            $shippingbookItem ->status              =   $request->status;
             $shippingbookItem->save();
             $this->apiSuccess();
             $this->data = (new ShippingBookingItemResource($shippingbookItem));

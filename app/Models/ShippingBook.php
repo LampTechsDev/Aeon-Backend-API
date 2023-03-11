@@ -24,6 +24,9 @@ class ShippingBook extends Model
     public function shippingBookingItem(){
         return $this->hasMany(ShippingBookingItem::class,"shipping_booking_id");
     }
+    public function manualPo(){
+        return $this->belongsTo(ManualPo::class, 'po_id');
+    }
 
-    
+
 }

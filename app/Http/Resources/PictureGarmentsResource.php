@@ -9,7 +9,7 @@ class PictureGarmentsResource extends JsonResource
     protected $withoutFields = [];
 
     /**
-     * Set Hidden Item 
+     * Set Hidden Item
      */
     public function hide(array $hide = []){
         $this->withoutFields = $hide;
@@ -33,13 +33,13 @@ class PictureGarmentsResource extends JsonResource
     {
         return $this->filter([
 
-            "id" => $this->id,
-            "po_id" => $this->po_id,
+            "id"         => $this->id,
+            "po_id"      => $this->po_id,
             "file_name"  => $this->file_name,
             "file_type"  => $this->type,
             "file_url"   => asset($this->file_url),
-            "created_by"                => $this->created_by  ? (new AdminResource($this->createdBy)) : null,
-            "updated_by"                => $this->updated_by  ? (new AdminResource($this->updatedBy)) : null,
+            "created_by" => $this->created_by  ? (new AdminResource($this->createdBy)) : null,
+            "updated_by" => $this->updated_by  ? (new AdminResource($this->updatedBy)) : null,
 
         ]);
     }
