@@ -2,17 +2,19 @@
 
 namespace App\Http\Controllers\V1\Admin;
 
-use App\Events\POCreationEvent;
 use Exception;
 use Carbon\Carbon;
 use App\Models\Mill;
+use App\Models\Invoice;
 use App\Models\Payment;
 use App\Models\ManualPo;
 use App\Models\ExFactory;
 use App\Models\PoArtwork;
 use App\Models\PpMeeting;
 use App\Models\CriticalPath;
+use App\Models\ShippingBook;
 use Illuminate\Http\Request;
+use App\Events\POCreationEvent;
 use App\Models\BusinessSummary;
 use App\Models\FreightManagement;
 use App\Models\PoPictureGarments;
@@ -32,7 +34,6 @@ use App\Http\Resources\CriticalPathResource;
 use App\Models\LabDipsEmbellishmentInformation;
 use App\Models\InspectionManagementOrderDetails;
 use App\Http\Resources\FreightManagementResource;
-use App\Models\Invoice;
 
 class ManualPoController extends Controller
 {
@@ -154,6 +155,7 @@ class ManualPoController extends Controller
         $data->po_id = $manualpo->id;
         $data->save();
     }
+
 
 
     // Save Extra File Info
@@ -308,6 +310,7 @@ class ManualPoController extends Controller
             $this->saveFreightManagementInfo($request, $criticalPath);
             $this->saveInspectionOrderDetailsInfo($request, $criticalPath);
             $this->saveInvoiceInfo($request, $criticalPath);
+            $this->saveShippingBookingInfo($request, $criticalPath);
 
     }
 
@@ -743,6 +746,15 @@ class ManualPoController extends Controller
         }
         public function saveInvoiceInfo($request,$criticalPath){
             $invoice = new Invoice();
+            $invoice->critical_path_id = $criticalPath->id;
+            $invoice->save();
+
+        }
+
+        //Save Shipping Booking Critical Path
+
+        public function saveShippingBookingInfo($request,$criticalPath){
+            $invoice = new ShippingBook();
             $invoice->critical_path_id = $criticalPath->id;
             $invoice->save();
 
