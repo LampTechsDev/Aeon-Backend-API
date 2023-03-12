@@ -10,7 +10,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class POCreationEvent
+class ScheduleCreated
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -22,7 +22,7 @@ class POCreationEvent
      */
     public function __construct($model)
     {
-        $this->model = $model;
+        $this->model    = $model;
     }
 
     /**

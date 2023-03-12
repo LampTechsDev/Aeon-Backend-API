@@ -29,13 +29,13 @@ class VendorPOCreationEmailSend
      */
     public function handle(POCreationEvent $event)
     {
-        $po = $event->po;
-        $user = $po->vendor;
+        $model = $event->model;
+        $user = $model->vendor;
         $email_template = "";
         $email_template =  EmailTemplate::where("email_type", "vendor_po_create_mail")->orderBy("id", "DESC")->first();
 
         if( isset($email_template->template) && $email_template->mail_send ){
-            $message = TemplateMessage::model($po)->parse($email_template->template);
+            $message = TemplateMessage::model($model)->parse($email_template->template);
             SendMail::dispatch($user, $email_template->subject, $message, $email_template->cc)->delay(1);
         }
     }

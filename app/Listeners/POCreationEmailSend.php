@@ -30,13 +30,13 @@ class POCreationEmailSend
      */
     public function handle(POCreationEvent $event)
     {
-        $po = $event->po;
+        $model = $event->model;
         $admins = Admin::where("email_receive_status", true)->get();
         $email_template = "";
         $email_template =  EmailTemplate::where("email_type", "therapist_registration_confirmation")->orderBy("id", "DESC")->first();
 
         if( isset($email_template->template) && $email_template->mail_send ){
-            $message = TemplateMessage::model($po)->parse($email_template->template);
+            $message = TemplateMessage::model($model)->parse($email_template->template);
             foreach($admins as $user){
                 SendMail::dispatch($user, $email_template->subject, $message, $email_template->cc)->delay(1);
             }
