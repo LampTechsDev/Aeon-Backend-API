@@ -116,12 +116,24 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
     /**
      * Email Template
      */
+    // Route::prefix('email-template')->group(function(){
+    //     Route::get('/list',     [EmailController::class, 'index']);
+    //     Route::post('/create',  [EmailController::class, 'store']);
+    //     Route::post('/update',  [EmailController::class, 'update']);
+    //     Route::get('view',      [EmailController::class, 'view']);
+    //     Route::get('/delete',   [EmailController::class, 'delete']);
+    // });
+
+    /**
+     * Email Template
+     */
     Route::prefix('email-template')->group(function(){
-        Route::get('/list',     [EmailController::class, 'index']);
-        Route::post('/create',  [EmailController::class, 'store']);
-        Route::post('/update',  [EmailController::class, 'update']);
-        Route::get('view',      [EmailController::class, 'view']);
-        Route::get('/delete',   [EmailController::class, 'delete']);
+        Route::get('/list',         [EmailController::class, 'index']);
+        Route::get('/temp_list',    [EmailController::class, 'create']);
+        Route::post('/create',      [EmailController::class, 'store']);
+        Route::post('/update',      [EmailController::class, 'update']);
+        Route::get('view',          [EmailController::class, 'view']);
+        Route::get('/delete',       [EmailController::class, 'delete']);
     });
 
 
