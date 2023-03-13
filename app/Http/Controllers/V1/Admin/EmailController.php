@@ -153,13 +153,14 @@ class EmailController extends Controller
     public function view(Request $request){
         try{
             $validator = Validator::make($request->all(), [
-                "id"            => ["required", "exists:email_templates,id"],
+                // "id"            => ["required", "exists:email_templates,id"],
             ]);
             if($validator->fails()){
                 return $this->apiOutput($this->getValidationError($validator));
             }
 
-            $template = EmailTemplate::withTrashed()->find($request->id);
+            // $template = EmailTemplate::withTrashed()->find($request->id);
+            $template = EmailTemplate::find($request->id);
             //$template = EmailTemplate::find($request->id);
             $template_type_use = EmailTemplate::select("email_type")
                 ->where("email_type", "!=", $template->email_type)->pluck("email_type")->toArray();
