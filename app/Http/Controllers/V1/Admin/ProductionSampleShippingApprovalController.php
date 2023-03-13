@@ -51,6 +51,7 @@ class ProductionSampleShippingApprovalController extends Controller
             $shippingapproval->production_sample_approval_plan = $request->production_sample_approval_plan;
             $shippingapproval->production_sample_approval_plan_buyer = $request->production_sample_approval_plan_buyer;
             $shippingapproval->production_sample_approval_actual = $request->production_sample_approval_actual;
+            $shippingapproval->production_sample_review_schedule = $request->production_sample_review_schedule;
             $shippingapproval->production_sample_dispatch_details = $request->production_sample_dispatch_details;
             $shippingapproval->production_sample_dispatch_sending_date = $request->production_sample_dispatch_sending_date;
             $shippingapproval->production_sample_dispatch_aob_number = $request->production_sample_dispatch_aob_number;
@@ -117,6 +118,7 @@ class ProductionSampleShippingApprovalController extends Controller
             $shippingapproval->production_sample_approval_plan = $request->production_sample_approval_plan;
             $shippingapproval->production_sample_approval_plan_buyer = $request->production_sample_approval_plan_buyer;
             $shippingapproval->production_sample_approval_actual = $request->production_sample_approval_actual;
+            $shippingapproval->production_sample_review_schedule = $request->production_sample_review_schedule;
             $shippingapproval->production_sample_dispatch_details = $request->production_sample_dispatch_details;
             $shippingapproval->production_sample_dispatch_sending_date = $request->production_sample_dispatch_sending_date;
             $shippingapproval->production_sample_dispatch_aob_number = $request->production_sample_dispatch_aob_number;

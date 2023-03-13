@@ -24,6 +24,7 @@ class CreateInspectionInformationTable extends Migration
             $table->date("finishing_inline_inspection_date_plan");
             $table->date("finishing_inline_inspection_date_plan_buyer");
             $table->date("finishing_inline_inspection_date_actual");
+            $table->string("finishing_inline_inspection_schedule");
             $table->date("pre_final_date_plan");
             $table->date("pre_final_date_plan_buyer");
             $table->date("pre_final_date_actual");
@@ -31,6 +32,7 @@ class CreateInspectionInformationTable extends Migration
             $table->date("final_aql_date_plan");
             $table->date("final_aql_date_plan_buyer");
             $table->date("final_aql_date_actual");
+            $table->date("final_aql_meeting_schedule");
             $table->string("final_aql_schedule");
             $table->timestamps();
         });

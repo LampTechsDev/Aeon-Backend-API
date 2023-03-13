@@ -268,7 +268,13 @@ class CriticalPathController extends Controller
 
             $sampleApproval->development_photo_sample_sent_plan = $request->development_photo_sample_sent_plan;
             $sampleApproval->development_photo_sample_sent_actual = $request->development_photo_sample_sent_actual;
-            $sampleApproval->development_photo_sample_dispatch_details = $request->development_photo_sample_dispatch_details;
+            $sampleApproval->development_photo_sample_dispatch_details  = $request->development_photo_sample_dispatch_details;
+            $sampleApproval->development_photo_sample_dispatch_sending_date     = $request->development_photo_sample_dispatch_sending_date;
+            $sampleApproval->development_photo_sample_dispatch_awb_number       = $request->development_photo_sample_dispatch_awb_number;
+            $sampleApproval->development_photo_sample_dispatch_review_meeting   = $request->development_photo_sample_dispatch_review_meeting;
+            $sampleApproval->fit_sample_review_meeting                          = $request->fit_sample_review_meeting;
+            $sampleApproval->size_set_sample_review_meeting                     = $request->size_set_sample_review_meeting;
+            $sampleApproval->pp_sample_review_meeting                           = $request->pp_sample_review_meeting;
             $sampleApproval->fit_approval_plan = $request->fit_approval_plan;
             $sampleApproval->fit_approval_actual = $request->fit_approval_actual;
             $sampleApproval->fit_sample_dispatch_details = $request->fit_sample_dispatch_details;
@@ -342,12 +348,14 @@ class CriticalPathController extends Controller
                     $inspection->sewing_inline_inspection_date_actual = $request->sewing_inline_inspection_date_actual;
                     $inspection->inline_inspection_schedule = $request->inline_inspection_schedule;
                     $inspection->finishing_inline_inspection_date_plan = $request->finishing_inline_inspection_date_plan;
-                    $inspection->finishing_inline_inspection_date_actual = $request->finishing_inline_inspection_date_actual;
+                    $inspection->finishing_inline_inspection_date_actual= $request->finishing_inline_inspection_date_actual;
+                    $inspection->finishing_inline_inspection_schedule    = $request->finishing_inline_inspection_schedule;
                     $inspection->pre_final_date_plan = $request->pre_final_date_plan;
                     $inspection->pre_final_date_actual = $request->pre_final_date_actual;
                     $inspection->pre_final_aql_schedule = $request->pre_final_aql_schedule;
                     $inspection->final_aql_date_plan = $request->final_aql_date_plan;
                     $inspection->final_aql_date_actual = $request->final_aql_date_actual;
+                    $inspection->final_aql_meeting_schedule = $request->final_aql_meeting_schedule;
                     $inspection->final_aql_schedule=$request->final_aql_schedule;
                     $inspection->save();
 
@@ -361,7 +369,8 @@ class CriticalPathController extends Controller
                     // $shippingapproval->po_number = $manualpo->po_no;
                     // $shippingapproval->po_id = $manualpo->id;
                     $shippingapproval->production_sample_approval_plan = $request->production_sample_approval_plan;
-                    $shippingapproval->production_sample_approval_actual = $request->roduction_sample_approval_actual;
+                    $shippingapproval->production_sample_approval_actual = $request->production_sample_approval_actual;
+                    $shippingapproval->production_sample_review_schedule = $request->production_sample_review_schedule;
                     //$shippingapproval->production_sample_dispatch_details = $request->;
                     $shippingapproval->production_sample_dispatch_sending_date = $request->production_sample_dispatch_sending_date;
                     $shippingapproval->production_sample_dispatch_aob_number = $request->production_sample_dispatch_aob_number;

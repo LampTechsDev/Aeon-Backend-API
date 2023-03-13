@@ -55,6 +55,12 @@ class SampleApprovalInformationController extends Controller
             $sampleApproval->development_photo_sample_sent_plan_buyer = $request->development_photo_sample_sent_plan_buyer;
             $sampleApproval->development_photo_sample_sent_actual = $request->development_photo_sample_sent_actual;
             $sampleApproval->development_photo_sample_dispatch_details = $request->development_photo_sample_dispatch_details;
+            $sampleApproval->development_photo_sample_dispatch_sending_date = $request->development_photo_sample_dispatch_sending_date;
+            $sampleApproval->development_photo_sample_dispatch_awb_number = $request->development_photo_sample_dispatch_awb_number;
+            $sampleApproval->development_photo_sample_dispatch_review_meeting = $request->development_photo_sample_dispatch_review_meeting;
+            $sampleApproval->fit_sample_review_meeting = $request->fit_sample_review_meeting;
+            $sampleApproval->size_set_sample_review_meeting = $request->size_set_sample_review_meeting;
+            $sampleApproval->pp_sample_review_meeting = $request->pp_sample_review_meeting;
             $sampleApproval->fit_approval_plan = $request->fit_approval_plan;
             $sampleApproval->fit_approval_plan_buyer = $request->fit_approval_plan_buyer;
             $sampleApproval->fit_approval_actual = $request->fit_approval_actual;
