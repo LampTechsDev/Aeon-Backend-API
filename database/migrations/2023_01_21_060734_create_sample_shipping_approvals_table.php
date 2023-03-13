@@ -20,6 +20,7 @@ class CreateSampleShippingApprovalsTable extends Migration
             $table->date("production_sample_approval_plan");
             $table->date("production_sample_approval_plan_buyer");
             $table->date("production_sample_approval_actual");
+            $table->date("production_sample_review_schedule")->nullable();
             $table->text("production_sample_dispatch_details")->nullable();
             $table->date("production_sample_dispatch_sending_date")->nullable();
             $table->string("production_sample_dispatch_aob_number")->nullable();

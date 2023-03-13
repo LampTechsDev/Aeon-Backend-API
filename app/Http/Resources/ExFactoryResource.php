@@ -37,6 +37,7 @@ class ExFactoryResource extends JsonResource
             "po_id"                     => $this->po_id ?? "",
             "ex_factory_date_po"        => $this->ex_factory_date_po ?? "",
             "revised_ex_factory_date"   => $this->revised_ex_factory_date ?? "",
+            "actual_ex_factory_date"    => $this->actual_ex_factory_date ?? "",
             "shipped_units"             => $this->shipped_units ?? "",
             "original_eta_sa_date"      => $this->original_eta_sa_date ?? "",
             "revised_eta_sa_date"       => $this->revised_eta_sa_date ?? "",

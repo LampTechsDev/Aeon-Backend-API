@@ -59,6 +59,7 @@ class InspectionInformationController extends Controller
             $inspection->finishing_inline_inspection_date_plan = $request->finishing_inline_inspection_date_plan;
             $inspection->finishing_inline_inspection_date_plan_buyer = $request->finishing_inline_inspection_date_plan_buyer;
             $inspection->finishing_inline_inspection_date_actual = $request->finishing_inline_inspection_date_actual;
+            $inspection->finishing_inline_inspection_schedule = $request->finishing_inline_inspection_schedule;
             $inspection->pre_final_date_plan = $request->pre_final_date_plan;
             $inspection->pre_final_date_plan_buyer = $request->pre_final_date_plan_buyer;
             $inspection->pre_final_date_actual = $request->pre_final_date_actual;
@@ -66,6 +67,7 @@ class InspectionInformationController extends Controller
             $inspection->final_aql_date_plan = $request->final_aql_date_plan;
             $inspection->final_aql_date_plan_buyer = $request->final_aql_date_plan_buyer;
             $inspection->final_aql_date_actual = $request->final_aql_date_actual;
+            $inspection->final_aql_meeting_schedule = $request->final_aql_meeting_schedule;
             $inspection->final_aql_schedule=$request->final_aql_schedule;
             $inspection->save();
             $this->saveFileInfo($request, $inspection);
@@ -174,6 +176,7 @@ class InspectionInformationController extends Controller
             $inspection->finishing_inline_inspection_date_plan = $request->finishing_inline_inspection_date_plan;
             $inspection->finishing_inline_inspection_date_plan_buyer = $request->finishing_inline_inspection_date_plan_buyer;
             $inspection->finishing_inline_inspection_date_actual = $request->finishing_inline_inspection_date_actual;
+            $inspection->finishing_inline_inspection_schedule = $request->finishing_inline_inspection_schedule;
             $inspection->pre_final_date_plan = $request->pre_final_date_plan;
             $inspection->pre_final_date_plan_buyer = $request->pre_final_date_plan_buyer;
             $inspection->pre_final_date_actual = $request->pre_final_date_actual;
@@ -181,6 +184,7 @@ class InspectionInformationController extends Controller
             $inspection->final_aql_date_plan = $request->final_aql_date_plan;
             $inspection->final_aql_date_plan_buyer = $request->final_aql_date_plan_buyer;
             $inspection->final_aql_date_actual = $request->final_aql_date_actual;
+            $inspection->final_aql_meeting_schedule = $request->final_aql_meeting_schedule;
             $inspection->final_aql_schedule=$request->final_aql_schedule;
             $inspection->save();
             $this->apiSuccess();

@@ -15,9 +15,9 @@ class ShippingBookController extends Controller
     {
        try{
 
-            $this->data = ShippingBookingResource::collection(ShippingBook::all());
-            $this->apiSuccess("Shipping Booking Loaded Successfully");
-            return $this->apiOutput();
+        $this->data = ShippingBookingResource::collection(ShippingBook::all());
+        $this->apiSuccess("Shipping Booking Loaded Successfully");
+        return $this->apiOutput();
 
         }catch(Exception $e){
             return $this->apiOutput($this->getError($e), 500);
@@ -36,7 +36,8 @@ class ShippingBookController extends Controller
                 $this->apiOutput($this->getValidationError($validator), 400);
             }
 
-            $shippingbook = new ShippingBook();
+            // $shippingbook = new ShippingBook();
+            $shippingbook = ShippingBook::find($request->id);
             $shippingbook->critical_path_id    = $request->critical_path_id;
             $shippingbook->bank_details        = $request->bank_details;
             $shippingbook->booking_date        = $request->booking_date;
