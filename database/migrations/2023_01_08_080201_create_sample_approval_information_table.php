@@ -21,6 +21,12 @@ class CreateSampleApprovalInformationTable extends Migration
             $table->date("development_photo_sample_sent_plan_buyer");
             $table->date("development_photo_sample_sent_actual");
             $table->text("development_photo_sample_dispatch_details")->nullable();
+            $table->date("development_photo_sample_dispatch_sending_date")->nullable();
+            $table->string("development_photo_sample_dispatch_awb_number")->nullable();
+            $table->date("development_photo_sample_dispatch_review_meeting")->nullable();
+            $table->date("fit_sample_review_meeting")->nullable();
+            $table->date("size_set_sample_review_meeting")->nullable();
+            $table->date("pp_sample_review_meeting")->nullable();
             $table->date("fit_approval_plan");
             $table->date("fit_approval_plan_buyer");
             $table->date("fit_approval_actual");

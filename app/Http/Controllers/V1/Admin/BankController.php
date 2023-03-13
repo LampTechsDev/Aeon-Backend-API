@@ -14,14 +14,14 @@ class BankController extends Controller
 
     public function index(){
         try{
-                
-                $this->data = BankResource::collection(Bank::all());
-                $this->apiSuccess("Bank Loaded Successfully");
-                return $this->apiOutput();
-    
-            }catch(Exception $e){
-                return $this->apiOutput($this->getError($e), 500);
-            }
+
+            $this->data = BankResource::collection(Bank::all());
+            $this->apiSuccess("Bank Loaded Successfully");
+            return $this->apiOutput();
+
+        }catch(Exception $e){
+            return $this->apiOutput($this->getError($e), 500);
+        }
     }
 
     public function store(Request $request){
@@ -29,8 +29,8 @@ class BankController extends Controller
             // 'name'          => ["required", "min:4"],
             // 'description'   => ["nullable", "min:4"],
         ]);
-            
-        if ($validator->fails()) {    
+
+        if ($validator->fails()) {
             $this->apiOutput($this->getValidationError($validator), 400);
         }
 
@@ -49,8 +49,8 @@ class BankController extends Controller
             // 'name'          => ["required", "min:4"],
             // 'description'   => ["nullable", "min:4"],
         ]);
-            
-        if ($validator->fails()) {    
+
+        if ($validator->fails()) {
             $this->apiOutput($this->getValidationError($validator), 400);
         }
 
@@ -67,7 +67,7 @@ class BankController extends Controller
     public function show(Request $request)
     {
         try{
-            
+
             $bank = Bank::find($request->id);
             $this->data = (new BankResource($bank));
             $this->apiSuccess("Bank Showed Successfully");
@@ -88,5 +88,5 @@ class BankController extends Controller
         return $this->apiOutput("Bank Deleted Successfully", 200);
     }
 
-    
+
 }

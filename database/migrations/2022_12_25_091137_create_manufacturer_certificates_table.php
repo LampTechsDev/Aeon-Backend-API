@@ -19,8 +19,8 @@ class CreateManufacturerCertificatesTable extends Migration
             $table->foreignId("vendor_manufacturer_id")->references("id")->on("vendor_manufacturers");
             $table->foreignId("global_certificate_id")->references("id")->on("global_certificates");
             $table->date('issue_date')->nullable();
-            $table->dateTime('validity_start_date')->nullable();
-            $table->dateTime('validity_end_date')->nullable();
+            $table->date('validity_start_date')->nullable();
+            $table->date('validity_end_date')->nullable();
             $table->date('renewal_date')->nullable();
             $table->string('score')->nullable();
 

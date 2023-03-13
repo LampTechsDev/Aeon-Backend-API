@@ -39,6 +39,7 @@ class SampleApprovalInformationResource extends JsonResource
             "production_sample_approval_plan"             => $this->production_sample_approval_plan ?? "",
             "production_sample_approval_plan_buyer"       => $this->production_sample_approval_plan_buyer ?? "",
             "production_sample_approval_actual"           => $this->production_sample_approval_actual ?? "",
+            "production_sample_review_schedule"           => $this->production_sample_review_schedule ?? "",
             "production_sample_dispatch_details"          => $this->production_sample_dispatch_details ?? "",
             "production_sample_dispatch_sending_date"     => $this->production_sample_dispatch_sending_date ?? "",
             "production_sample_dispatch_aob_number"       => $this->production_sample_dispatch_aob_number ?? "",
